@@ -5,12 +5,10 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "webpack --mode production",
+    "build": "webpack --mode development",
     "dev": "webpack --mode development && electron .",
     "watch": "webpack --mode development --watch",
-    "dev:watch": "concurrently \"npm run watch\" \"electron .\"",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dev:watch": "concurrently \"npm run watch\" \"electron .\""
   },
   "build": {
     "appId": "com.milesexpress.admin",
@@ -29,7 +27,11 @@
       "target": "nsis"
     },
     "linux": {
-      "target": ["deb", "rpm", "AppImage"]
+      "target": [
+        "deb",
+        "rpm",
+        "AppImage"
+      ]
     }
   },
   "devDependencies": {
@@ -37,12 +39,16 @@
     "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
     "babel-loader": "^9.1.3",
+    "buffer": "^6.0.3",
     "concurrently": "^8.2.0",
     "css-loader": "^6.8.1",
     "dotenv": "^16.3.1",
     "electron": "22.3.27",
     "electron-builder": "^24.6.3",
+    "file-loader": "^6.2.0",
+    "process": "^0.11.10",
     "style-loader": "^3.3.3",
+    "url-loader": "^4.1.1",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   },

@@ -1,6 +1,5 @@
 // admin-app/webpack.config.js
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -36,5 +35,5 @@ module.exports = {
     }
   },
   devtool: 'source-map',
-  target: 'electron-renderer'
+  target: 'web' // Use 'web' instead of 'electron-renderer' to avoid require
 };

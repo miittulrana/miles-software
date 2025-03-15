@@ -3,10 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 
-// Simple renderer that will definitely work
+// Initialize the app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   try {
-    console.log('Initializing app...');
     const container = document.getElementById('app');
     
     if (!container) {
@@ -14,9 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     
-    // Use ReactDOM.render for better compatibility
     ReactDOM.render(<App />, container);
-    console.log('App rendered successfully');
   } catch (error) {
     console.error('Error rendering app:', error);
   }

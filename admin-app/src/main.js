@@ -14,8 +14,8 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
-      sandbox: false, // Need this for some electron functionality
-      webSecurity: true
+      sandbox: false,
+      webSecurity: false // Disable for development only - allows loading content from CDN
     }
   });
 
