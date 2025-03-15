@@ -1,12 +1,41 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
-import { supabase } from '../supabaseClient';
+// admin-app/src/components/Login.jsx
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
+import { supabase, isAdmin } from '../supabaseClient';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [initializing, setInitializing] = useState(true);
+
+  // Check for existing session on component mount
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        setInitializing(true);
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session) {
+          // Verify if user is admin
+          const adminStatus = await isAdmin();
+          
+          if (!adminStatus) {
+            // If not admin, sign out
+            await supabase.auth.signOut();
+            setError('Access denied. This portal is for admin users only.');
+          }
+        }
+      } catch (err) {
+        console.error('Session check error:', err);
+      } finally {
+        setInitializing(false);
+      }
+    };
+    
+    checkSession();
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,18 +44,39 @@ const Login = () => {
       setLoading(true);
       setError(null);
       
+      // Sign in with email and password
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       });
       
       if (error) throw error;
-    } catch (error) {
-      setError(error.message);
+      
+      // Verify if user is admin
+      const adminStatus = await isAdmin();
+      
+      if (!adminStatus) {
+        // If not admin, sign out
+        await supabase.auth.signOut();
+        throw new Error('Access denied. This portal is for admin users only.');
+      }
+    } catch (err) {
+      setError(err.message);
+      console.error('Login error:', err);
     } finally {
       setLoading(false);
     }
   };
+
+  if (initializing) {
+    return (
+      <Container className="vh-100 d-flex align-items-center justify-content-center">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
 
   return (
     <Container className="vh-100 d-flex align-items-center justify-content-center">
@@ -50,6 +100,7 @@ const Login = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    disabled={loading}
                   />
                 </Form.Group>
                 
@@ -60,6 +111,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    disabled={loading}
                   />
                 </Form.Group>
                 
@@ -69,7 +121,19 @@ const Login = () => {
                   className="w-100" 
                   disabled={loading}
                 >
-                  {loading ? 'Signing in...' : 'Sign In'}
+                  {loading ? (
+                    <>
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                        className="me-2"
+                      />
+                      Signing in...
+                    </>
+                  ) : 'Sign In'}
                 </Button>
               </Form>
             </Card.Body>

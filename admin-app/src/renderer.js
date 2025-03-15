@@ -1,30 +1,23 @@
+// admin-app/src/renderer.js
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import App from './components/App';
 
-// Set up Supabase configuration for React components
-window.getSupabaseConfig = async () => {
+// Simple renderer that will definitely work
+document.addEventListener('DOMContentLoaded', () => {
   try {
-    // Get configuration from main process via preload bridge
-    if (window.electronAPI) {
-      return await window.electronAPI.getSupabaseConfig();
+    console.log('Initializing app...');
+    const container = document.getElementById('app');
+    
+    if (!container) {
+      console.error('App container not found!');
+      return;
     }
     
-    // Fallback for development
-    return {
-      url: 'https://your-project-url.supabase.co',
-      key: 'your-anon-key'
-    };
+    // Use ReactDOM.render for better compatibility
+    ReactDOM.render(<App />, container);
+    console.log('App rendered successfully');
   } catch (error) {
-    console.error('Error getting Supabase config:', error);
-    return null;
+    console.error('Error rendering app:', error);
   }
-};
-
-// Wait for the DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM content loaded, initializing React app');
-  const container = document.getElementById('app');
-  const root = createRoot(container);
-  root.render(<App />);
 });

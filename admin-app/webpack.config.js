@@ -1,4 +1,6 @@
+// admin-app/webpack.config.js
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -26,6 +28,13 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
-  }
+    extensions: ['.js', '.jsx'],
+    fallback: {
+      "path": false,
+      "fs": false,
+      "crypto": false
+    }
+  },
+  devtool: 'source-map',
+  target: 'electron-renderer'
 };
