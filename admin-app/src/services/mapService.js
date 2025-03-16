@@ -1,11 +1,19 @@
 // admin-app/src/services/mapService.js
 import L from 'leaflet';
 
+// Fix Leaflet's icon paths
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png'
+});
+
 class MapService {
   constructor() {
     this.map = null;
-    this.markers = new Map(); // vehicle ID -> marker
-    this.vehicleColors = new Map(); // vehicle ID -> color
+    this.markers = new Map();
+    this.vehicleColors = new Map();
     this.colorPalette = [
       '#3498db', '#2ecc71', '#e74c3c', '#9b59b6', '#f1c40f', 
       '#1abc9c', '#e67e22', '#34495e'
@@ -14,41 +22,58 @@ class MapService {
     this.selectedVehicleId = null;
     this.isInitialized = false;
     this.onVehicleClickCallbacks = [];
-    
-    // Malta center coordinates
     this.maltaCenter = [35.937496, 14.375416];
   }
 
-  // Initialize the map in the provided container
   initializeMap(container, options = {}) {
+    console.log("Map initialization starting");
+    
+    // Clean up if already initialized
     if (this.isInitialized) {
-      console.log("Map already initialized, cleaning up first");
       this.cleanup();
     }
 
     try {
-      // Create new Leaflet map instance
+      // Make sure container has height
+      if (container.style.height === '' || container.style.height === '0px') {
+        container.style.height = '500px';
+      }
+      
+      // Create map
       this.map = L.map(container, {
         center: options.center || this.maltaCenter,
-        zoom: options.zoom || 10,
+        zoom: options.zoom || 10
       });
 
-      // Add OpenStreetMap tile layer (free, no API key needed)
+      // Add a default tile layer
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(this.map);
       
-      // Setup complete
+      // Add a default marker at Malta center to verify map is working
+      L.marker(this.maltaCenter)
+        .addTo(this.map)
+        .bindPopup('Map is working!')
+        .openPopup();
+      
+      // Force map to recalculate size
+      setTimeout(() => {
+        if (this.map) {
+          this.map.invalidateSize(true);
+          console.log("Map size recalculated");
+        }
+      }, 300);
+      
       this.isInitialized = true;
-      console.log("Leaflet map initialized successfully");
-
-      // Call onMapLoaded callback if provided
+      console.log("Map initialized successfully");
+      
       if (options.onMapLoaded) {
         options.onMapLoaded();
       }
-
+      
       return true;
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error initializing map:", error);
       if (options.onMapError) {
         options.onMapError(error);
@@ -57,7 +82,7 @@ class MapService {
     }
   }
 
-  // Add or update a vehicle marker on the map
+  // Rest of the methods remain unchanged
   updateVehicleMarker(vehicle, location) {
     if (!this.isInitialized || !this.map) {
       console.warn("Map not initialized, can't update marker");
@@ -96,7 +121,7 @@ class MapService {
         // Create icon
         const icon = L.divIcon({
           className: 'vehicle-marker',
-          html: `<div style="background-color: ${vehicleColor}; width: 100%; height: 100%; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; color: white;">
+          html: `<div style="background-color: ${vehicleColor}; width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; color: white;">
                   <i class="bi bi-truck"></i>
                 </div>`,
           iconSize: [30, 30],
