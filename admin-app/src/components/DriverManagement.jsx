@@ -1,108 +1,77 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Card, Table, Button } from 'react-bootstrap';
-import { supabase } from '../supabaseClient';
+// admin-app/src/components/DriverManagement.jsx
+import React, { useState } from 'react';
+
+// Import sub-modules
+import AvailableDrivers from './drivers/AvailableDrivers';
+import DriverDocuments from './drivers/DriverDocuments';
 
 const DriverManagement = () => {
-  const [drivers, setDrivers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [currentSubModule, setCurrentSubModule] = useState('main');
+  const [error, setError] = useState(null);
+  
+  // Define the sub-modules
+  const subModules = [
+    {
+      id: 'available',
+      name: 'Manage Drivers',
+      icon: '👤',
+      description: 'Add, edit, or remove drivers'
+    },
+    {
+      id: 'documents',
+      name: 'Driver Documents',
+      icon: '📄',
+      description: 'Manage driver licenses and ID cards'
+    }
+  ];
 
-  useEffect(() => {
-    const fetchDrivers = async () => {
-      try {
-        setLoading(true);
-        const { data, error } = await supabase
-          .from('users')
-          .select('*')
-          .eq('role', 'driver');
-          
-        if (error) throw error;
-        setDrivers(data || []);
-      } catch (error) {
-        console.error('Error fetching drivers:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchDrivers();
-    
-    // Set up realtime subscription
-    const subscription = supabase
-      .channel('public:users')
-      .on('postgres_changes', { 
-        event: '*', 
-        schema: 'public', 
-        table: 'users',
-        filter: 'role=eq.driver'
-      }, (payload) => {
-        if (payload.eventType === 'INSERT') {
-          setDrivers(prev => [payload.new, ...prev]);
-        } else if (payload.eventType === 'UPDATE') {
-          setDrivers(prev => prev.map(driver => 
-            driver.id === payload.new.id ? payload.new : driver
-          ));
-        } else if (payload.eventType === 'DELETE') {
-          setDrivers(prev => prev.filter(driver => driver.id !== payload.old.id));
-        }
-      })
-      .subscribe();
-      
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+  // Render the appropriate sub-module based on state
+  const renderSubModule = () => {
+    switch(currentSubModule) {
+      case 'available':
+        return <AvailableDrivers onBack={() => setCurrentSubModule('main')} />;
+      case 'documents':
+        return <DriverDocuments onBack={() => setCurrentSubModule('main')} />;
+      default:
+        // Main module selection screen
+        return (
+          <div>
+            <h2>Driver Management</h2>
+            
+            {error && (
+              <div className="alert alert-danger" role="alert">
+                {error}
+              </div>
+            )}
+            
+            <div className="row row-cols-1 row-cols-md-2 g-4 mt-3">
+              {subModules.map(module => (
+                <div key={module.id} className="col">
+                  <div 
+                    className="card h-100 shadow-sm" 
+                    onClick={() => setCurrentSubModule(module.id)}
+                    style={{ cursor: 'pointer', transition: 'transform 0.2s' }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                  >
+                    <div className="card-body text-center">
+                      <div style={{ fontSize: '48px', marginBottom: '10px' }}>{module.icon}</div>
+                      <h3 className="card-title">{module.name}</h3>
+                      <p className="card-text text-muted">{module.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+    }
+  };
 
   return (
-    <Container>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Driver Management</h2>
-        <Button variant="primary">
-          <i className="bi bi-plus-lg me-1"></i> Add Driver
-        </Button>
-      </div>
-      
-      {loading ? (
-        <div className="text-center my-5">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      ) : drivers.length === 0 ? (
-        <p className="text-muted">No drivers found</p>
-      ) : (
-        <Card>
-          <Table responsive hover className="mb-0">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Created At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {drivers.map(driver => (
-                <tr key={driver.id}>
-                  <td>{driver.full_name}</td>
-                  <td>{driver.email}</td>
-                  <td>{driver.phone || 'N/A'}</td>
-                  <td>{new Date(driver.created_at).toLocaleDateString()}</td>
-                  <td>
-                    <Button variant="outline-primary" size="sm" className="me-2">
-                      <i className="bi bi-pencil"></i>
-                    </Button>
-                    <Button variant="outline-danger" size="sm">
-                      <i className="bi bi-trash"></i>
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Card>
-      )}
-    </Container>
+    <div className="container py-4">
+      {renderSubModule()}
+    </div>
   );
 };
 
