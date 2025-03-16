@@ -26,20 +26,6 @@ const BlockedVehicles = ({ onBack }) => {
 
   useEffect(() => {
     fetchData();
-    
-    // Subscribe to realtime changes
-    const subscription = supabase
-      .channel('public:vehicle_blocked_periods')
-      .on('postgres_changes', { 
-        event: '*', 
-        schema: 'public', 
-        table: 'vehicle_blocked_periods' 
-      }, () => fetchData())
-      .subscribe();
-    
-    return () => {
-      subscription.unsubscribe();
-    };
   }, []);
 
   const fetchData = async () => {
@@ -47,34 +33,47 @@ const BlockedVehicles = ({ onBack }) => {
       setLoading(true);
       setError(null);
       
-      // Fetch vehicles
+      // Fetch vehicles - SIMPLE QUERY
       const { data: vehiclesData, error: vehiclesError } = await supabase
         .from('vehicles')
         .select('id, registration_number, make, model')
         .order('registration_number', { ascending: true });
       
-      if (vehiclesError) throw vehiclesError;
+      if (vehiclesError) {
+        console.error('Vehicles error:', vehiclesError);
+        throw new Error('Failed to load vehicles');
+      }
       
-      // Fetch blocked periods
+      // Fetch blocked periods - SIMPLE QUERY, NO JOINS
       const { data: blockedData, error: blockedError } = await supabase
         .from('vehicle_blocked_periods')
-        .select(`
-          id,
-          vehicle_id,
-          start_date,
-          end_date,
-          reason,
-          created_by,
-          created_at,
-          vehicles(id, registration_number, make, model),
-          users(id, email)
-        `)
+        .select('id, vehicle_id, start_date, end_date, reason, created_by, created_at')
         .order('start_date', { ascending: true });
       
-      if (blockedError) throw blockedError;
+      if (blockedError) {
+        console.error('Blocked periods error:', blockedError);
+        throw new Error('Failed to load blocked periods');
+      }
+      
+      // Manually combine data instead of using Supabase joins
+      const enhancedData = [];
+      
+      for (const block of blockedData) {
+        const matchingVehicle = vehiclesData.find(v => v.id === block.vehicle_id);
+        
+        enhancedData.push({
+          ...block,
+          // Add vehicle info in the format the component expects
+          vehicles: matchingVehicle ? {
+            registration_number: matchingVehicle.registration_number,
+            make: matchingVehicle.make,
+            model: matchingVehicle.model
+          } : null
+        });
+      }
       
       setVehicles(vehiclesData || []);
-      setBlockedPeriods(blockedData || []);
+      setBlockedPeriods(enhancedData || []);
     } catch (err) {
       console.error('Error fetching data:', err);
       setError('Failed to load blocked vehicles. Please try again.');
@@ -87,12 +86,22 @@ const BlockedVehicles = ({ onBack }) => {
     try {
       setError(null);
       
+      // Form validation
       if (!blockData.vehicle_id || !blockData.start_date || !blockData.end_date || !blockData.reason) {
         setError('Please fill in all required fields.');
         return;
       }
       
-      // Add new blocked period without created_by field
+      // Validate dates
+      const startDate = new Date(blockData.start_date);
+      const endDate = new Date(blockData.end_date);
+      
+      if (startDate > endDate) {
+        setError('End date must be after start date.');
+        return;
+      }
+      
+      // Insert block - SIMPLE INSERT, NO RELATIONSHIP
       const { error } = await supabase
         .from('vehicle_blocked_periods')
         .insert({
@@ -103,17 +112,20 @@ const BlockedVehicles = ({ onBack }) => {
         });
       
       if (error) {
-        console.error('Block insert error details:', error);
-        throw error;
+        console.error('Block insert error:', error);
+        throw new Error('Failed to add block');
       }
       
       setShowAddModal(false);
       resetForm();
       setSuccessMessage('Vehicle blocked successfully!');
       setTimeout(() => setSuccessMessage(null), 3000);
+      
+      // Refresh data
+      fetchData();
     } catch (err) {
       console.error('Error blocking vehicle:', err);
-      setError('Failed to block vehicle. Please try again.');
+      setError(err.message || 'Failed to block vehicle. Please try again.');
     }
   };
 
@@ -136,46 +148,7 @@ const BlockedVehicles = ({ onBack }) => {
         return;
       }
       
-      // Get the current block to exclude it from collision detection
-      const { data: currentBlock, error: currentError } = await supabase
-        .from('vehicle_blocked_periods')
-        .select('*')
-        .eq('id', currentBlockId)
-        .single();
-      
-      if (currentError) throw currentError;
-      
-      // Check if vehicle is already assigned during this period
-      const { data: assignments, error: assignmentError } = await supabase
-        .from('vehicle_assignments')
-        .select('id, start_time, end_time')
-        .eq('vehicle_id', blockData.vehicle_id)
-        .or(`start_time.lte.${blockData.end_date},end_time.gte.${blockData.start_date}`)
-        .is('status', 'not.eq.rejected');
-      
-      if (assignmentError) throw assignmentError;
-      
-      if (assignments && assignments.length > 0) {
-        setError('Vehicle is already assigned during this period. Please choose different dates or cancel the assignment first.');
-        return;
-      }
-      
-      // Check if vehicle is already blocked during this period (excluding current block)
-      const { data: existing, error: existingError } = await supabase
-        .from('vehicle_blocked_periods')
-        .select('id')
-        .eq('vehicle_id', blockData.vehicle_id)
-        .neq('id', currentBlockId)
-        .or(`start_date.lte.${blockData.end_date},end_date.gte.${blockData.start_date}`);
-      
-      if (existingError) throw existingError;
-      
-      if (existing && existing.length > 0) {
-        setError('Vehicle is already blocked during this period. Please choose different dates.');
-        return;
-      }
-      
-      // Update blocked period
+      // Update block - SIMPLE UPDATE
       const { error } = await supabase
         .from('vehicle_blocked_periods')
         .update({
@@ -186,15 +159,21 @@ const BlockedVehicles = ({ onBack }) => {
         })
         .eq('id', currentBlockId);
       
-      if (error) throw error;
+      if (error) {
+        console.error('Block update error:', error);
+        throw new Error('Failed to update block');
+      }
       
       setShowEditModal(false);
       resetForm();
       setSuccessMessage('Block updated successfully!');
       setTimeout(() => setSuccessMessage(null), 3000);
+      
+      // Refresh data
+      fetchData();
     } catch (err) {
       console.error('Error updating block:', err);
-      setError('Failed to update block. Please try again.');
+      setError(err.message || 'Failed to update block. Please try again.');
     }
   };
 
@@ -202,19 +181,26 @@ const BlockedVehicles = ({ onBack }) => {
     try {
       setError(null);
       
+      // Delete block - SIMPLE DELETE
       const { error } = await supabase
         .from('vehicle_blocked_periods')
         .delete()
         .eq('id', currentBlockId);
       
-      if (error) throw error;
+      if (error) {
+        console.error('Block delete error:', error);
+        throw new Error('Failed to delete block');
+      }
       
       setShowDeleteModal(false);
       setSuccessMessage('Block removed successfully!');
       setTimeout(() => setSuccessMessage(null), 3000);
+      
+      // Refresh data
+      fetchData();
     } catch (err) {
       console.error('Error deleting block:', err);
-      setError('Failed to remove block. Please try again.');
+      setError(err.message || 'Failed to remove block. Please try again.');
     }
   };
 
@@ -361,9 +347,25 @@ const BlockedVehicles = ({ onBack }) => {
           marginBottom: '15px', 
           backgroundColor: '#f8d7da', 
           color: '#721c24',
-          borderRadius: '4px'
+          borderRadius: '4px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center' 
         }}>
-          {error}
+          <span>{error}</span>
+          <button 
+            onClick={fetchData}
+            style={{
+              backgroundColor: '#721c24',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              padding: '4px 8px',
+              cursor: 'pointer'
+            }}
+          >
+            Retry
+          </button>
         </div>
       )}
       
@@ -424,14 +426,13 @@ const BlockedVehicles = ({ onBack }) => {
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Start Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>End Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Reason</th>
-                  <th style={{ padding: '12px 15px', textAlign: 'left' }}>Blocked By</th>
                   <th style={{ padding: '12px 15px', textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {blockedPeriods.filter(block => isActive(block)).length === 0 ? (
                   <tr>
-                    <td colSpan="6" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
+                    <td colSpan="5" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
                       No vehicles are currently blocked
                     </td>
                   </tr>
@@ -439,12 +440,14 @@ const BlockedVehicles = ({ onBack }) => {
                   blockedPeriods.filter(block => isActive(block)).map(block => (
                     <tr key={block.id} style={{ borderBottom: '1px solid #dee2e6' }}>
                       <td style={{ padding: '12px 15px' }}>
-                        {block.vehicles?.registration_number} ({block.vehicles?.make} {block.vehicles?.model})
+                        {block.vehicles ? 
+                          `${block.vehicles.registration_number} (${block.vehicles.make} ${block.vehicles.model})` :
+                          `Vehicle ID: ${block.vehicle_id}`
+                        }
                       </td>
                       <td style={{ padding: '12px 15px' }}>{formatDate(block.start_date)}</td>
                       <td style={{ padding: '12px 15px' }}>{formatDate(block.end_date)}</td>
                       <td style={{ padding: '12px 15px' }}>{block.reason}</td>
-                      <td style={{ padding: '12px 15px' }}>{block.users?.email}</td>
                       <td style={{ padding: '12px 15px', textAlign: 'right' }}>
                         <button 
                           onClick={() => openEditModal(block)}
@@ -498,14 +501,13 @@ const BlockedVehicles = ({ onBack }) => {
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Start Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>End Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Reason</th>
-                  <th style={{ padding: '12px 15px', textAlign: 'left' }}>Blocked By</th>
                   <th style={{ padding: '12px 15px', textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {blockedPeriods.filter(block => isUpcoming(block)).length === 0 ? (
                   <tr>
-                    <td colSpan="6" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
+                    <td colSpan="5" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
                       No upcoming blocks scheduled
                     </td>
                   </tr>
@@ -513,12 +515,14 @@ const BlockedVehicles = ({ onBack }) => {
                   blockedPeriods.filter(block => isUpcoming(block)).map(block => (
                     <tr key={block.id} style={{ borderBottom: '1px solid #dee2e6' }}>
                       <td style={{ padding: '12px 15px' }}>
-                        {block.vehicles?.registration_number} ({block.vehicles?.make} {block.vehicles?.model})
+                        {block.vehicles ? 
+                          `${block.vehicles.registration_number} (${block.vehicles.make} ${block.vehicles.model})` :
+                          `Vehicle ID: ${block.vehicle_id}`
+                        }
                       </td>
                       <td style={{ padding: '12px 15px' }}>{formatDate(block.start_date)}</td>
                       <td style={{ padding: '12px 15px' }}>{formatDate(block.end_date)}</td>
                       <td style={{ padding: '12px 15px' }}>{block.reason}</td>
-                      <td style={{ padding: '12px 15px' }}>{block.users?.email}</td>
                       <td style={{ padding: '12px 15px', textAlign: 'right' }}>
                         <button 
                           onClick={() => openEditModal(block)}
@@ -571,13 +575,12 @@ const BlockedVehicles = ({ onBack }) => {
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Start Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>End Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Reason</th>
-                  <th style={{ padding: '12px 15px', textAlign: 'left' }}>Blocked By</th>
                 </tr>
               </thead>
               <tbody>
                 {blockedPeriods.filter(block => isPast(block)).length === 0 ? (
                   <tr>
-                    <td colSpan="5" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
+                    <td colSpan="4" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
                       No past blocks found
                     </td>
                   </tr>
@@ -585,12 +588,14 @@ const BlockedVehicles = ({ onBack }) => {
                   blockedPeriods.filter(block => isPast(block)).slice(0, 10).map(block => (
                     <tr key={block.id} style={{ borderBottom: '1px solid #dee2e6' }}>
                       <td style={{ padding: '12px 15px' }}>
-                        {block.vehicles?.registration_number} ({block.vehicles?.make} {block.vehicles?.model})
+                        {block.vehicles ? 
+                          `${block.vehicles.registration_number} (${block.vehicles.make} ${block.vehicles.model})` :
+                          `Vehicle ID: ${block.vehicle_id}`
+                        }
                       </td>
                       <td style={{ padding: '12px 15px' }}>{formatDate(block.start_date)}</td>
                       <td style={{ padding: '12px 15px' }}>{formatDate(block.end_date)}</td>
                       <td style={{ padding: '12px 15px' }}>{block.reason}</td>
-                      <td style={{ padding: '12px 15px' }}>{block.users?.email}</td>
                     </tr>
                   ))
                 )}

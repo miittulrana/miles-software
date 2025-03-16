@@ -1,6 +1,6 @@
 // admin-app/src/components/App.jsx
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase, validateSession, executeQuery } from '../supabaseClient';
 
 // Import components
 import VehicleManagement from './VehicleManagement';
@@ -25,30 +25,33 @@ const App = () => {
       setLoading(true);
       
       try {
-        // First check connection
-        await checkNetworkConnection();
-        
         // Get current session
         const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
         
-        if (sessionError) throw sessionError;
+        if (sessionError) {
+          console.error('Session error:', sessionError);
+          setSession(null);
+          setLoading(false);
+          return;
+        }
         
-        if (sessionData.session) {
+        if (sessionData && sessionData.session) {
           // Verify this user is an admin 
-          const { data: userData, error: userError } = await supabase
-            .from('users')
-            .select('role')
-            .eq('email', sessionData.session.user.email) // Using email to match users
-            .maybeSingle(); // Use maybeSingle to avoid errors
+          const { data: userData, error: userError } = await executeQuery(() => 
+            supabase
+              .from('users')
+              .select('role')
+              .eq('email', sessionData.session.user.email)
+              .maybeSingle()
+          );
           
-          // If error querying, log it but allow the user in for now
+          // If error querying, assume not admin
           if (userError) {
             console.error('User data fetch error:', userError);
-          }
-          
-          // If no user found or not admin role, sign out
-          if (!userData || userData.role !== 'admin') {
-            // Not an admin, sign out
+            await supabase.auth.signOut();
+            setSession(null);
+          } else if (!userData || userData.role !== 'admin') {
+            // Not an admin
             console.error('Not authorized as admin');
             await supabase.auth.signOut();
             setSession(null);
@@ -86,7 +89,6 @@ const App = () => {
         console.log('Auth state changed:', event);
         
         if (session) {
-          // Only update session - we'll verify on page load and navigation
           setSession(session);
         } else {
           setSession(null);
@@ -98,10 +100,21 @@ const App = () => {
     window.addEventListener('online', handleOnlineStatus);
     window.addEventListener('offline', handleOfflineStatus);
 
+    // Set up a session validation interval
+    const sessionInterval = setInterval(() => {
+      validateSession().then(valid => {
+        if (!valid && session) {
+          console.log('Session is no longer valid, signing out');
+          supabase.auth.signOut().then(() => setSession(null));
+        }
+      });
+    }, 60000); // Check every minute
+
     return () => {
       subscription.unsubscribe();
       window.removeEventListener('online', handleOnlineStatus);
       window.removeEventListener('offline', handleOfflineStatus);
+      clearInterval(sessionInterval);
     }
   }, []);
   
@@ -109,7 +122,10 @@ const App = () => {
   const checkNetworkConnection = async () => {
     try {
       // Simple check - try to fetch from Supabase
-      const { error } = await supabase.from('vehicles').select('count', { count: 'exact', head: true });
+      const { error } = await executeQuery(() => 
+        supabase.from('vehicles').select('count', { count: 'exact', head: true })
+      );
+      
       const isOnline = !error;
       
       setNetworkStatus({ online: isOnline, lastChecked: Date.now() });

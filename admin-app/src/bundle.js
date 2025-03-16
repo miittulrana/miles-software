@@ -45687,6 +45687,39 @@ if (
 
 /***/ }),
 
+/***/ "./node_modules/react-dom/client.js":
+/*!******************************************!*\
+  !*** ./node_modules/react-dom/client.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var m = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+if (false) {} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  exports.createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+  exports.hydrateRoot = function(c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.hydrateRoot(c, h, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/react-dom/index.js":
 /*!*****************************************!*\
   !*** ./node_modules/react-dom/index.js ***!
@@ -52885,73 +52918,78 @@ var App = function App() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var checkSession = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var _yield$supabase$auth$, sessionData, sessionError, _yield$supabase$from$, userData, userError;
+        var _yield$supabase$auth$, sessionData, sessionError, _yield$executeQuery, userData, userError;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               setLoading(true);
               _context.prev = 1;
               _context.next = 4;
-              return checkNetworkConnection();
-            case 4:
-              _context.next = 6;
               return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.getSession();
-            case 6:
+            case 4:
               _yield$supabase$auth$ = _context.sent;
               sessionData = _yield$supabase$auth$.data;
               sessionError = _yield$supabase$auth$.error;
               if (!sessionError) {
-                _context.next = 11;
+                _context.next = 12;
                 break;
               }
-              throw sessionError;
-            case 11:
-              if (!sessionData.session) {
-                _context.next = 30;
+              console.error('Session error:', sessionError);
+              setSession(null);
+              setLoading(false);
+              return _context.abrupt("return");
+            case 12:
+              if (!(sessionData && sessionData.session)) {
+                _context.next = 37;
                 break;
               }
-              _context.next = 14;
-              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('role').eq('email', sessionData.session.user.email) // Using email to match users
-              .maybeSingle();
-            case 14:
-              _yield$supabase$from$ = _context.sent;
-              userData = _yield$supabase$from$.data;
-              userError = _yield$supabase$from$.error;
-              // Use maybeSingle to avoid errors
-
-              // If error querying, log it but allow the user in for now
-              if (userError) {
-                console.error('User data fetch error:', userError);
-              }
-
-              // If no user found or not admin role, sign out
-              if (!(!userData || userData.role !== 'admin')) {
+              _context.next = 15;
+              return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
+                return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('role').eq('email', sessionData.session.user.email).maybeSingle();
+              });
+            case 15:
+              _yield$executeQuery = _context.sent;
+              userData = _yield$executeQuery.data;
+              userError = _yield$executeQuery.error;
+              if (!userError) {
                 _context.next = 25;
                 break;
               }
-              // Not an admin, sign out
-              console.error('Not authorized as admin');
+              console.error('User data fetch error:', userError);
               _context.next = 22;
               return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.signOut();
             case 22:
               setSession(null);
-              _context.next = 28;
+              _context.next = 35;
               break;
             case 25:
+              if (!(!userData || userData.role !== 'admin')) {
+                _context.next = 32;
+                break;
+              }
+              // Not an admin
+              console.error('Not authorized as admin');
+              _context.next = 29;
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.signOut();
+            case 29:
+              setSession(null);
+              _context.next = 35;
+              break;
+            case 32:
               // Valid admin session
               console.log('Valid admin session');
               setSession(sessionData.session);
               setAuthError(null);
-            case 28:
-              _context.next = 31;
-              break;
-            case 30:
-              setSession(null);
-            case 31:
+            case 35:
               _context.next = 38;
               break;
-            case 33:
-              _context.prev = 33;
+            case 37:
+              setSession(null);
+            case 38:
+              _context.next = 45;
+              break;
+            case 40:
+              _context.prev = 40;
               _context.t0 = _context["catch"](1);
               console.error('Session error:', _context.t0);
 
@@ -52962,15 +53000,15 @@ var App = function App() {
                 }));
               }
               setSession(null);
-            case 38:
-              _context.prev = 38;
+            case 45:
+              _context.prev = 45;
               setLoading(false);
-              return _context.finish(38);
-            case 41:
+              return _context.finish(45);
+            case 48:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[1, 33, 38, 41]]);
+        }, _callee, null, [[1, 40, 45, 48]]);
       }));
       return function checkSession() {
         return _ref.apply(this, arguments);
@@ -52986,7 +53024,6 @@ var App = function App() {
               case 0:
                 console.log('Auth state changed:', event);
                 if (session) {
-                  // Only update session - we'll verify on page load and navigation
                   setSession(session);
                 } else {
                   setSession(null);
@@ -53006,29 +53043,45 @@ var App = function App() {
     // Also check for online/offline status
     window.addEventListener('online', handleOnlineStatus);
     window.addEventListener('offline', handleOfflineStatus);
+
+    // Set up a session validation interval
+    var sessionInterval = setInterval(function () {
+      (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.validateSession)().then(function (valid) {
+        if (!valid && session) {
+          console.log('Session is no longer valid, signing out');
+          _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.signOut().then(function () {
+            return setSession(null);
+          });
+        }
+      });
+    }, 60000); // Check every minute
+
     return function () {
       subscription.unsubscribe();
       window.removeEventListener('online', handleOnlineStatus);
       window.removeEventListener('offline', handleOfflineStatus);
+      clearInterval(sessionInterval);
     };
   }, []);
 
   // Check network connection
   var checkNetworkConnection = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      var _yield$supabase$from$2, error, isOnline;
+      var _yield$executeQuery2, error, isOnline;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('count', {
-              count: 'exact',
-              head: true
+            return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('count', {
+                count: 'exact',
+                head: true
+              });
             });
           case 3:
-            _yield$supabase$from$2 = _context3.sent;
-            error = _yield$supabase$from$2.error;
+            _yield$executeQuery2 = _context3.sent;
+            error = _yield$executeQuery2.error;
             isOnline = !error;
             setNetworkStatus({
               online: isOnline,
@@ -55506,12 +55559,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _supabaseClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../supabaseClient */ "./src/supabaseClient.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -55583,21 +55636,24 @@ var AssignVehicle = function AssignVehicle(_ref) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     fetchData();
 
-    // Subscribe to realtime changes
-    var subscription = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('public:vehicle_assignments').on('postgres_changes', {
+    // Set up realtime subscription
+    var channel = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('assignment_changes').on('postgres_changes', {
       event: '*',
       schema: 'public',
       table: 'vehicle_assignments'
     }, function () {
-      return fetchData();
+      console.log('Assignments updated');
+      fetchData();
     }).subscribe();
     return function () {
-      subscription.unsubscribe();
+      channel.unsubscribe();
     };
   }, []);
+
+  // admin-app/src/components/vehicles/AssignVehicle.jsx - fetchData function
   var fetchData = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _yield$supabase$from$, vehiclesData, vehiclesError, _yield$supabase$from$2, driversData, driversError, _yield$supabase$from$3, assignmentsData, assignmentsError, available;
+      var _yield$executeQuery, vehiclesData, vehiclesError, _yield$executeQuery2, driversData, driversError, _yield$executeQuery3, assignmentsData, assignmentsError, enhancedAssignments, available;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -55607,73 +55663,101 @@ var AssignVehicle = function AssignVehicle(_ref) {
 
             // Fetch all vehicles
             _context.next = 5;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('id, registration_number, make, model, status, assigned_driver_id').order('registration_number', {
-              ascending: true
+            return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('id, registration_number, make, model, status').order('registration_number', {
+                ascending: true
+              });
             });
           case 5:
-            _yield$supabase$from$ = _context.sent;
-            vehiclesData = _yield$supabase$from$.data;
-            vehiclesError = _yield$supabase$from$.error;
+            _yield$executeQuery = _context.sent;
+            vehiclesData = _yield$executeQuery.data;
+            vehiclesError = _yield$executeQuery.error;
             if (!vehiclesError) {
               _context.next = 10;
               break;
             }
-            throw vehiclesError;
+            throw new Error(vehiclesError.message || 'Failed to load vehicles');
           case 10:
             _context.next = 12;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('id, full_name, email').eq('role', 'driver').order('full_name', {
-              ascending: true
+            return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('id, full_name, email').eq('role', 'driver').order('full_name', {
+                ascending: true
+              });
             });
           case 12:
-            _yield$supabase$from$2 = _context.sent;
-            driversData = _yield$supabase$from$2.data;
-            driversError = _yield$supabase$from$2.error;
+            _yield$executeQuery2 = _context.sent;
+            driversData = _yield$executeQuery2.data;
+            driversError = _yield$executeQuery2.error;
             if (!driversError) {
               _context.next = 17;
               break;
             }
-            throw driversError;
+            throw new Error(driversError.message || 'Failed to load drivers');
           case 17:
             _context.next = 19;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select("\n          id,\n          vehicle_id,\n          driver_id,\n          start_time,\n          end_time,\n          notes,\n          is_temporary,\n          status,\n          created_by,\n          created_at,\n          vehicles(id, registration_number, make, model),\n          users!vehicle_assignments_driver_id_fkey(id, full_name, email),\n          admin:users!vehicle_assignments_created_by_fkey(id, email)\n        ").eq('is_temporary', true).order('start_time', {
-              ascending: false
+            return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('id, vehicle_id, driver_id, start_time, end_time, notes, is_temporary, status, created_by, created_at').eq('is_temporary', true).order('start_time', {
+                ascending: false
+              });
             });
           case 19:
-            _yield$supabase$from$3 = _context.sent;
-            assignmentsData = _yield$supabase$from$3.data;
-            assignmentsError = _yield$supabase$from$3.error;
+            _yield$executeQuery3 = _context.sent;
+            assignmentsData = _yield$executeQuery3.data;
+            assignmentsError = _yield$executeQuery3.error;
             if (!assignmentsError) {
               _context.next = 24;
               break;
             }
-            throw assignmentsError;
+            throw new Error(assignmentsError.message || 'Failed to load assignments');
           case 24:
-            // Store data
+            // Enhance assignments with vehicle and driver data
+            enhancedAssignments = assignmentsData.map(function (assignment) {
+              // Find related vehicle
+              var vehicle = vehiclesData.find(function (v) {
+                return v.id === assignment.vehicle_id;
+              }) || {
+                registration_number: 'Unknown',
+                make: '',
+                model: ''
+              };
+
+              // Find related driver
+              var driver = driversData.find(function (d) {
+                return d.id === assignment.driver_id;
+              }) || {
+                full_name: 'Unknown',
+                email: ''
+              };
+              return _objectSpread(_objectSpread({}, assignment), {}, {
+                vehicles: vehicle,
+                users: driver
+              });
+            }); // Store data
             setVehicles(vehiclesData || []);
             setDrivers(driversData || []);
-            setAssignments(assignmentsData || []);
+            setAssignments(enhancedAssignments || []);
 
             // Calculate available vehicles (not permanently assigned)
             available = (vehiclesData === null || vehiclesData === void 0 ? void 0 : vehiclesData.filter(function (vehicle) {
               return vehicle.status === 'available' || vehicle.status === 'spare';
             })) || [];
             setAvailableVehicles(available);
-            _context.next = 35;
+            _context.next = 36;
             break;
-          case 31:
-            _context.prev = 31;
+          case 32:
+            _context.prev = 32;
             _context.t0 = _context["catch"](0);
             console.error('Error fetching data:', _context.t0);
             setError('Failed to load assignment data. Please try again.');
-          case 35:
-            _context.prev = 35;
+          case 36:
+            _context.prev = 36;
             setLoading(false);
-            return _context.finish(35);
-          case 38:
+            return _context.finish(36);
+          case 39:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 31, 35, 38]]);
+      }, _callee, null, [[0, 32, 36, 39]]);
     }));
     return function fetchData() {
       return _ref2.apply(this, arguments);
@@ -55681,7 +55765,7 @@ var AssignVehicle = function AssignVehicle(_ref) {
   }();
   var handleAddAssignment = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var startTime, endTime, _yield$supabase$from$4, blockedData, blockedError, _yield$supabase$from$5, existingData, existingError, _yield$supabase$auth$, user, _yield$supabase$from$6, _error;
+      var startTime, endTime, _yield$supabase$auth$, userData, userError, _yield$executeQuery4, _error;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
@@ -55707,87 +55791,70 @@ var AssignVehicle = function AssignVehicle(_ref) {
             return _context2.abrupt("return");
           case 10:
             _context2.next = 12;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('id').eq('vehicle_id', assignmentData.vehicle_id).or("start_date.lte.".concat(assignmentData.end_time || '9999-12-31', ",end_date.gte.").concat(assignmentData.start_time));
-          case 12:
-            _yield$supabase$from$4 = _context2.sent;
-            blockedData = _yield$supabase$from$4.data;
-            blockedError = _yield$supabase$from$4.error;
-            if (!blockedError) {
-              _context2.next = 17;
-              break;
-            }
-            throw blockedError;
-          case 17:
-            if (!(blockedData && blockedData.length > 0)) {
-              _context2.next = 20;
-              break;
-            }
-            setError('Vehicle is blocked during this period. Please check the calendar or blocked vehicles section.');
-            return _context2.abrupt("return");
-          case 20:
-            _context2.next = 22;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('id').eq('vehicle_id', assignmentData.vehicle_id).or("start_time.lte.".concat(assignmentData.end_time || '9999-12-31', ",end_time.gte.").concat(assignmentData.start_time)).is('status', 'not.eq.rejected');
-          case 22:
-            _yield$supabase$from$5 = _context2.sent;
-            existingData = _yield$supabase$from$5.data;
-            existingError = _yield$supabase$from$5.error;
-            if (!existingError) {
-              _context2.next = 27;
-              break;
-            }
-            throw existingError;
-          case 27:
-            if (!(existingData && existingData.length > 0)) {
-              _context2.next = 30;
-              break;
-            }
-            setError('Vehicle is already assigned during this period. Please check the calendar or choose a different vehicle.');
-            return _context2.abrupt("return");
-          case 30:
-            _context2.next = 32;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.getUser();
-          case 32:
+          case 12:
             _yield$supabase$auth$ = _context2.sent;
-            user = _yield$supabase$auth$.data.user;
-            _context2.next = 36;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').insert({
-              vehicle_id: assignmentData.vehicle_id,
-              driver_id: assignmentData.driver_id,
-              start_time: assignmentData.start_time,
-              end_time: assignmentData.end_time || null,
-              notes: assignmentData.notes,
-              is_temporary: true,
-              status: 'approved',
-              // Auto-approve admin assignments
-              created_by: user.id
-            });
-          case 36:
-            _yield$supabase$from$6 = _context2.sent;
-            _error = _yield$supabase$from$6.error;
-            if (!_error) {
-              _context2.next = 40;
+            userData = _yield$supabase$auth$.data;
+            userError = _yield$supabase$auth$.error;
+            if (!userError) {
+              _context2.next = 19;
               break;
             }
-            throw _error;
-          case 40:
+            console.error('Error getting current user:', userError);
+            setError('Authentication error. Please sign in again.');
+            return _context2.abrupt("return");
+          case 19:
+            if (!(!userData || !userData.user)) {
+              _context2.next = 22;
+              break;
+            }
+            setError('Authentication required. Please sign in again.');
+            return _context2.abrupt("return");
+          case 22:
+            _context2.next = 24;
+            return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').insert({
+                vehicle_id: assignmentData.vehicle_id,
+                driver_id: assignmentData.driver_id,
+                start_time: assignmentData.start_time,
+                end_time: assignmentData.end_time || null,
+                notes: assignmentData.notes,
+                is_temporary: true,
+                status: 'approved',
+                // Auto-approve admin assignments
+                created_by: userData.user.id
+              });
+            });
+          case 24:
+            _yield$executeQuery4 = _context2.sent;
+            _error = _yield$executeQuery4.error;
+            if (!_error) {
+              _context2.next = 28;
+              break;
+            }
+            throw new Error(_error.message || 'Failed to assign vehicle');
+          case 28:
             setShowAddModal(false);
             resetForm();
             setSuccessMessage('Vehicle assigned successfully!');
             setTimeout(function () {
               return setSuccessMessage(null);
             }, 3000);
-            _context2.next = 50;
+
+            // Refresh data
+            fetchData();
+            _context2.next = 39;
             break;
-          case 46:
-            _context2.prev = 46;
+          case 35:
+            _context2.prev = 35;
             _context2.t0 = _context2["catch"](0);
             console.error('Error assigning vehicle:', _context2.t0);
-            setError('Failed to assign vehicle. Please try again.');
-          case 50:
+            setError(_context2.t0.message || 'Failed to assign vehicle. Please try again.');
+          case 39:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[0, 46]]);
+      }, _callee2, null, [[0, 35]]);
     }));
     return function handleAddAssignment() {
       return _ref3.apply(this, arguments);
@@ -55795,42 +55862,49 @@ var AssignVehicle = function AssignVehicle(_ref) {
   }();
   var handleDeleteAssignment = /*#__PURE__*/function () {
     var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      var _yield$supabase$from$7, _error2;
+      var _yield$executeQuery5, _error2;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
             setError(null);
+
+            // Cancel assignment
             _context3.next = 4;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').update({
-              status: 'cancelled'
-            }).eq('id', currentAssignmentId);
+            return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').update({
+                status: 'cancelled'
+              }).eq('id', currentAssignmentId);
+            });
           case 4:
-            _yield$supabase$from$7 = _context3.sent;
-            _error2 = _yield$supabase$from$7.error;
+            _yield$executeQuery5 = _context3.sent;
+            _error2 = _yield$executeQuery5.error;
             if (!_error2) {
               _context3.next = 8;
               break;
             }
-            throw _error2;
+            throw new Error(_error2.message || 'Failed to cancel assignment');
           case 8:
             setShowDeleteModal(false);
             setSuccessMessage('Assignment cancelled successfully!');
             setTimeout(function () {
               return setSuccessMessage(null);
             }, 3000);
-            _context3.next = 17;
+
+            // Refresh data
+            fetchData();
+            _context3.next = 18;
             break;
-          case 13:
-            _context3.prev = 13;
+          case 14:
+            _context3.prev = 14;
             _context3.t0 = _context3["catch"](0);
             console.error('Error cancelling assignment:', _context3.t0);
-            setError('Failed to cancel assignment. Please try again.');
-          case 17:
+            setError(_context3.t0.message || 'Failed to cancel assignment. Please try again.');
+          case 18:
           case "end":
             return _context3.stop();
         }
-      }, _callee3, null, [[0, 13]]);
+      }, _callee3, null, [[0, 14]]);
     }));
     return function handleDeleteAssignment() {
       return _ref4.apply(this, arguments);
@@ -55990,9 +56064,22 @@ var AssignVehicle = function AssignVehicle(_ref) {
       marginBottom: '15px',
       backgroundColor: '#f8d7da',
       color: '#721c24',
-      borderRadius: '4px'
+      borderRadius: '4px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
     }
-  }, error), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: fetchData,
+    style: {
+      backgroundColor: '#721c24',
+      color: 'white',
+      border: 'none',
+      borderRadius: '4px',
+      padding: '4px 8px',
+      cursor: 'pointer'
+    }
+  }, "Retry")), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       padding: '10px',
       marginBottom: '15px',
@@ -56066,17 +56153,12 @@ var AssignVehicle = function AssignVehicle(_ref) {
   }, "Notes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
     style: {
       padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Assigned By"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
       textAlign: 'right'
     }
   }, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, assignments.filter(function (assignment) {
     return isActive(assignment);
   }).length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-    colSpan: "7",
+    colSpan: "6",
     style: {
       padding: '15px',
       textAlign: 'center',
@@ -56085,7 +56167,7 @@ var AssignVehicle = function AssignVehicle(_ref) {
   }, "No active assignments")) : assignments.filter(function (assignment) {
     return isActive(assignment);
   }).map(function (assignment) {
-    var _assignment$vehicles, _assignment$vehicles2, _assignment$vehicles3, _assignment$users, _assignment$admin;
+    var _assignment$vehicles, _assignment$vehicles2, _assignment$vehicles3, _assignment$users;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
       key: assignment.id,
       style: {
@@ -56112,10 +56194,6 @@ var AssignVehicle = function AssignVehicle(_ref) {
         padding: '12px 15px'
       }
     }, assignment.notes || 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, (_assignment$admin = assignment.admin) === null || _assignment$admin === void 0 ? void 0 : _assignment$admin.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px',
         textAlign: 'right'
@@ -56188,17 +56266,12 @@ var AssignVehicle = function AssignVehicle(_ref) {
   }, "Notes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
     style: {
       padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Assigned By"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
       textAlign: 'right'
     }
   }, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, assignments.filter(function (assignment) {
     return isUpcoming(assignment);
   }).length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-    colSpan: "7",
+    colSpan: "6",
     style: {
       padding: '15px',
       textAlign: 'center',
@@ -56207,7 +56280,7 @@ var AssignVehicle = function AssignVehicle(_ref) {
   }, "No upcoming assignments")) : assignments.filter(function (assignment) {
     return isUpcoming(assignment);
   }).map(function (assignment) {
-    var _assignment$vehicles4, _assignment$vehicles5, _assignment$vehicles6, _assignment$users2, _assignment$admin2;
+    var _assignment$vehicles4, _assignment$vehicles5, _assignment$vehicles6, _assignment$users2;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
       key: assignment.id,
       style: {
@@ -56234,10 +56307,6 @@ var AssignVehicle = function AssignVehicle(_ref) {
         padding: '12px 15px'
       }
     }, assignment.notes || 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, (_assignment$admin2 = assignment.admin) === null || _assignment$admin2 === void 0 ? void 0 : _assignment$admin2.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px',
         textAlign: 'right'
@@ -56301,15 +56370,10 @@ var AssignVehicle = function AssignVehicle(_ref) {
       padding: '12px 15px',
       textAlign: 'left'
     }
-  }, "End Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Assigned By"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, assignments.filter(function (assignment) {
+  }, "End Date"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, assignments.filter(function (assignment) {
     return isCompleted(assignment);
   }).length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-    colSpan: "5",
+    colSpan: "4",
     style: {
       padding: '15px',
       textAlign: 'center',
@@ -56318,7 +56382,7 @@ var AssignVehicle = function AssignVehicle(_ref) {
   }, "No completed assignments")) : assignments.filter(function (assignment) {
     return isCompleted(assignment);
   }).slice(0, 10).map(function (assignment) {
-    var _assignment$vehicles7, _assignment$vehicles8, _assignment$vehicles9, _assignment$users3, _assignment$admin3;
+    var _assignment$vehicles7, _assignment$vehicles8, _assignment$vehicles9, _assignment$users3;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
       key: assignment.id,
       style: {
@@ -56340,11 +56404,7 @@ var AssignVehicle = function AssignVehicle(_ref) {
       style: {
         padding: '12px 15px'
       }
-    }, assignment.end_time ? formatDate(assignment.end_time) : 'Ongoing'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, (_assignment$admin3 = assignment.admin) === null || _assignment$admin3 === void 0 ? void 0 : _assignment$admin3.email));
+    }, assignment.end_time ? formatDate(assignment.end_time) : 'Ongoing'));
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
     style: {
       marginTop: '20px',
@@ -56387,15 +56447,10 @@ var AssignVehicle = function AssignVehicle(_ref) {
       padding: '12px 15px',
       textAlign: 'left'
     }
-  }, "End Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Assigned By"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, assignments.filter(function (assignment) {
+  }, "End Date"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, assignments.filter(function (assignment) {
     return assignment.status === 'cancelled';
   }).length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-    colSpan: "5",
+    colSpan: "4",
     style: {
       padding: '15px',
       textAlign: 'center',
@@ -56404,7 +56459,7 @@ var AssignVehicle = function AssignVehicle(_ref) {
   }, "No cancelled assignments")) : assignments.filter(function (assignment) {
     return assignment.status === 'cancelled';
   }).slice(0, 10).map(function (assignment) {
-    var _assignment$vehicles10, _assignment$vehicles11, _assignment$vehicles12, _assignment$users4, _assignment$admin4;
+    var _assignment$vehicles10, _assignment$vehicles11, _assignment$vehicles12, _assignment$users4;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
       key: assignment.id,
       style: {
@@ -56426,11 +56481,7 @@ var AssignVehicle = function AssignVehicle(_ref) {
       style: {
         padding: '12px 15px'
       }
-    }, assignment.end_time ? formatDate(assignment.end_time) : 'Ongoing'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, (_assignment$admin4 = assignment.admin) === null || _assignment$admin4 === void 0 ? void 0 : _assignment$admin4.email));
+    }, assignment.end_time ? formatDate(assignment.end_time) : 'Ongoing'));
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
     show: showAddModal,
     onClose: function onClose() {
@@ -58160,12 +58211,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _supabaseClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../supabaseClient */ "./src/supabaseClient.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -58230,76 +58282,115 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
     setCurrentBlockId = _useState20[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     fetchData();
-
-    // Subscribe to realtime changes
-    var subscription = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('public:vehicle_blocked_periods').on('postgres_changes', {
-      event: '*',
-      schema: 'public',
-      table: 'vehicle_blocked_periods'
-    }, function () {
-      return fetchData();
-    }).subscribe();
-    return function () {
-      subscription.unsubscribe();
-    };
   }, []);
   var fetchData = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _yield$supabase$from$, vehiclesData, vehiclesError, _yield$supabase$from$2, blockedData, blockedError;
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
+      var _yield$supabase$from$, vehiclesData, vehiclesError, _yield$supabase$from$2, blockedData, blockedError, enhancedData, _iterator, _step, _loop;
+      return _regeneratorRuntime().wrap(function _callee$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
           case 0:
-            _context.prev = 0;
+            _context2.prev = 0;
             setLoading(true);
             setError(null);
 
-            // Fetch vehicles
-            _context.next = 5;
+            // Fetch vehicles - SIMPLE QUERY
+            _context2.next = 5;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('id, registration_number, make, model').order('registration_number', {
               ascending: true
             });
           case 5:
-            _yield$supabase$from$ = _context.sent;
+            _yield$supabase$from$ = _context2.sent;
             vehiclesData = _yield$supabase$from$.data;
             vehiclesError = _yield$supabase$from$.error;
             if (!vehiclesError) {
-              _context.next = 10;
+              _context2.next = 11;
               break;
             }
-            throw vehiclesError;
-          case 10:
-            _context.next = 12;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select("\n          id,\n          vehicle_id,\n          start_date,\n          end_date,\n          reason,\n          created_by,\n          created_at,\n          vehicles(id, registration_number, make, model),\n          users(id, email)\n        ").order('start_date', {
+            console.error('Vehicles error:', vehiclesError);
+            throw new Error('Failed to load vehicles');
+          case 11:
+            _context2.next = 13;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('id, vehicle_id, start_date, end_date, reason, created_by, created_at').order('start_date', {
               ascending: true
             });
-          case 12:
-            _yield$supabase$from$2 = _context.sent;
+          case 13:
+            _yield$supabase$from$2 = _context2.sent;
             blockedData = _yield$supabase$from$2.data;
             blockedError = _yield$supabase$from$2.error;
             if (!blockedError) {
-              _context.next = 17;
+              _context2.next = 19;
               break;
             }
-            throw blockedError;
-          case 17:
-            setVehicles(vehiclesData || []);
-            setBlockedPeriods(blockedData || []);
-            _context.next = 25;
+            console.error('Blocked periods error:', blockedError);
+            throw new Error('Failed to load blocked periods');
+          case 19:
+            // Manually combine data instead of using Supabase joins
+            enhancedData = [];
+            _iterator = _createForOfIteratorHelper(blockedData);
+            _context2.prev = 21;
+            _loop = /*#__PURE__*/_regeneratorRuntime().mark(function _loop() {
+              var block, matchingVehicle;
+              return _regeneratorRuntime().wrap(function _loop$(_context) {
+                while (1) switch (_context.prev = _context.next) {
+                  case 0:
+                    block = _step.value;
+                    matchingVehicle = vehiclesData.find(function (v) {
+                      return v.id === block.vehicle_id;
+                    });
+                    enhancedData.push(_objectSpread(_objectSpread({}, block), {}, {
+                      // Add vehicle info in the format the component expects
+                      vehicles: matchingVehicle ? {
+                        registration_number: matchingVehicle.registration_number,
+                        make: matchingVehicle.make,
+                        model: matchingVehicle.model
+                      } : null
+                    }));
+                  case 3:
+                  case "end":
+                    return _context.stop();
+                }
+              }, _loop);
+            });
+            _iterator.s();
+          case 24:
+            if ((_step = _iterator.n()).done) {
+              _context2.next = 28;
+              break;
+            }
+            return _context2.delegateYield(_loop(), "t0", 26);
+          case 26:
+            _context2.next = 24;
             break;
-          case 21:
-            _context.prev = 21;
-            _context.t0 = _context["catch"](0);
-            console.error('Error fetching data:', _context.t0);
-            setError('Failed to load blocked vehicles. Please try again.');
-          case 25:
-            _context.prev = 25;
-            setLoading(false);
-            return _context.finish(25);
           case 28:
+            _context2.next = 33;
+            break;
+          case 30:
+            _context2.prev = 30;
+            _context2.t1 = _context2["catch"](21);
+            _iterator.e(_context2.t1);
+          case 33:
+            _context2.prev = 33;
+            _iterator.f();
+            return _context2.finish(33);
+          case 36:
+            setVehicles(vehiclesData || []);
+            setBlockedPeriods(enhancedData || []);
+            _context2.next = 44;
+            break;
+          case 40:
+            _context2.prev = 40;
+            _context2.t2 = _context2["catch"](0);
+            console.error('Error fetching data:', _context2.t2);
+            setError('Failed to load blocked vehicles. Please try again.');
+          case 44:
+            _context2.prev = 44;
+            setLoading(false);
+            return _context2.finish(44);
+          case 47:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
-      }, _callee, null, [[0, 21, 25, 28]]);
+      }, _callee, null, [[0, 40, 44, 47], [21, 30, 33, 36]]);
     }));
     return function fetchData() {
       return _ref2.apply(this, arguments);
@@ -58307,69 +58398,14 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }();
   var handleAddBlock = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var _yield$supabase$from$3, _error;
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
-          case 0:
-            _context2.prev = 0;
-            setError(null);
-            if (!(!blockData.vehicle_id || !blockData.start_date || !blockData.end_date || !blockData.reason)) {
-              _context2.next = 5;
-              break;
-            }
-            setError('Please fill in all required fields.');
-            return _context2.abrupt("return");
-          case 5:
-            _context2.next = 7;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').insert({
-              vehicle_id: blockData.vehicle_id,
-              start_date: blockData.start_date,
-              end_date: blockData.end_date,
-              reason: blockData.reason
-            });
-          case 7:
-            _yield$supabase$from$3 = _context2.sent;
-            _error = _yield$supabase$from$3.error;
-            if (!_error) {
-              _context2.next = 12;
-              break;
-            }
-            console.error('Block insert error details:', _error);
-            throw _error;
-          case 12:
-            setShowAddModal(false);
-            resetForm();
-            setSuccessMessage('Vehicle blocked successfully!');
-            setTimeout(function () {
-              return setSuccessMessage(null);
-            }, 3000);
-            _context2.next = 22;
-            break;
-          case 18:
-            _context2.prev = 18;
-            _context2.t0 = _context2["catch"](0);
-            console.error('Error blocking vehicle:', _context2.t0);
-            setError('Failed to block vehicle. Please try again.');
-          case 22:
-          case "end":
-            return _context2.stop();
-        }
-      }, _callee2, null, [[0, 18]]);
-    }));
-    return function handleAddBlock() {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-  var handleUpdateBlock = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      var startDate, endDate, _yield$supabase$from$4, currentBlock, currentError, _yield$supabase$from$5, assignments, assignmentError, _yield$supabase$from$6, existing, existingError, _yield$supabase$from$7, _error2;
-      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      var startDate, endDate, _yield$supabase$from$3, _error;
+      return _regeneratorRuntime().wrap(function _callee2$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
             setError(null);
 
-            // Validate form
+            // Form validation
             if (!(!blockData.vehicle_id || !blockData.start_date || !blockData.end_date || !blockData.reason)) {
               _context3.next = 5;
               break;
@@ -58388,89 +58424,113 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
             return _context3.abrupt("return");
           case 10:
             _context3.next = 12;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('*').eq('id', currentBlockId).single();
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').insert({
+              vehicle_id: blockData.vehicle_id,
+              start_date: blockData.start_date,
+              end_date: blockData.end_date,
+              reason: blockData.reason
+            });
           case 12:
-            _yield$supabase$from$4 = _context3.sent;
-            currentBlock = _yield$supabase$from$4.data;
-            currentError = _yield$supabase$from$4.error;
-            if (!currentError) {
+            _yield$supabase$from$3 = _context3.sent;
+            _error = _yield$supabase$from$3.error;
+            if (!_error) {
               _context3.next = 17;
               break;
             }
-            throw currentError;
+            console.error('Block insert error:', _error);
+            throw new Error('Failed to add block');
           case 17:
-            _context3.next = 19;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('id, start_time, end_time').eq('vehicle_id', blockData.vehicle_id).or("start_time.lte.".concat(blockData.end_date, ",end_time.gte.").concat(blockData.start_date)).is('status', 'not.eq.rejected');
-          case 19:
-            _yield$supabase$from$5 = _context3.sent;
-            assignments = _yield$supabase$from$5.data;
-            assignmentError = _yield$supabase$from$5.error;
-            if (!assignmentError) {
-              _context3.next = 24;
-              break;
-            }
-            throw assignmentError;
+            setShowAddModal(false);
+            resetForm();
+            setSuccessMessage('Vehicle blocked successfully!');
+            setTimeout(function () {
+              return setSuccessMessage(null);
+            }, 3000);
+
+            // Refresh data
+            fetchData();
+            _context3.next = 28;
+            break;
           case 24:
-            if (!(assignments && assignments.length > 0)) {
-              _context3.next = 27;
+            _context3.prev = 24;
+            _context3.t0 = _context3["catch"](0);
+            console.error('Error blocking vehicle:', _context3.t0);
+            setError(_context3.t0.message || 'Failed to block vehicle. Please try again.');
+          case 28:
+          case "end":
+            return _context3.stop();
+        }
+      }, _callee2, null, [[0, 24]]);
+    }));
+    return function handleAddBlock() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  var handleUpdateBlock = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      var startDate, endDate, _yield$supabase$from$4, _error2;
+      return _regeneratorRuntime().wrap(function _callee3$(_context4) {
+        while (1) switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            setError(null);
+
+            // Validate form
+            if (!(!blockData.vehicle_id || !blockData.start_date || !blockData.end_date || !blockData.reason)) {
+              _context4.next = 5;
               break;
             }
-            setError('Vehicle is already assigned during this period. Please choose different dates or cancel the assignment first.');
-            return _context3.abrupt("return");
-          case 27:
-            _context3.next = 29;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('id').eq('vehicle_id', blockData.vehicle_id).neq('id', currentBlockId).or("start_date.lte.".concat(blockData.end_date, ",end_date.gte.").concat(blockData.start_date));
-          case 29:
-            _yield$supabase$from$6 = _context3.sent;
-            existing = _yield$supabase$from$6.data;
-            existingError = _yield$supabase$from$6.error;
-            if (!existingError) {
-              _context3.next = 34;
+            setError('Please fill in all required fields.');
+            return _context4.abrupt("return");
+          case 5:
+            // Validate dates
+            startDate = new Date(blockData.start_date);
+            endDate = new Date(blockData.end_date);
+            if (!(startDate > endDate)) {
+              _context4.next = 10;
               break;
             }
-            throw existingError;
-          case 34:
-            if (!(existing && existing.length > 0)) {
-              _context3.next = 37;
-              break;
-            }
-            setError('Vehicle is already blocked during this period. Please choose different dates.');
-            return _context3.abrupt("return");
-          case 37:
-            _context3.next = 39;
+            setError('End date must be after start date.');
+            return _context4.abrupt("return");
+          case 10:
+            _context4.next = 12;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').update({
               vehicle_id: blockData.vehicle_id,
               start_date: blockData.start_date,
               end_date: blockData.end_date,
               reason: blockData.reason
             }).eq('id', currentBlockId);
-          case 39:
-            _yield$supabase$from$7 = _context3.sent;
-            _error2 = _yield$supabase$from$7.error;
+          case 12:
+            _yield$supabase$from$4 = _context4.sent;
+            _error2 = _yield$supabase$from$4.error;
             if (!_error2) {
-              _context3.next = 43;
+              _context4.next = 17;
               break;
             }
-            throw _error2;
-          case 43:
+            console.error('Block update error:', _error2);
+            throw new Error('Failed to update block');
+          case 17:
             setShowEditModal(false);
             resetForm();
             setSuccessMessage('Block updated successfully!');
             setTimeout(function () {
               return setSuccessMessage(null);
             }, 3000);
-            _context3.next = 53;
+
+            // Refresh data
+            fetchData();
+            _context4.next = 28;
             break;
-          case 49:
-            _context3.prev = 49;
-            _context3.t0 = _context3["catch"](0);
-            console.error('Error updating block:', _context3.t0);
-            setError('Failed to update block. Please try again.');
-          case 53:
+          case 24:
+            _context4.prev = 24;
+            _context4.t0 = _context4["catch"](0);
+            console.error('Error updating block:', _context4.t0);
+            setError(_context4.t0.message || 'Failed to update block. Please try again.');
+          case 28:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
-      }, _callee3, null, [[0, 49]]);
+      }, _callee3, null, [[0, 24]]);
     }));
     return function handleUpdateBlock() {
       return _ref4.apply(this, arguments);
@@ -58478,40 +58538,46 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }();
   var handleDeleteBlock = /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-      var _yield$supabase$from$8, _error3;
-      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-        while (1) switch (_context4.prev = _context4.next) {
+      var _yield$supabase$from$5, _error3;
+      return _regeneratorRuntime().wrap(function _callee4$(_context5) {
+        while (1) switch (_context5.prev = _context5.next) {
           case 0:
-            _context4.prev = 0;
+            _context5.prev = 0;
             setError(null);
-            _context4.next = 4;
+
+            // Delete block - SIMPLE DELETE
+            _context5.next = 4;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods')["delete"]().eq('id', currentBlockId);
           case 4:
-            _yield$supabase$from$8 = _context4.sent;
-            _error3 = _yield$supabase$from$8.error;
+            _yield$supabase$from$5 = _context5.sent;
+            _error3 = _yield$supabase$from$5.error;
             if (!_error3) {
-              _context4.next = 8;
+              _context5.next = 9;
               break;
             }
-            throw _error3;
-          case 8:
+            console.error('Block delete error:', _error3);
+            throw new Error('Failed to delete block');
+          case 9:
             setShowDeleteModal(false);
             setSuccessMessage('Block removed successfully!');
             setTimeout(function () {
               return setSuccessMessage(null);
             }, 3000);
-            _context4.next = 17;
+
+            // Refresh data
+            fetchData();
+            _context5.next = 19;
             break;
-          case 13:
-            _context4.prev = 13;
-            _context4.t0 = _context4["catch"](0);
-            console.error('Error deleting block:', _context4.t0);
-            setError('Failed to remove block. Please try again.');
-          case 17:
+          case 15:
+            _context5.prev = 15;
+            _context5.t0 = _context5["catch"](0);
+            console.error('Error deleting block:', _context5.t0);
+            setError(_context5.t0.message || 'Failed to remove block. Please try again.');
+          case 19:
           case "end":
-            return _context4.stop();
+            return _context5.stop();
         }
-      }, _callee4, null, [[0, 13]]);
+      }, _callee4, null, [[0, 15]]);
     }));
     return function handleDeleteBlock() {
       return _ref5.apply(this, arguments);
@@ -58678,9 +58744,22 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
       marginBottom: '15px',
       backgroundColor: '#f8d7da',
       color: '#721c24',
-      borderRadius: '4px'
+      borderRadius: '4px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
     }
-  }, error), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: fetchData,
+    style: {
+      backgroundColor: '#721c24',
+      color: 'white',
+      border: 'none',
+      borderRadius: '4px',
+      padding: '4px 8px',
+      cursor: 'pointer'
+    }
+  }, "Retry")), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       padding: '10px',
       marginBottom: '15px',
@@ -58761,17 +58840,12 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }, "Reason"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
     style: {
       padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Blocked By"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
       textAlign: 'right'
     }
   }, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, blockedPeriods.filter(function (block) {
     return isActive(block);
   }).length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-    colSpan: "6",
+    colSpan: "5",
     style: {
       padding: '15px',
       textAlign: 'center',
@@ -58780,7 +58854,6 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }, "No vehicles are currently blocked")) : blockedPeriods.filter(function (block) {
     return isActive(block);
   }).map(function (block) {
-    var _block$vehicles, _block$vehicles2, _block$vehicles3, _block$users;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
       key: block.id,
       style: {
@@ -58790,7 +58863,7 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
       style: {
         padding: '12px 15px'
       }
-    }, (_block$vehicles = block.vehicles) === null || _block$vehicles === void 0 ? void 0 : _block$vehicles.registration_number, " (", (_block$vehicles2 = block.vehicles) === null || _block$vehicles2 === void 0 ? void 0 : _block$vehicles2.make, " ", (_block$vehicles3 = block.vehicles) === null || _block$vehicles3 === void 0 ? void 0 : _block$vehicles3.model, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
+    }, block.vehicles ? "".concat(block.vehicles.registration_number, " (").concat(block.vehicles.make, " ").concat(block.vehicles.model, ")") : "Vehicle ID: ".concat(block.vehicle_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px'
       }
@@ -58803,10 +58876,6 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
         padding: '12px 15px'
       }
     }, block.reason), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, (_block$users = block.users) === null || _block$users === void 0 ? void 0 : _block$users.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px',
         textAlign: 'right'
@@ -58890,17 +58959,12 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }, "Reason"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
     style: {
       padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Blocked By"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
       textAlign: 'right'
     }
   }, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, blockedPeriods.filter(function (block) {
     return isUpcoming(block);
   }).length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-    colSpan: "6",
+    colSpan: "5",
     style: {
       padding: '15px',
       textAlign: 'center',
@@ -58909,7 +58973,6 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }, "No upcoming blocks scheduled")) : blockedPeriods.filter(function (block) {
     return isUpcoming(block);
   }).map(function (block) {
-    var _block$vehicles4, _block$vehicles5, _block$vehicles6, _block$users2;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
       key: block.id,
       style: {
@@ -58919,7 +58982,7 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
       style: {
         padding: '12px 15px'
       }
-    }, (_block$vehicles4 = block.vehicles) === null || _block$vehicles4 === void 0 ? void 0 : _block$vehicles4.registration_number, " (", (_block$vehicles5 = block.vehicles) === null || _block$vehicles5 === void 0 ? void 0 : _block$vehicles5.make, " ", (_block$vehicles6 = block.vehicles) === null || _block$vehicles6 === void 0 ? void 0 : _block$vehicles6.model, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
+    }, block.vehicles ? "".concat(block.vehicles.registration_number, " (").concat(block.vehicles.make, " ").concat(block.vehicles.model, ")") : "Vehicle ID: ".concat(block.vehicle_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px'
       }
@@ -58932,10 +58995,6 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
         padding: '12px 15px'
       }
     }, block.reason), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, (_block$users2 = block.users) === null || _block$users2 === void 0 ? void 0 : _block$users2.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px',
         textAlign: 'right'
@@ -59015,15 +59074,10 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
       padding: '12px 15px',
       textAlign: 'left'
     }
-  }, "Reason"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Blocked By"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, blockedPeriods.filter(function (block) {
+  }, "Reason"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, blockedPeriods.filter(function (block) {
     return isPast(block);
   }).length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-    colSpan: "5",
+    colSpan: "4",
     style: {
       padding: '15px',
       textAlign: 'center',
@@ -59032,7 +59086,6 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }, "No past blocks found")) : blockedPeriods.filter(function (block) {
     return isPast(block);
   }).slice(0, 10).map(function (block) {
-    var _block$vehicles7, _block$vehicles8, _block$vehicles9, _block$users3;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
       key: block.id,
       style: {
@@ -59042,7 +59095,7 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
       style: {
         padding: '12px 15px'
       }
-    }, (_block$vehicles7 = block.vehicles) === null || _block$vehicles7 === void 0 ? void 0 : _block$vehicles7.registration_number, " (", (_block$vehicles8 = block.vehicles) === null || _block$vehicles8 === void 0 ? void 0 : _block$vehicles8.make, " ", (_block$vehicles9 = block.vehicles) === null || _block$vehicles9 === void 0 ? void 0 : _block$vehicles9.model, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
+    }, block.vehicles ? "".concat(block.vehicles.registration_number, " (").concat(block.vehicles.make, " ").concat(block.vehicles.model, ")") : "Vehicle ID: ".concat(block.vehicle_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px'
       }
@@ -59054,11 +59107,7 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
       style: {
         padding: '12px 15px'
       }
-    }, block.reason), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, (_block$users3 = block.users) === null || _block$users3 === void 0 ? void 0 : _block$users3.email));
+    }, block.reason));
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
     show: showAddModal,
     onClose: function onClose() {
@@ -59365,6 +59414,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _supabaseClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../supabaseClient */ "./src/supabaseClient.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -59417,29 +59471,58 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     fetchData();
 
-    // Subscribe to realtime changes
-    var assignmentsSubscription = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('public:vehicle_assignments').on('postgres_changes', {
-      event: '*',
-      schema: 'public',
-      table: 'vehicle_assignments'
-    }, function () {
-      return fetchData();
-    }).subscribe();
-    var blockedSubscription = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('public:vehicle_blocked_periods').on('postgres_changes', {
-      event: '*',
-      schema: 'public',
-      table: 'vehicle_blocked_periods'
-    }, function () {
-      return fetchData();
-    }).subscribe();
+    // Simple subscription with retry
+    var setupSubscriptions = function setupSubscriptions() {
+      try {
+        // Subscribe to realtime changes for assignments
+        var assignmentsChannel = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('public:vehicle_assignments').on('postgres_changes', {
+          event: '*',
+          schema: 'public',
+          table: 'vehicle_assignments'
+        }, function () {
+          console.log('Assignments changed, refreshing data');
+          fetchData();
+        }).subscribe(function (status) {
+          console.log('Assignments subscription status:', status);
+        });
+
+        // Subscribe to realtime changes for blocked periods
+        var blockedChannel = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('public:vehicle_blocked_periods').on('postgres_changes', {
+          event: '*',
+          schema: 'public',
+          table: 'vehicle_blocked_periods'
+        }, function () {
+          console.log('Blocked periods changed, refreshing data');
+          fetchData();
+        }).subscribe(function (status) {
+          console.log('Blocked periods subscription status:', status);
+        });
+        return {
+          assignmentsChannel: assignmentsChannel,
+          blockedChannel: blockedChannel
+        };
+      } catch (err) {
+        console.error('Failed to set up subscriptions:', err);
+        return null;
+      }
+    };
+    var subscriptions = setupSubscriptions();
     return function () {
-      assignmentsSubscription.unsubscribe();
-      blockedSubscription.unsubscribe();
+      if (subscriptions) {
+        if (subscriptions.assignmentsChannel) {
+          subscriptions.assignmentsChannel.unsubscribe();
+        }
+        if (subscriptions.blockedChannel) {
+          subscriptions.blockedChannel.unsubscribe();
+        }
+      }
     };
   }, [currentDate, selectedVehicle]);
+
+  // admin-app/src/components/vehicles/VehicleCalendar.jsx - fetchData function
   var fetchData = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _yield$supabase$from$, vehiclesData, vehiclesError, startOfMonth, endOfMonth, startDateStr, endDateStr, query, _yield$query, assignmentsData, assignmentsError, blockedQuery, _yield$blockedQuery, blockedData, blockedError;
+      var vehiclesResult, startOfMonth, endOfMonth, startDateStr, endDateStr, assignmentsQuery, assignmentsResult, enhancedAssignments, blockedQuery, blockedResult;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -59447,97 +59530,89 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
             setLoading(true);
             setError(null);
 
-            // Get all vehicles - simple query, less likely to fail
+            // 1. Get vehicles
             _context.next = 5;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('id, registration_number, make, model, status').order('registration_number', {
-              ascending: true
+            return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('id, registration_number, make, model, status').order('registration_number', {
+                ascending: true
+              });
             });
           case 5:
-            _yield$supabase$from$ = _context.sent;
-            vehiclesData = _yield$supabase$from$.data;
-            vehiclesError = _yield$supabase$from$.error;
-            if (vehiclesError) {
-              console.error('Error fetching vehicles:', vehiclesError);
-              setVehicles([]);
-            } else {
-              setVehicles(vehiclesData || []);
+            vehiclesResult = _context.sent;
+            if (!vehiclesResult.error) {
+              _context.next = 8;
+              break;
             }
+            throw new Error(vehiclesResult.error.message || 'Failed to load vehicles');
+          case 8:
+            setVehicles(vehiclesResult.data || []);
 
-            // Get assignments with simplified query
-            _context.prev = 9;
+            // 2. Get assignments - simplified to avoid relationship issues
             // Format dates for filtering
             startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
             endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0, 23, 59, 59);
             startDateStr = startOfMonth.toISOString();
-            endDateStr = endOfMonth.toISOString();
-            console.log("Fetching data for: ".concat(startDateStr, " to ").concat(endDateStr));
-
-            // Simplified assignments query
-            query = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('*').gte('start_time', startDateStr).lte('start_time', endDateStr);
+            endDateStr = endOfMonth.toISOString(); // Base assignments query
+            assignmentsQuery = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('id, vehicle_id, driver_id, start_time, end_time, is_temporary, status').gte('start_time', startDateStr).lte('start_time', endDateStr); // Add vehicle filter if needed
             if (selectedVehicle !== 'all') {
-              query = query.eq('vehicle_id', selectedVehicle);
+              assignmentsQuery = assignmentsQuery.eq('vehicle_id', selectedVehicle);
             }
-            _context.next = 19;
-            return query;
-          case 19:
-            _yield$query = _context.sent;
-            assignmentsData = _yield$query.data;
-            assignmentsError = _yield$query.error;
-            if (assignmentsError) {
-              console.error('Error fetching assignments:', assignmentsError);
-              setAssignments([]);
-            } else {
-              setAssignments(assignmentsData || []);
+            _context.next = 17;
+            return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
+              return assignmentsQuery;
+            });
+          case 17:
+            assignmentsResult = _context.sent;
+            if (!assignmentsResult.error) {
+              _context.next = 20;
+              break;
             }
-            _context.next = 29;
-            break;
-          case 25:
-            _context.prev = 25;
-            _context.t0 = _context["catch"](9);
-            console.error('Error processing assignments:', _context.t0);
-            setAssignments([]);
-          case 29:
-            _context.prev = 29;
-            blockedQuery = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('*');
+            throw new Error(assignmentsResult.error.message || 'Failed to load assignments');
+          case 20:
+            // Handle assignment relationships manually
+            enhancedAssignments = assignmentsResult.data.map(function (assignment) {
+              // Add user/driver details
+              // For simplicity, we're skipping driver details for now, but you would fetch users separately
+              // and map them here if needed
+
+              return _objectSpread({}, assignment);
+            });
+            setAssignments(enhancedAssignments || []);
+
+            // 3. Get blocked periods - simplified to avoid relationship issues
+            blockedQuery = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('id, vehicle_id, start_date, end_date, reason');
             if (selectedVehicle !== 'all') {
               blockedQuery = blockedQuery.eq('vehicle_id', selectedVehicle);
             }
-            _context.next = 34;
-            return blockedQuery;
-          case 34:
-            _yield$blockedQuery = _context.sent;
-            blockedData = _yield$blockedQuery.data;
-            blockedError = _yield$blockedQuery.error;
-            if (blockedError) {
-              console.error('Error fetching blocked periods:', blockedError);
-              setBlockedPeriods([]);
-            } else {
-              setBlockedPeriods(blockedData || []);
+            _context.next = 26;
+            return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
+              return blockedQuery;
+            });
+          case 26:
+            blockedResult = _context.sent;
+            if (!blockedResult.error) {
+              _context.next = 29;
+              break;
             }
-            _context.next = 44;
+            throw new Error(blockedResult.error.message || 'Failed to load blocked periods');
+          case 29:
+            setBlockedPeriods(blockedResult.data || []);
+            _context.next = 36;
             break;
-          case 40:
-            _context.prev = 40;
-            _context.t1 = _context["catch"](29);
-            console.error('Error processing blocked periods:', _context.t1);
-            setBlockedPeriods([]);
-          case 44:
-            _context.next = 50;
-            break;
-          case 46:
-            _context.prev = 46;
-            _context.t2 = _context["catch"](0);
-            console.error('Error fetching calendar data:', _context.t2);
+          case 32:
+            _context.prev = 32;
+            _context.t0 = _context["catch"](0);
+            console.error('Error fetching calendar data:', _context.t0);
             setError('Failed to load calendar data. Please try again.');
-          case 50:
-            _context.prev = 50;
+          case 36:
+            _context.prev = 36;
             setLoading(false);
-            return _context.finish(50);
-          case 53:
+            return _context.finish(36);
+          case 39:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 46, 50, 53], [9, 25], [29, 40]]);
+      }, _callee, null, [[0, 32, 36, 39]]);
     }));
     return function fetchData() {
       return _ref2.apply(this, arguments);
@@ -59614,7 +59689,7 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
             // If no end date, consider it ongoing indefinitely
             endDate = new Date(9999, 11, 31);
           }
-          if (date >= startDate && date <= endDate) {
+          if (date >= startDate && date <= endDate && assignment.status !== 'rejected' && assignment.status !== 'cancelled') {
             events.push({
               type: 'assignment',
               data: assignment,
@@ -59771,9 +59846,21 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
       marginBottom: '15px',
       backgroundColor: '#f8d7da',
       color: '#721c24',
-      borderRadius: '4px'
+      borderRadius: '4px',
+      display: 'flex',
+      justifyContent: 'space-between'
     }
-  }, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: fetchData,
+    style: {
+      backgroundColor: '#721c24',
+      color: 'white',
+      border: 'none',
+      borderRadius: '4px',
+      padding: '4px 8px',
+      cursor: 'pointer'
+    }
+  }, "Retry")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       backgroundColor: 'white',
       borderRadius: '5px',
@@ -60065,7 +60152,7 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
             day: day
           });
         }
-      }, event.type === 'assignment' ? "".concat(event.data.users.full_name.split(' ')[0]) : "Blocked: ".concat(event.data.reason.substring(0, 15)).concat(event.data.reason.length > 15 ? '...' : ''));
+      }, event.type === 'assignment' ? "Driver assigned" : "Blocked");
     })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
         height: '70px',
@@ -60106,10 +60193,6 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
       style: {
         margin: '0 0 5px 0'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Driver:"), " ", event.data.users.full_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-      style: {
-        margin: '0 0 5px 0'
-      }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Type:"), " ", event.data.is_temporary ? 'Temporary' : 'Permanent'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
       style: {
         margin: '0 0 5px 0'
@@ -60122,7 +60205,7 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
       style: {
         margin: '0'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Status:"), " ", event.data.status.charAt(0).toUpperCase() + event.data.status.slice(1))), event.type === 'blocked' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Status:"), " ", event.data.status)), event.type === 'blocked' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
       style: {
         margin: '0 0 5px 0'
       }
@@ -61789,10 +61872,10 @@ var VehicleLogs = function VehicleLogs(_ref) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   executeQuery: () => (/* binding */ executeQuery),
 /* harmony export */   getCurrentUser: () => (/* binding */ getCurrentUser),
 /* harmony export */   isUserAdmin: () => (/* binding */ isUserAdmin),
-/* harmony export */   supabase: () => (/* binding */ supabase),
-/* harmony export */   testConnection: () => (/* binding */ testConnection)
+/* harmony export */   supabase: () => (/* binding */ supabase)
 /* harmony export */ });
 /* harmony import */ var _supabase_supabase_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @supabase/supabase-js */ "./node_modules/@supabase/supabase-js/dist/module/index.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -61802,11 +61885,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 // admin-app/src/supabaseClient.js
 
 
-// FIXED: Using the correct Supabase URL and API key
+// Supabase configuration
 var supabaseUrl = 'https://vtuxejdnmpdfisgdgbdd.supabase.co';
+
+// Regular anon key for auth operations
 var supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0dXhlamRubXBkZmlzZ2RnYmRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNzg1MjcsImV4cCI6MjA1NzY1NDUyN30.ebDSQ_KZG8skVPxFfcQVr1loX52DuYooBHRKx95sC8k';
 
-// Create Supabase client
+// Create the standard client for authentication
 var supabase = (0,_supabase_supabase_js__WEBPACK_IMPORTED_MODULE_0__.createClient)(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
@@ -61815,50 +61900,95 @@ var supabase = (0,_supabase_supabase_js__WEBPACK_IMPORTED_MODULE_0__.createClien
   }
 });
 
-// Helper to check if Supabase is reachable
-var testConnection = /*#__PURE__*/function () {
+// Simple function to execute database queries
+function executeQuery(_x) {
+  return _executeQuery.apply(this, arguments);
+}
+
+// Helper to get current user 
+function _executeQuery() {
+  _executeQuery = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(queryFn) {
+    var _yield$supabase$auth$3, session;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.prev = 0;
+          _context3.next = 3;
+          return supabase.auth.getSession();
+        case 3:
+          _yield$supabase$auth$3 = _context3.sent;
+          session = _yield$supabase$auth$3.data.session;
+          if (session) {
+            _context3.next = 7;
+            break;
+          }
+          return _context3.abrupt("return", {
+            data: null,
+            error: {
+              message: 'Authentication required. Please sign in.'
+            }
+          });
+        case 7:
+          _context3.next = 9;
+          return queryFn();
+        case 9:
+          return _context3.abrupt("return", _context3.sent);
+        case 12:
+          _context3.prev = 12;
+          _context3.t0 = _context3["catch"](0);
+          console.error('Query error:', _context3.t0);
+          return _context3.abrupt("return", {
+            data: null,
+            error: _context3.t0
+          });
+        case 16:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3, null, [[0, 12]]);
+  }));
+  return _executeQuery.apply(this, arguments);
+}
+var getCurrentUser = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var _yield$supabase$from$, data, error;
+    var _yield$supabase$auth$, data, error;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
           _context.next = 3;
-          return supabase.from('vehicles').select('count', {
-            count: 'exact',
-            head: true
-          });
+          return supabase.auth.getUser();
         case 3:
-          _yield$supabase$from$ = _context.sent;
-          data = _yield$supabase$from$.data;
-          error = _yield$supabase$from$.error;
-          return _context.abrupt("return", {
-            success: !error,
-            error: error
-          });
-        case 9:
-          _context.prev = 9;
+          _yield$supabase$auth$ = _context.sent;
+          data = _yield$supabase$auth$.data;
+          error = _yield$supabase$auth$.error;
+          if (!error) {
+            _context.next = 8;
+            break;
+          }
+          throw error;
+        case 8:
+          return _context.abrupt("return", data.user);
+        case 11:
+          _context.prev = 11;
           _context.t0 = _context["catch"](0);
-          console.error('Supabase connection test failed:', _context.t0);
-          return _context.abrupt("return", {
-            success: false,
-            error: _context.t0.message || 'Connection test failed'
-          });
-        case 13:
+          console.error('Error fetching current user:', _context.t0);
+          return _context.abrupt("return", null);
+        case 15:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 9]]);
+    }, _callee, null, [[0, 11]]);
   }));
-  return function testConnection() {
+  return function getCurrentUser() {
     return _ref.apply(this, arguments);
   };
 }();
 
-// Helper to get current user
-var getCurrentUser = /*#__PURE__*/function () {
+// Helper to check if user is admin
+var isUserAdmin = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var _yield$supabase$auth$, user, error;
+    var _yield$supabase$auth$2, data, _yield$supabase$from$, userData, error;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -61866,77 +61996,40 @@ var getCurrentUser = /*#__PURE__*/function () {
           _context2.next = 3;
           return supabase.auth.getUser();
         case 3:
-          _yield$supabase$auth$ = _context2.sent;
-          user = _yield$supabase$auth$.data.user;
-          error = _yield$supabase$auth$.error;
-          if (!error) {
-            _context2.next = 8;
+          _yield$supabase$auth$2 = _context2.sent;
+          data = _yield$supabase$auth$2.data;
+          if (!(!data || !data.user)) {
+            _context2.next = 7;
             break;
           }
-          throw error;
-        case 8:
-          return _context2.abrupt("return", user);
-        case 11:
-          _context2.prev = 11;
+          return _context2.abrupt("return", false);
+        case 7:
+          _context2.next = 9;
+          return supabase.from('users').select('role').eq('email', data.user.email).single();
+        case 9:
+          _yield$supabase$from$ = _context2.sent;
+          userData = _yield$supabase$from$.data;
+          error = _yield$supabase$from$.error;
+          if (!(error || !userData)) {
+            _context2.next = 14;
+            break;
+          }
+          return _context2.abrupt("return", false);
+        case 14:
+          return _context2.abrupt("return", userData.role === 'admin');
+        case 17:
+          _context2.prev = 17;
           _context2.t0 = _context2["catch"](0);
-          console.error('Error fetching current user:', _context2.t0);
-          return _context2.abrupt("return", null);
-        case 15:
+          console.error('Error checking admin status:', _context2.t0);
+          return _context2.abrupt("return", false);
+        case 21:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 11]]);
-  }));
-  return function getCurrentUser() {
-    return _ref2.apply(this, arguments);
-  };
-}();
-
-// Helper to check if user is admin
-var isUserAdmin = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-    var _yield$supabase$auth$2, user, _yield$supabase$from$2, data, error;
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) switch (_context3.prev = _context3.next) {
-        case 0:
-          _context3.prev = 0;
-          _context3.next = 3;
-          return supabase.auth.getUser();
-        case 3:
-          _yield$supabase$auth$2 = _context3.sent;
-          user = _yield$supabase$auth$2.data.user;
-          if (user) {
-            _context3.next = 7;
-            break;
-          }
-          return _context3.abrupt("return", false);
-        case 7:
-          _context3.next = 9;
-          return supabase.from('users').select('role').eq('email', user.email).single();
-        case 9:
-          _yield$supabase$from$2 = _context3.sent;
-          data = _yield$supabase$from$2.data;
-          error = _yield$supabase$from$2.error;
-          if (!(error || !data)) {
-            _context3.next = 14;
-            break;
-          }
-          return _context3.abrupt("return", false);
-        case 14:
-          return _context3.abrupt("return", data.role === 'admin');
-        case 17:
-          _context3.prev = 17;
-          _context3.t0 = _context3["catch"](0);
-          console.error('Error checking admin status:', _context3.t0);
-          return _context3.abrupt("return", false);
-        case 21:
-        case "end":
-          return _context3.stop();
-      }
-    }, _callee3, null, [[0, 17]]);
+    }, _callee2, null, [[0, 17]]);
   }));
   return function isUserAdmin() {
-    return _ref3.apply(this, arguments);
+    return _ref2.apply(this, arguments);
   };
 }();
 
@@ -62593,26 +62686,89 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App */ "./src/components/App.jsx");
+/* harmony import */ var _supabaseClient__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./supabaseClient */ "./src/supabaseClient.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 // admin-app/src/renderer.js
 
 
 
 
+
+// Global error handler for Supabase realtime errors
+var handleSupabaseError = function handleSupabaseError(error) {
+  console.error('Supabase error:', error);
+  // We could show a global notification here if needed
+};
+
 // Initialize the app when DOM is loaded
-document.addEventListener('DOMContentLoaded', function () {
-  try {
-    var container = document.getElementById('app');
-    if (!container) {
-      console.error('App container not found!');
-      return;
+document.addEventListener('DOMContentLoaded', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+  var container, _yield$supabase$from$, error, root, _container;
+  return _regeneratorRuntime().wrap(function _callee$(_context) {
+    while (1) switch (_context.prev = _context.next) {
+      case 0:
+        _context.prev = 0;
+        container = document.getElementById('app');
+        if (container) {
+          _context.next = 5;
+          break;
+        }
+        console.error('App container not found!');
+        return _context.abrupt("return");
+      case 5:
+        _context.prev = 5;
+        _context.next = 8;
+        return _supabaseClient__WEBPACK_IMPORTED_MODULE_3__.supabase.from('vehicles').select('id').limit(1);
+      case 8:
+        _yield$supabase$from$ = _context.sent;
+        error = _yield$supabase$from$.error;
+        if (error) {
+          console.warn('Supabase connection test failed:', error);
+          // Continue anyway, but log the warning
+        } else {
+          console.log('Supabase connection successful');
+        }
+        _context.next = 16;
+        break;
+      case 13:
+        _context.prev = 13;
+        _context.t0 = _context["catch"](5);
+        console.error('Error initializing Supabase:', _context.t0);
+        // Continue mounting the app anyway - it will handle connection errors
+      case 16:
+        // Use the newer React 18 createRoot API
+        root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(container);
+        root.render(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().StrictMode), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_App__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
+
+        // Set up global Supabase error handler
+        window.addEventListener('unhandledrejection', function (event) {
+          if (event.reason && event.reason.error && event.reason.error.message && event.reason.error.message.includes('policy')) {
+            handleSupabaseError(event.reason.error);
+            console.warn('Supabase permission error detected globally:', event.reason.error.message);
+          }
+        });
+        _context.next = 26;
+        break;
+      case 21:
+        _context.prev = 21;
+        _context.t1 = _context["catch"](0);
+        console.error('Error rendering app:', _context.t1);
+
+        // Render a fallback error UI
+        _container = document.getElementById('app');
+        if (_container) {
+          _container.innerHTML = "\n        <div style=\"text-align: center; padding: 2rem; font-family: system-ui, sans-serif;\">\n          <h2>Something went wrong</h2>\n          <p>The application encountered an error during startup.</p>\n          <button onclick=\"location.reload()\">Reload</button>\n        </div>\n      ";
+        }
+      case 26:
+      case "end":
+        return _context.stop();
     }
-    react_dom__WEBPACK_IMPORTED_MODULE_1__.render(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_App__WEBPACK_IMPORTED_MODULE_2__["default"], null), container);
-  } catch (error) {
-    console.error('Error rendering app:', error);
-  }
-});
+  }, _callee, null, [[0, 21], [5, 13]]);
+})));
 })();
 
 /******/ })()

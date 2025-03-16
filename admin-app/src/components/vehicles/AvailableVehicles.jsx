@@ -38,41 +38,6 @@ const AvailableVehicles = ({ onBack }) => {
   useEffect(() => {
     fetchVehicles();
     fetchDrivers();
-    
-    // Set up real-time subscription for vehicles with error handling
-    let subscription;
-    try {
-      subscription = supabase
-        .channel('public:vehicles')
-        .on('postgres_changes', { 
-          event: '*', 
-          schema: 'public', 
-          table: 'vehicles' 
-        }, (payload) => {
-          console.log('Vehicle change detected:', payload);
-          fetchVehicles();
-        })
-        .subscribe((status) => {
-          console.log('Supabase realtime status:', status);
-          if (status === 'CHANNEL_ERROR') {
-            console.error('Supabase realtime connection error');
-            setNetworkStatus(false);
-          }
-        });
-    } catch (err) {
-      console.error('Error setting up realtime subscription:', err);
-      setNetworkStatus(false);
-    }
-      
-    return () => {
-      if (subscription) {
-        try {
-          subscription.unsubscribe();
-        } catch (err) {
-          console.error('Error unsubscribing from channel:', err);
-        }
-      }
-    };
   }, []);
 
   const fetchVehicles = async () => {
@@ -82,29 +47,30 @@ const AvailableVehicles = ({ onBack }) => {
       
       console.log("Fetching vehicles from Supabase...");
       
+      // SIMPLIFIED QUERY - Just get the basic vehicle data
       const { data, error } = await supabase
         .from('vehicles')
-        .select(`
-          *,
-          driver:assigned_driver_id(id, full_name)
-        `)
+        .select('*')
         .order('created_at', { ascending: false });
       
       if (error) {
         console.error('Supabase error:', error);
-        if (error.message.includes('Failed to fetch') || 
-            error.message.includes('network') || 
-            error.message.includes('connection')) {
-          setNetworkStatus(false);
-          throw new Error('Network connection issue. Please check your internet connection.');
-        }
         throw error;
       }
       
-      // Network is good if we get here
+      // Now manually enhance the vehicles with driver data
+      const enhancedVehicles = [];
+      
+      for (const vehicle of data || []) {
+        enhancedVehicles.push({
+          ...vehicle,
+          // We'll fill in driver details later after fetching drivers
+        });
+      }
+      
       setNetworkStatus(true);
-      console.log("Fetched vehicles:", data?.length || 0);
-      setVehicles(data || []);
+      console.log("Fetched vehicles:", enhancedVehicles.length);
+      setVehicles(enhancedVehicles);
     } catch (err) {
       console.error('Error fetching vehicles:', err);
       if (err.message.includes('Failed to fetch') || 
@@ -135,6 +101,14 @@ const AvailableVehicles = ({ onBack }) => {
       
       console.log("Fetched drivers:", data?.length || 0);
       setDrivers(data || []);
+      
+      // Now update vehicles with driver information
+      setVehicles(prevVehicles => 
+        prevVehicles.map(vehicle => ({
+          ...vehicle,
+          driver: data?.find(d => d.id === vehicle.assigned_driver_id) || null
+        }))
+      );
     } catch (err) {
       console.error('Error fetching drivers:', err);
       // Don't show an error message here as it's secondary to the vehicles

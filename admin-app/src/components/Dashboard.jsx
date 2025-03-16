@@ -1,5 +1,6 @@
+// admin-app/src/components/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Table, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card, Table, Badge, Alert, Spinner } from 'react-bootstrap';
 import { supabase } from '../supabaseClient';
 
 const Dashboard = () => {
@@ -11,94 +12,146 @@ const Dashboard = () => {
   });
   const [recentIssues, setRecentIssues] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        
-        // Get vehicles stats
-        const { data: vehicles, error: vehiclesError } = await supabase
-          .from('vehicles')
-          .select('*');
-          
-        if (vehiclesError) throw vehiclesError;
-        
-        // Get drivers count
-        const { count: driversCount, error: driversError } = await supabase
-          .from('users')
-          .select('*', { count: 'exact', head: true })
-          .eq('role', 'driver');
-        
-        if (driversError) throw driversError;
-        
-        // Get pending requests
-        const { count: pendingCount, error: pendingError } = await supabase
-          .from('vehicle_assignments')
-          .select('*', { count: 'exact', head: true })
-          .eq('status', 'pending');
-        
-        if (pendingError) throw pendingError;
-        
-        // Get recent issues
-        const { data: issues, error: issuesError } = await supabase
-          .from('vehicle_issues')
-          .select(`
-            id,
-            description,
-            priority,
-            status,
-            created_at,
-            vehicles (registration_number),
-            users (full_name)
-          `)
-          .order('created_at', { ascending: false })
-          .limit(5);
-        
-        if (issuesError) throw issuesError;
-        
-        // Update stats
-        setStats({
-          totalVehicles: vehicles.length,
-          activeVehicles: vehicles.filter(v => v.status === 'available' || v.status === 'assigned').length,
-          totalDrivers: driversCount,
-          pendingRequests: pendingCount
-        });
-        
-        setRecentIssues(issues || []);
-      } catch (error) {
-        console.error('Error loading dashboard data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
     fetchData();
-    
-    // Subscribe to realtime issues
-    const issueSubscription = supabase
-      .channel('public:vehicle_issues')
-      .on('postgres_changes', { 
-        event: '*', 
-        schema: 'public', 
-        table: 'vehicle_issues' 
-      }, () => {
-        fetchData(); // Reload data when issues change
-      })
-      .subscribe();
-      
-    return () => {
-      issueSubscription.unsubscribe();
-    };
   }, []);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Get vehicles stats - SIMPLE QUERY
+      const { data: vehicles, error: vehiclesError } = await supabase
+        .from('vehicles')
+        .select('id, status');
+        
+      if (vehiclesError) {
+        console.error("Vehicles error:", vehiclesError);
+        throw new Error('Failed to load vehicles');
+      }
+      
+      // Get drivers count - SIMPLE COUNT QUERY
+      const { count: driversCount, error: driversError } = await supabase
+        .from('users')
+        .select('id', { count: 'exact', head: true })
+        .eq('role', 'driver');
+      
+      if (driversError) {
+        console.error("Drivers error:", driversError);
+        throw new Error('Failed to count drivers');
+      }
+      
+      // Get pending requests - SIMPLE COUNT QUERY
+      const { count: pendingCount, error: pendingError } = await supabase
+        .from('vehicle_assignments')
+        .select('id', { count: 'exact', head: true })
+        .eq('status', 'pending');
+      
+      if (pendingError) {
+        console.error("Pending assignments error:", pendingError);
+        throw new Error('Failed to count pending assignments');
+      }
+      
+      // Get recent issues - WITHOUT JOINS
+      const { data: issues, error: issuesError } = await supabase
+        .from('vehicle_issues')
+        .select('id, description, priority, status, created_at, vehicle_id, reported_by')
+        .order('created_at', { ascending: false })
+        .limit(5);
+      
+      if (issuesError) {
+        console.error("Issues error:", issuesError);
+        throw new Error('Failed to load recent issues');
+      }
+      
+      // Get additional data for issues separately if needed
+      let enhancedIssues = [];
+      if (issues && issues.length > 0) {
+        // Get all unique vehicle IDs from issues
+        const vehicleIds = [...new Set(issues.map(issue => issue.vehicle_id))];
+        
+        // Fetch vehicle details
+        const { data: issueVehicles, error: issueVehiclesError } = await supabase
+          .from('vehicles')
+          .select('id, registration_number, make, model')
+          .in('id', vehicleIds);
+          
+        if (issueVehiclesError) {
+          console.warn("Issue vehicles error:", issueVehiclesError);
+          // Continue without vehicle details
+        }
+        
+        // Get all unique user IDs from issues
+        const userIds = [...new Set(issues.map(issue => issue.reported_by))];
+        
+        // Fetch user details
+        const { data: issueUsers, error: issueUsersError } = await supabase
+          .from('users')
+          .select('id, full_name')
+          .in('id', userIds);
+          
+        if (issueUsersError) {
+          console.warn("Issue users error:", issueUsersError);
+          // Continue without user details
+        }
+        
+        // Combine data
+        enhancedIssues = issues.map(issue => {
+          const vehicle = issueVehicles?.find(v => v.id === issue.vehicle_id);
+          const user = issueUsers?.find(u => u.id === issue.reported_by);
+          
+          return {
+            ...issue,
+            vehicles: vehicle || null,
+            users: user || null
+          };
+        });
+      }
+      
+      // Update stats
+      setStats({
+        totalVehicles: vehicles?.length || 0,
+        activeVehicles: vehicles?.filter(v => v.status === 'available' || v.status === 'assigned').length || 0,
+        totalDrivers: driversCount || 0,
+        pendingRequests: pendingCount || 0
+      });
+      
+      setRecentIssues(enhancedIssues || []);
+    } catch (error) {
+      console.error('Error loading dashboard data:', error);
+      setError('Failed to load dashboard data. Please refresh the page.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
       <div className="text-center my-5">
-        <div className="spinner-border" role="status">
+        <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
-        </div>
+        </Spinner>
       </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container>
+        <Alert variant="danger" className="my-3">
+          <Alert.Heading>Error Loading Dashboard</Alert.Heading>
+          <p>{error}</p>
+          <hr />
+          <div className="d-flex justify-content-end">
+            <button onClick={fetchData} className="btn btn-outline-danger">
+              Retry
+            </button>
+          </div>
+        </Alert>
+      </Container>
     );
   }
 
@@ -166,8 +219,8 @@ const Dashboard = () => {
               <tbody>
                 {recentIssues.map(issue => (
                   <tr key={issue.id}>
-                    <td>{issue.vehicles?.registration_number || "Unknown"}</td>
-                    <td>{issue.users?.full_name || "Unknown"}</td>
+                    <td>{issue.vehicles?.registration_number || `Vehicle ID: ${issue.vehicle_id}`}</td>
+                    <td>{issue.users?.full_name || `User ID: ${issue.reported_by}`}</td>
                     <td>{issue.description}</td>
                     <td>
                       <Badge bg={

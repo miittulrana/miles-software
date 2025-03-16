@@ -1,6 +1,6 @@
 // admin-app/src/components/vehicles/AssignVehicle.jsx
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../supabaseClient';
+import { supabase, executeQuery } from '../../supabaseClient';
 
 const AssignVehicle = ({ onBack }) => {
   const [assignments, setAssignments] = useState([]);
@@ -30,70 +30,92 @@ const AssignVehicle = ({ onBack }) => {
   useEffect(() => {
     fetchData();
     
-    // Subscribe to realtime changes
-    const subscription = supabase
-      .channel('public:vehicle_assignments')
-      .on('postgres_changes', { 
-        event: '*', 
-        schema: 'public', 
-        table: 'vehicle_assignments' 
-      }, () => fetchData())
+    // Set up realtime subscription
+    const channel = supabase.channel('assignment_changes')
+      .on('postgres_changes', 
+        { event: '*', schema: 'public', table: 'vehicle_assignments' }, 
+        () => {
+          console.log('Assignments updated');
+          fetchData();
+        }
+      )
       .subscribe();
     
     return () => {
-      subscription.unsubscribe();
+      channel.unsubscribe();
     };
   }, []);
 
-  const fetchData = async () => {
+// admin-app/src/components/vehicles/AssignVehicle.jsx - fetchData function
+const fetchData = async () => {
     try {
       setLoading(true);
       setError(null);
       
       // Fetch all vehicles
-      const { data: vehiclesData, error: vehiclesError } = await supabase
-        .from('vehicles')
-        .select('id, registration_number, make, model, status, assigned_driver_id')
-        .order('registration_number', { ascending: true });
+      const { data: vehiclesData, error: vehiclesError } = await executeQuery(() => 
+        supabase
+          .from('vehicles')
+          .select('id, registration_number, make, model, status')
+          .order('registration_number', { ascending: true })
+      );
       
-      if (vehiclesError) throw vehiclesError;
+      if (vehiclesError) {
+        throw new Error(vehiclesError.message || 'Failed to load vehicles');
+      }
       
       // Fetch all drivers
-      const { data: driversData, error: driversError } = await supabase
-        .from('users')
-        .select('id, full_name, email')
-        .eq('role', 'driver')
-        .order('full_name', { ascending: true });
+      const { data: driversData, error: driversError } = await executeQuery(() => 
+        supabase
+          .from('users')
+          .select('id, full_name, email')
+          .eq('role', 'driver')
+          .order('full_name', { ascending: true })
+      );
       
-      if (driversError) throw driversError;
+      if (driversError) {
+        throw new Error(driversError.message || 'Failed to load drivers');
+      }
       
-      // Fetch temporary assignments
-      const { data: assignmentsData, error: assignmentsError } = await supabase
-        .from('vehicle_assignments')
-        .select(`
-          id,
-          vehicle_id,
-          driver_id,
-          start_time,
-          end_time,
-          notes,
-          is_temporary,
-          status,
-          created_by,
-          created_at,
-          vehicles(id, registration_number, make, model),
-          users!vehicle_assignments_driver_id_fkey(id, full_name, email),
-          admin:users!vehicle_assignments_created_by_fkey(id, email)
-        `)
-        .eq('is_temporary', true)
-        .order('start_time', { ascending: false });
+      // Fetch temporary assignments - simplified query
+      const { data: assignmentsData, error: assignmentsError } = await executeQuery(() => 
+        supabase
+          .from('vehicle_assignments')
+          .select('id, vehicle_id, driver_id, start_time, end_time, notes, is_temporary, status, created_by, created_at')
+          .eq('is_temporary', true)
+          .order('start_time', { ascending: false })
+      );
       
-      if (assignmentsError) throw assignmentsError;
+      if (assignmentsError) {
+        throw new Error(assignmentsError.message || 'Failed to load assignments');
+      }
+      
+      // Enhance assignments with vehicle and driver data
+      const enhancedAssignments = assignmentsData.map(assignment => {
+        // Find related vehicle
+        const vehicle = vehiclesData.find(v => v.id === assignment.vehicle_id) || { 
+          registration_number: 'Unknown', 
+          make: '', 
+          model: '' 
+        };
+        
+        // Find related driver
+        const driver = driversData.find(d => d.id === assignment.driver_id) || { 
+          full_name: 'Unknown', 
+          email: '' 
+        };
+        
+        return {
+          ...assignment,
+          vehicles: vehicle,
+          users: driver
+        };
+      });
       
       // Store data
       setVehicles(vehiclesData || []);
       setDrivers(driversData || []);
-      setAssignments(assignmentsData || []);
+      setAssignments(enhancedAssignments || []);
       
       // Calculate available vehicles (not permanently assigned)
       const available = vehiclesData?.filter(vehicle => 
@@ -101,6 +123,7 @@ const AssignVehicle = ({ onBack }) => {
       ) || [];
       
       setAvailableVehicles(available);
+      
     } catch (err) {
       console.error('Error fetching data:', err);
       setError('Failed to load assignment data. Please try again.');
@@ -128,62 +151,50 @@ const AssignVehicle = ({ onBack }) => {
         return;
       }
       
-      // Check if vehicle is available during this period
-      // 1. Check if vehicle is blocked
-      const { data: blockedData, error: blockedError } = await supabase
-        .from('vehicle_blocked_periods')
-        .select('id')
-        .eq('vehicle_id', assignmentData.vehicle_id)
-        .or(`start_date.lte.${assignmentData.end_time || '9999-12-31'},end_date.gte.${assignmentData.start_time}`);
-      
-      if (blockedError) throw blockedError;
-      
-      if (blockedData && blockedData.length > 0) {
-        setError('Vehicle is blocked during this period. Please check the calendar or blocked vehicles section.');
-        return;
-      }
-      
-      // 2. Check if vehicle is already assigned during this period
-      const { data: existingData, error: existingError } = await supabase
-        .from('vehicle_assignments')
-        .select('id')
-        .eq('vehicle_id', assignmentData.vehicle_id)
-        .or(`start_time.lte.${assignmentData.end_time || '9999-12-31'},end_time.gte.${assignmentData.start_time}`)
-        .is('status', 'not.eq.rejected');
-      
-      if (existingError) throw existingError;
-      
-      if (existingData && existingData.length > 0) {
-        setError('Vehicle is already assigned during this period. Please check the calendar or choose a different vehicle.');
-        return;
-      }
-      
       // Get current user
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      
+      if (userError) {
+        console.error('Error getting current user:', userError);
+        setError('Authentication error. Please sign in again.');
+        return;
+      }
+      
+      if (!userData || !userData.user) {
+        setError('Authentication required. Please sign in again.');
+        return;
+      }
       
       // Create assignment
-      const { error } = await supabase
-        .from('vehicle_assignments')
-        .insert({
-          vehicle_id: assignmentData.vehicle_id,
-          driver_id: assignmentData.driver_id,
-          start_time: assignmentData.start_time,
-          end_time: assignmentData.end_time || null,
-          notes: assignmentData.notes,
-          is_temporary: true,
-          status: 'approved', // Auto-approve admin assignments
-          created_by: user.id
-        });
+      const { error } = await executeQuery(() => 
+        supabase
+          .from('vehicle_assignments')
+          .insert({
+            vehicle_id: assignmentData.vehicle_id,
+            driver_id: assignmentData.driver_id,
+            start_time: assignmentData.start_time,
+            end_time: assignmentData.end_time || null,
+            notes: assignmentData.notes,
+            is_temporary: true,
+            status: 'approved', // Auto-approve admin assignments
+            created_by: userData.user.id
+          })
+      );
       
-      if (error) throw error;
+      if (error) {
+        throw new Error(error.message || 'Failed to assign vehicle');
+      }
       
       setShowAddModal(false);
       resetForm();
       setSuccessMessage('Vehicle assigned successfully!');
       setTimeout(() => setSuccessMessage(null), 3000);
+      
+      // Refresh data
+      fetchData();
     } catch (err) {
       console.error('Error assigning vehicle:', err);
-      setError('Failed to assign vehicle. Please try again.');
+      setError(err.message || 'Failed to assign vehicle. Please try again.');
     }
   };
 
@@ -191,19 +202,27 @@ const AssignVehicle = ({ onBack }) => {
     try {
       setError(null);
       
-      const { error } = await supabase
-        .from('vehicle_assignments')
-        .update({ status: 'cancelled' })
-        .eq('id', currentAssignmentId);
+      // Cancel assignment
+      const { error } = await executeQuery(() => 
+        supabase
+          .from('vehicle_assignments')
+          .update({ status: 'cancelled' })
+          .eq('id', currentAssignmentId)
+      );
       
-      if (error) throw error;
+      if (error) {
+        throw new Error(error.message || 'Failed to cancel assignment');
+      }
       
       setShowDeleteModal(false);
       setSuccessMessage('Assignment cancelled successfully!');
       setTimeout(() => setSuccessMessage(null), 3000);
+      
+      // Refresh data
+      fetchData();
     } catch (err) {
       console.error('Error cancelling assignment:', err);
-      setError('Failed to cancel assignment. Please try again.');
+      setError(err.message || 'Failed to cancel assignment. Please try again.');
     }
   };
 
@@ -276,7 +295,7 @@ const AssignVehicle = ({ onBack }) => {
       </div>
     );
   };
-
+  
   // Check if an assignment is active
   const isActive = (assignment) => {
     const now = new Date();
@@ -346,9 +365,25 @@ const AssignVehicle = ({ onBack }) => {
           marginBottom: '15px', 
           backgroundColor: '#f8d7da', 
           color: '#721c24',
-          borderRadius: '4px'
+          borderRadius: '4px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center' 
         }}>
-          {error}
+          <span>{error}</span>
+          <button 
+            onClick={fetchData}
+            style={{
+              backgroundColor: '#721c24',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              padding: '4px 8px',
+              cursor: 'pointer'
+            }}
+          >
+            Retry
+          </button>
         </div>
       )}
       
@@ -404,14 +439,13 @@ const AssignVehicle = ({ onBack }) => {
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Start Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>End Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Notes</th>
-                  <th style={{ padding: '12px 15px', textAlign: 'left' }}>Assigned By</th>
                   <th style={{ padding: '12px 15px', textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {assignments.filter(assignment => isActive(assignment)).length === 0 ? (
                   <tr>
-                    <td colSpan="7" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
+                    <td colSpan="6" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
                       No active assignments
                     </td>
                   </tr>
@@ -425,7 +459,6 @@ const AssignVehicle = ({ onBack }) => {
                       <td style={{ padding: '12px 15px' }}>{formatDate(assignment.start_time)}</td>
                       <td style={{ padding: '12px 15px' }}>{assignment.end_time ? formatDate(assignment.end_time) : 'Ongoing'}</td>
                       <td style={{ padding: '12px 15px' }}>{assignment.notes || 'N/A'}</td>
-                      <td style={{ padding: '12px 15px' }}>{assignment.admin?.email}</td>
                       <td style={{ padding: '12px 15px', textAlign: 'right' }}>
                         <button 
                           onClick={() => openDeleteModal(assignment)}
@@ -466,14 +499,13 @@ const AssignVehicle = ({ onBack }) => {
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Start Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>End Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Notes</th>
-                  <th style={{ padding: '12px 15px', textAlign: 'left' }}>Assigned By</th>
                   <th style={{ padding: '12px 15px', textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {assignments.filter(assignment => isUpcoming(assignment)).length === 0 ? (
                   <tr>
-                    <td colSpan="7" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
+                    <td colSpan="6" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
                       No upcoming assignments
                     </td>
                   </tr>
@@ -487,7 +519,6 @@ const AssignVehicle = ({ onBack }) => {
                       <td style={{ padding: '12px 15px' }}>{formatDate(assignment.start_time)}</td>
                       <td style={{ padding: '12px 15px' }}>{assignment.end_time ? formatDate(assignment.end_time) : 'Ongoing'}</td>
                       <td style={{ padding: '12px 15px' }}>{assignment.notes || 'N/A'}</td>
-                      <td style={{ padding: '12px 15px' }}>{assignment.admin?.email}</td>
                       <td style={{ padding: '12px 15px', textAlign: 'right' }}>
                         <button 
                           onClick={() => openDeleteModal(assignment)}
@@ -526,13 +557,12 @@ const AssignVehicle = ({ onBack }) => {
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Driver</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Start Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>End Date</th>
-                  <th style={{ padding: '12px 15px', textAlign: 'left' }}>Assigned By</th>
                 </tr>
               </thead>
               <tbody>
                 {assignments.filter(assignment => isCompleted(assignment)).length === 0 ? (
                   <tr>
-                    <td colSpan="5" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
+                    <td colSpan="4" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
                       No completed assignments
                     </td>
                   </tr>
@@ -545,7 +575,6 @@ const AssignVehicle = ({ onBack }) => {
                       <td style={{ padding: '12px 15px' }}>{assignment.users?.full_name}</td>
                       <td style={{ padding: '12px 15px' }}>{formatDate(assignment.start_time)}</td>
                       <td style={{ padding: '12px 15px' }}>{assignment.end_time ? formatDate(assignment.end_time) : 'Ongoing'}</td>
-                      <td style={{ padding: '12px 15px' }}>{assignment.admin?.email}</td>
                     </tr>
                   ))
                 )}
@@ -568,13 +597,12 @@ const AssignVehicle = ({ onBack }) => {
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Driver</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>Start Date</th>
                   <th style={{ padding: '12px 15px', textAlign: 'left' }}>End Date</th>
-                  <th style={{ padding: '12px 15px', textAlign: 'left' }}>Assigned By</th>
                 </tr>
               </thead>
               <tbody>
                 {assignments.filter(assignment => assignment.status === 'cancelled').length === 0 ? (
                   <tr>
-                    <td colSpan="5" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
+                    <td colSpan="4" style={{ padding: '15px', textAlign: 'center', color: '#6c757d' }}>
                       No cancelled assignments
                     </td>
                   </tr>
@@ -587,7 +615,6 @@ const AssignVehicle = ({ onBack }) => {
                       <td style={{ padding: '12px 15px' }}>{assignment.users?.full_name}</td>
                       <td style={{ padding: '12px 15px' }}>{formatDate(assignment.start_time)}</td>
                       <td style={{ padding: '12px 15px' }}>{assignment.end_time ? formatDate(assignment.end_time) : 'Ongoing'}</td>
-                      <td style={{ padding: '12px 15px' }}>{assignment.admin?.email}</td>
                     </tr>
                   ))
                 )}
