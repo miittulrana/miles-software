@@ -15,16 +15,35 @@ const Login = () => {
       setLoading(true);
       setError(null);
       
+      console.log('Attempting login with:', email);
+      
       // Sign in with email and password
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password
       });
       
-      if (error) throw error;
+      if (signInError) {
+        console.error('Authentication error:', signInError);
+        throw signInError;
+      }
+      
+      // Success! The App.jsx component will handle the session state
+      console.log('Login successful');
+      
     } catch (err) {
       console.error('Login error:', err);
-      setError(err.message);
+      
+      // Provide more user-friendly error messages
+      if (err.message.includes('Failed to fetch') || err.message.includes('Network')) {
+        setError('Network connection error. Please check your internet connection and try again.');
+      } else if (err.message.includes('Invalid login credentials')) {
+        setError('Invalid email or password. Please try again.');
+      } else if (err.message.includes('Email not confirmed')) {
+        setError('Please confirm your email address before logging in.');
+      } else {
+        setError(err.message || 'An error occurred during login. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -55,6 +74,7 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     disabled={loading}
+                    autoFocus
                   />
                 </div>
                 

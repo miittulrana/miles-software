@@ -1,5 +1,5 @@
 // admin-app/src/components/VehicleManagement.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AvailableVehicles from './vehicles/AvailableVehicles';
 import VehicleCalendar from './vehicles/VehicleCalendar';
 import BlockedVehicles from './vehicles/BlockedVehicles';
@@ -73,42 +73,27 @@ const VehicleManagement = () => {
             <h2>Vehicle Management</h2>
             
             {error && (
-              <div style={{ 
-                padding: '10px', 
-                marginBottom: '15px', 
-                backgroundColor: '#f8d7da', 
-                color: '#721c24',
-                borderRadius: '4px'
-              }}>
+              <div className="alert alert-danger" role="alert">
                 {error}
               </div>
             )}
             
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-              gap: '20px',
-              marginTop: '20px'
-            }}>
+            <div className="row row-cols-1 row-cols-md-3 g-4 mt-3">
               {subModules.map(module => (
-                <div 
-                  key={module.id}
-                  style={{
-                    padding: '20px',
-                    backgroundColor: 'white',
-                    borderRadius: '5px',
-                    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-                    cursor: 'pointer',
-                    transition: 'transform 0.2s',
-                    ':hover': {
-                      transform: 'translateY(-5px)'
-                    }
-                  }}
-                  onClick={() => setCurrentSubModule(module.id)}
-                >
-                  <div style={{ fontSize: '48px', marginBottom: '10px' }}>{module.icon}</div>
-                  <h3>{module.name}</h3>
-                  <p style={{ color: '#6c757d' }}>{module.description}</p>
+                <div key={module.id} className="col">
+                  <div 
+                    className="card h-100 shadow-sm" 
+                    onClick={() => setCurrentSubModule(module.id)}
+                    style={{ cursor: 'pointer', transition: 'transform 0.2s' }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                  >
+                    <div className="card-body text-center">
+                      <div style={{ fontSize: '48px', marginBottom: '10px' }}>{module.icon}</div>
+                      <h3 className="card-title">{module.name}</h3>
+                      <p className="card-text text-muted">{module.description}</p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -118,7 +103,7 @@ const VehicleManagement = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="container py-4">
       {renderSubModule()}
     </div>
   );

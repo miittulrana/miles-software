@@ -4,7 +4,7 @@ import { supabase } from '../supabaseClient';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 // Replace with your Mapbox token
-const MAPBOX_TOKEN = 'your-mapbox-token';
+const MAPBOX_TOKEN = 'sk.eyJ1IjoicmFuYWppNSIsImEiOiJjbThhd2hkenUxbW1yMmtzZm1qcHRodXI2In0.A9_ke0F5JrP5OYHd0tAVkg';
 
 const VehicleTracking = () => {
   const mapContainer = useRef(null);

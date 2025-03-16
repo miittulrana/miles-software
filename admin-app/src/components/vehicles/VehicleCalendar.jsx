@@ -46,73 +46,75 @@ const VehicleCalendar = ({ onBack }) => {
       setLoading(true);
       setError(null);
       
-      // Get all vehicles
+      // Get all vehicles - simple query, less likely to fail
       const { data: vehiclesData, error: vehiclesError } = await supabase
         .from('vehicles')
-        .select('id, registration_number, make, model, status');
+        .select('id, registration_number, make, model, status')
+        .order('registration_number', { ascending: true });
       
-      if (vehiclesError) throw vehiclesError;
-      
-      // Calculate month range for filtering
-      const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-      const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-      
-      // Format dates for Supabase
-      const startDate = startOfMonth.toISOString();
-      const endDate = endOfMonth.toISOString();
-      
-      // Get vehicle assignments for the month
-      let query = supabase
-        .from('vehicle_assignments')
-        .select(`
-          id,
-          vehicle_id,
-          driver_id,
-          start_time,
-          end_time,
-          is_temporary,
-          status,
-          created_by,
-          users!vehicle_assignments_driver_id_fkey(id, full_name)
-        `)
-        .or(`start_time.lte.${endDate},end_time.gte.${startDate}`)
-        .order('start_time', { ascending: true });
-      
-      // Filter by vehicle if selected
-      if (selectedVehicle !== 'all') {
-        query = query.eq('vehicle_id', selectedVehicle);
+      if (vehiclesError) {
+        console.error('Error fetching vehicles:', vehiclesError);
+        setVehicles([]);
+      } else {
+        setVehicles(vehiclesData || []);
       }
       
-      const { data: assignmentsData, error: assignmentsError } = await query;
-      
-      if (assignmentsError) throw assignmentsError;
-      
-      // Get blocked periods for the month
-      let blockedQuery = supabase
-        .from('vehicle_blocked_periods')
-        .select(`
-          id,
-          vehicle_id,
-          start_date,
-          end_date,
-          reason,
-          created_by,
-          created_at
-        `)
-        .or(`start_date.lte.${endDate},end_date.gte.${startDate}`);
-      
-      // Filter by vehicle if selected
-      if (selectedVehicle !== 'all') {
-        blockedQuery = blockedQuery.eq('vehicle_id', selectedVehicle);
+      // Get assignments with simplified query
+      try {
+        // Format dates for filtering
+        const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0, 23, 59, 59);
+        const startDateStr = startOfMonth.toISOString();
+        const endDateStr = endOfMonth.toISOString();
+        
+        console.log(`Fetching data for: ${startDateStr} to ${endDateStr}`);
+        
+        // Simplified assignments query
+        let query = supabase
+          .from('vehicle_assignments')
+          .select('*')
+          .gte('start_time', startDateStr)
+          .lte('start_time', endDateStr);
+        
+        if (selectedVehicle !== 'all') {
+          query = query.eq('vehicle_id', selectedVehicle);
+        }
+        
+        const { data: assignmentsData, error: assignmentsError } = await query;
+        
+        if (assignmentsError) {
+          console.error('Error fetching assignments:', assignmentsError);
+          setAssignments([]);
+        } else {
+          setAssignments(assignmentsData || []);
+        }
+      } catch (err) {
+        console.error('Error processing assignments:', err);
+        setAssignments([]);
       }
       
-      const { data: blockedData, error: blockedError } = await blockedQuery;
-      
-      if (blockedError) throw blockedError;
-      
-      setVehicles(vehiclesData || []);
-      setAssignments(assignmentsData || []);
-      setBlockedPeriods(blockedData || []);
+      // Simplified blocked periods query
+      try {
+        let blockedQuery = supabase
+          .from('vehicle_blocked_periods')
+          .select('*');
+        
+        if (selectedVehicle !== 'all') {
+          blockedQuery = blockedQuery.eq('vehicle_id', selectedVehicle);
+        }
+        
+        const { data: blockedData, error: blockedError } = await blockedQuery;
+        
+        if (blockedError) {
+          console.error('Error fetching blocked periods:', blockedError);
+          setBlockedPeriods([]);
+        } else {
+          setBlockedPeriods(blockedData || []);
+        }
+      } catch (err) {
+        console.error('Error processing blocked periods:', err);
+        setBlockedPeriods([]);
+      }
     } catch (err) {
       console.error('Error fetching calendar data:', err);
       setError('Failed to load calendar data. Please try again.');
@@ -174,50 +176,65 @@ const VehicleCalendar = ({ onBack }) => {
   const getEventsForDay = (vehicleId, day) => {
     if (!day) return [];
     
-    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-    date.setHours(0, 0, 0, 0);
-    
-    const events = [];
-    
-    // Check assignments
-    assignments.forEach(assignment => {
-      if (assignment.vehicle_id === vehicleId) {
-        const startDate = new Date(assignment.start_time);
-        startDate.setHours(0, 0, 0, 0);
-        
-        const endDate = new Date(assignment.end_time || assignment.start_time);
-        endDate.setHours(0, 0, 0, 0);
-        
-        if (date >= startDate && date <= endDate) {
-          events.push({
-            type: 'assignment',
-            data: assignment,
-            color: assignment.is_temporary ? '#17a2b8' : '#007bff'
-          });
+    try {
+      // Create a date object for the current day
+      const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+      date.setHours(0, 0, 0, 0);
+      
+      // Format as ISO date string for comparison
+      const dateStr = date.toISOString().split('T')[0];
+      
+      const events = [];
+      
+      // Check assignments
+      assignments.forEach(assignment => {
+        if (assignment.vehicle_id === vehicleId) {
+          const startDate = new Date(assignment.start_time);
+          startDate.setHours(0, 0, 0, 0);
+          
+          // Default end date is far in the future if not specified
+          let endDate;
+          if (assignment.end_time) {
+            endDate = new Date(assignment.end_time);
+            endDate.setHours(23, 59, 59, 999);
+          } else {
+            // If no end date, consider it ongoing indefinitely
+            endDate = new Date(9999, 11, 31);
+          }
+          
+          if (date >= startDate && date <= endDate) {
+            events.push({
+              type: 'assignment',
+              data: assignment,
+              color: assignment.is_temporary ? '#17a2b8' : '#007bff'
+            });
+          }
         }
-      }
-    });
-    
-    // Check blocked periods
-    blockedPeriods.forEach(block => {
-      if (block.vehicle_id === vehicleId) {
-        const startDate = new Date(block.start_date);
-        startDate.setHours(0, 0, 0, 0);
-        
-        const endDate = new Date(block.end_date);
-        endDate.setHours(0, 0, 0, 0);
-        
-        if (date >= startDate && date <= endDate) {
-          events.push({
-            type: 'blocked',
-            data: block,
-            color: '#dc3545'
-          });
+      });
+      
+      // Check blocked periods
+      blockedPeriods.forEach(block => {
+        if (block.vehicle_id === vehicleId) {
+          // Handle date comparison properly
+          const blockStartStr = block.start_date.split('T')[0];
+          const blockEndStr = block.end_date.split('T')[0];
+          
+          // Compare as date strings for simplicity (YYYY-MM-DD format)
+          if (dateStr >= blockStartStr && dateStr <= blockEndStr) {
+            events.push({
+              type: 'blocked',
+              data: block,
+              color: '#dc3545'
+            });
+          }
         }
-      }
-    });
-    
-    return events;
+      });
+      
+      return events;
+    } catch (error) {
+      console.error("Error getting events for day:", error, "Date:", day);
+      return [];
+    }
   };
 
   // Helper function to format date
@@ -293,6 +310,12 @@ const VehicleCalendar = ({ onBack }) => {
   // Weekday headers
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+  // Get today's info
+  const today = new Date();
+  const isCurrentMonth = today.getMonth() === currentDate.getMonth() && 
+                         today.getFullYear() === currentDate.getFullYear();
+  const currentDay = today.getDate();
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
@@ -332,7 +355,14 @@ const VehicleCalendar = ({ onBack }) => {
         padding: '20px',
         marginBottom: '20px'
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          marginBottom: '15px',
+          flexWrap: 'wrap',
+          gap: '10px'
+        }}>
           <div>
             <button 
               onClick={handlePreviousMonth}
@@ -405,7 +435,7 @@ const VehicleCalendar = ({ onBack }) => {
         ) : (
           <>
             <div style={{ marginBottom: '15px' }}>
-              <div style={{ display: 'flex', marginBottom: '10px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: '10px', gap: '10px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', marginRight: '20px' }}>
                   <div style={{ width: '12px', height: '12px', backgroundColor: '#007bff', borderRadius: '2px', marginRight: '5px' }}></div>
                   <span>Permanent Assignment</span>
@@ -422,155 +452,200 @@ const VehicleCalendar = ({ onBack }) => {
               <p style={{ color: '#6c757d', margin: 0, fontSize: '0.9rem' }}>Click on any colored cell to view details</p>
             </div>
             
-            {/* Calendar header with weekdays */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: '5px' }}>
-              {weekdays.map((day, index) => (
-                <div 
-                  key={index}
-                  style={{
-                    padding: '5px',
-                    backgroundColor: '#f8f9fa',
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                    fontSize: '0.9rem'
-                  }}
-                >
-                  {day}
-                </div>
-              ))}
-            </div>
-            
-            {/* Calendar grid */}
-            {selectedVehicle === 'all' ? (
-              // Display all vehicles in a list with their calendars
-              vehicles.map(vehicle => (
-                <div key={vehicle.id} style={{ marginBottom: '20px', borderTop: '1px solid #dee2e6', paddingTop: '10px' }}>
-                  <h4 style={{ marginBottom: '10px' }}>{vehicle.registration_number} ({vehicle.make} {vehicle.model})</h4>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '2px' }}>
-                    {calendarDays.map((day, index) => {
-                      const events = getEventsForDay(vehicle.id, day);
-                      const hasEvents = events.length > 0;
-                      
-                      return (
-                        <div 
-                          key={index}
-                          style={{
-                            height: '40px',
-                            border: '1px solid #dee2e6',
-                            backgroundColor: day ? 'white' : '#f8f9fa',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            position: 'relative'
-                          }}
-                        >
-                          {day && (
-                            <>
-                              <div style={{ padding: '2px 5px', fontSize: '0.8rem', textAlign: 'right' }}>
-                                {day}
-                              </div>
-                              {hasEvents && (
-                                <div 
-                                  style={{
-                                    position: 'absolute',
-                                    top: '18px',
-                                    left: '0',
-                                    right: '0',
-                                    bottom: '0',
-                                    backgroundColor: events[0].color,
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    cursor: 'pointer'
-                                  }}
-                                  onClick={() => showEventDetails({ vehicle, events, day })}
-                                >
-                                  {events.length > 1 && (
-                                    <span style={{ color: 'white', fontSize: '0.8rem', fontWeight: 'bold' }}>
-                                      {events.length}
-                                    </span>
-                                  )}
-                                </div>
-                              )}
-                            </>
-                          )}
-                        </div>
-                      );
-                    })}
+            <div style={{ overflowX: 'auto' }}>
+              {/* Calendar header with weekdays - fixed and more visible */}
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(7, minmax(80px, 1fr))', 
+                position: 'sticky',
+                top: 0,
+                backgroundColor: '#f8f9fa',
+                zIndex: 1
+              }}>
+                {weekdays.map((day, index) => (
+                  <div 
+                    key={index}
+                    style={{
+                      padding: '8px',
+                      textAlign: 'center',
+                      fontWeight: 'bold',
+                      borderBottom: '2px solid #dee2e6',
+                      borderRight: index < 6 ? '1px solid #dee2e6' : 'none'
+                    }}
+                  >
+                    {day}
                   </div>
-                </div>
-              ))
-            ) : (
-              // Display a single vehicle calendar with more details
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '2px' }}>
-                {calendarDays.map((day, index) => {
-                  const events = getEventsForDay(selectedVehicle, day);
-                  const hasEvents = events.length > 0;
-                  
-                  return (
-                    <div 
-                      key={index}
-                      style={{
-                        height: '100px',
-                        border: '1px solid #dee2e6',
-                        backgroundColor: day ? 'white' : '#f8f9fa',
-                        padding: '5px',
-                        position: 'relative',
-                        overflow: 'hidden'
-                      }}
-                    >
-                      {day && (
-                        <>
-                          <div style={{ fontSize: '0.9rem', fontWeight: 'bold', textAlign: 'right', marginBottom: '5px' }}>
-                            {day}
-                          </div>
-                          {hasEvents ? (
-                            <div style={{ fontSize: '0.8rem' }}>
-                              {events.map((event, idx) => (
-                                <div 
-                                  key={idx}
-                                  style={{ 
-                                    padding: '2px 5px',
-                                    backgroundColor: event.color,
-                                    color: 'white',
-                                    borderRadius: '2px',
-                                    marginBottom: '2px',
-                                    cursor: 'pointer',
-                                    whiteSpace: 'nowrap',
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis'
-                                  }}
-                                  onClick={() => showEventDetails({ 
-                                    vehicle: vehicles.find(v => v.id === selectedVehicle), 
-                                    events: [event], 
-                                    day 
-                                  })}
-                                >
-                                  {event.type === 'assignment' 
-                                    ? `${event.data.users.full_name.split(' ')[0]}`
-                                    : `Blocked: ${event.data.reason.substring(0, 10)}...`
-                                  }
-                                </div>
-                              ))}
-                            </div>
-                          ) : (
-                            <div style={{ 
-                              height: '70px', 
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              color: '#adb5bd',
-                              fontSize: '0.8rem'
-                            }}>
-                              Available
-                            </div>
-                          )}
-                        </>
-                      )}
-                    </div>
-                  );
-                })}
+                ))}
               </div>
-            )}
+              
+              {selectedVehicle === 'all' ? (
+                /* All vehicles view */
+                vehicles.map(vehicle => (
+                  <div key={vehicle.id} style={{ 
+                    marginBottom: '20px', 
+                    borderTop: '1px solid #dee2e6', 
+                    paddingTop: '10px'
+                  }}>
+                    <h4 style={{ marginBottom: '10px' }}>
+                      {vehicle.registration_number} ({vehicle.make} {vehicle.model})
+                    </h4>
+                    <div style={{ 
+                      display: 'grid', 
+                      gridTemplateColumns: 'repeat(7, minmax(80px, 1fr))',
+                      gap: '2px'
+                    }}>
+                      {calendarDays.map((day, index) => {
+                        const events = getEventsForDay(vehicle.id, day);
+                        const hasEvents = events.length > 0;
+                        
+                        // Check if this is today
+                        const isToday = isCurrentMonth && day === currentDay;
+                        
+                        return (
+                          <div 
+                            key={index}
+                            style={{
+                              height: '50px',
+                              border: isToday ? '2px solid #007bff' : '1px solid #dee2e6',
+                              backgroundColor: day ? (isToday ? '#f0f8ff' : 'white') : '#f8f9fa',
+                              position: 'relative',
+                              overflow: 'hidden'
+                            }}
+                          >
+                            {day && (
+                              <>
+                                <div style={{ 
+                                  padding: '2px 5px', 
+                                  fontSize: '0.8rem', 
+                                  textAlign: 'right',
+                                  fontWeight: isToday ? 'bold' : 'normal'
+                                }}>
+                                  {day}
+                                </div>
+                                {hasEvents && (
+                                  <div 
+                                    style={{
+                                      position: 'absolute',
+                                      top: '18px',
+                                      left: '2px',
+                                      right: '2px',
+                                      bottom: '2px',
+                                      backgroundColor: events[0].color,
+                                      borderRadius: '3px',
+                                      display: 'flex',
+                                      justifyContent: 'center',
+                                      alignItems: 'center',
+                                      cursor: 'pointer',
+                                      opacity: 0.9
+                                    }}
+                                    onClick={() => showEventDetails({ vehicle, events, day })}
+                                  >
+                                    {events.length > 1 && (
+                                      <span style={{ 
+                                        color: 'white', 
+                                        fontSize: '0.8rem', 
+                                        fontWeight: 'bold',
+                                        textShadow: '0px 0px 2px rgba(0,0,0,0.5)'
+                                      }}>
+                                        {events.length}
+                                      </span>
+                                    )}
+                                  </div>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                /* Single vehicle view - with more details */
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(7, minmax(120px, 1fr))',
+                  gap: '3px'
+                }}>
+                  {calendarDays.map((day, index) => {
+                    const events = getEventsForDay(selectedVehicle, day);
+                    const hasEvents = events.length > 0;
+                    
+                    // Check if this is today
+                    const isToday = isCurrentMonth && day === currentDay;
+                    
+                    return (
+                      <div 
+                        key={index}
+                        style={{
+                          minHeight: '120px',
+                          border: isToday ? '2px solid #007bff' : '1px solid #dee2e6',
+                          backgroundColor: day ? (isToday ? '#f0f8ff' : 'white') : '#f8f9fa',
+                          padding: '5px',
+                          position: 'relative',
+                          overflow: 'hidden'
+                        }}
+                      >
+                        {day && (
+                          <>
+                            <div style={{ 
+                              fontSize: '0.9rem', 
+                              fontWeight: isToday ? 'bold' : 'normal', 
+                              textAlign: 'right', 
+                              marginBottom: '5px' 
+                            }}>
+                              {day}
+                            </div>
+                            {hasEvents ? (
+                              <div style={{ fontSize: '0.8rem' }}>
+                                {events.map((event, idx) => (
+                                  <div 
+                                    key={idx}
+                                    style={{ 
+                                      padding: '4px 6px',
+                                      backgroundColor: event.color,
+                                      color: 'white',
+                                      borderRadius: '3px',
+                                      marginBottom: '4px',
+                                      cursor: 'pointer',
+                                      whiteSpace: 'nowrap',
+                                      overflow: 'hidden',
+                                      textOverflow: 'ellipsis',
+                                      textShadow: '0px 0px 2px rgba(0,0,0,0.3)'
+                                    }}
+                                    onClick={() => showEventDetails({ 
+                                      vehicle: vehicles.find(v => v.id === selectedVehicle), 
+                                      events: [event], 
+                                      day 
+                                    })}
+                                  >
+                                    {event.type === 'assignment' 
+                                      ? `${event.data.users.full_name.split(' ')[0]}`
+                                      : `Blocked: ${event.data.reason.substring(0, 15)}${event.data.reason.length > 15 ? '...' : ''}`
+                                    }
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <div style={{ 
+                                height: '70px', 
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                color: '#adb5bd',
+                                fontSize: '0.8rem'
+                              }}>
+                                Available
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </>
         )}
       </div>
@@ -608,7 +683,7 @@ const VehicleCalendar = ({ onBack }) => {
                     <p style={{ margin: '0 0 5px 0' }}><strong>Type:</strong> {event.data.is_temporary ? 'Temporary' : 'Permanent'}</p>
                     <p style={{ margin: '0 0 5px 0' }}><strong>From:</strong> {formatDate(event.data.start_time)}</p>
                     <p style={{ margin: '0 0 5px 0' }}><strong>To:</strong> {event.data.end_time ? formatDate(event.data.end_time) : 'Ongoing'}</p>
-                    <p style={{ margin: '0' }}><strong>Status:</strong> {event.data.status}</p>
+                    <p style={{ margin: '0' }}><strong>Status:</strong> {event.data.status.charAt(0).toUpperCase() + event.data.status.slice(1)}</p>
                   </>
                 )}
                 

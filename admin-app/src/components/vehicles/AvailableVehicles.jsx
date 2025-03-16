@@ -8,6 +8,7 @@ const AvailableVehicles = ({ onBack }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [networkStatus, setNetworkStatus] = useState(true);
   
   // Modal states
   const [showAddModal, setShowAddModal] = useState(false);
@@ -38,34 +39,39 @@ const AvailableVehicles = ({ onBack }) => {
     fetchVehicles();
     fetchDrivers();
     
-    // Subscribe to realtime vehicle changes
-    const subscription = supabase
-      .channel('public:vehicles')
-      .on('postgres_changes', { 
-        event: '*', 
-        schema: 'public', 
-        table: 'vehicles' 
-      }, (payload) => {
-        console.log('Vehicle change detected:', payload);
-        
-        if (payload.eventType === 'INSERT') {
-          setVehicles(prev => [payload.new, ...prev]);
-        } else if (payload.eventType === 'UPDATE') {
-          setVehicles(prev => 
-            prev.map(vehicle => 
-              vehicle.id === payload.new.id ? payload.new : vehicle
-            )
-          );
-        } else if (payload.eventType === 'DELETE') {
-          setVehicles(prev => 
-            prev.filter(vehicle => vehicle.id !== payload.old.id)
-          );
-        }
-      })
-      .subscribe();
-    
+    // Set up real-time subscription for vehicles with error handling
+    let subscription;
+    try {
+      subscription = supabase
+        .channel('public:vehicles')
+        .on('postgres_changes', { 
+          event: '*', 
+          schema: 'public', 
+          table: 'vehicles' 
+        }, (payload) => {
+          console.log('Vehicle change detected:', payload);
+          fetchVehicles();
+        })
+        .subscribe((status) => {
+          console.log('Supabase realtime status:', status);
+          if (status === 'CHANNEL_ERROR') {
+            console.error('Supabase realtime connection error');
+            setNetworkStatus(false);
+          }
+        });
+    } catch (err) {
+      console.error('Error setting up realtime subscription:', err);
+      setNetworkStatus(false);
+    }
+      
     return () => {
-      subscription.unsubscribe();
+      if (subscription) {
+        try {
+          subscription.unsubscribe();
+        } catch (err) {
+          console.error('Error unsubscribing from channel:', err);
+        }
+      }
     };
   }, []);
 
@@ -73,6 +79,8 @@ const AvailableVehicles = ({ onBack }) => {
     try {
       setLoading(true);
       setError(null);
+      
+      console.log("Fetching vehicles from Supabase...");
       
       const { data, error } = await supabase
         .from('vehicles')
@@ -82,12 +90,31 @@ const AvailableVehicles = ({ onBack }) => {
         `)
         .order('created_at', { ascending: false });
       
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error:', error);
+        if (error.message.includes('Failed to fetch') || 
+            error.message.includes('network') || 
+            error.message.includes('connection')) {
+          setNetworkStatus(false);
+          throw new Error('Network connection issue. Please check your internet connection.');
+        }
+        throw error;
+      }
       
+      // Network is good if we get here
+      setNetworkStatus(true);
+      console.log("Fetched vehicles:", data?.length || 0);
       setVehicles(data || []);
     } catch (err) {
       console.error('Error fetching vehicles:', err);
-      setError('Failed to load vehicles. Please try again.');
+      if (err.message.includes('Failed to fetch') || 
+          err.message.includes('network') || 
+          err.message.includes('connection')) {
+        setNetworkStatus(false);
+        setError('Network error. Please check your internet connection and try again.');
+      } else {
+        setError('Failed to load vehicles. Error: ' + err.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -95,16 +122,22 @@ const AvailableVehicles = ({ onBack }) => {
 
   const fetchDrivers = async () => {
     try {
+      console.log("Fetching drivers...");
       const { data, error } = await supabase
         .from('users')
         .select('id, full_name')
         .eq('role', 'driver');
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching drivers:', error);
+        throw error;
+      }
       
+      console.log("Fetched drivers:", data?.length || 0);
       setDrivers(data || []);
     } catch (err) {
       console.error('Error fetching drivers:', err);
+      // Don't show an error message here as it's secondary to the vehicles
     }
   };
   
@@ -126,40 +159,79 @@ const AvailableVehicles = ({ onBack }) => {
   };
 
   const handleAddVehicle = async () => {
+    if (!networkStatus) {
+      setError('Cannot add vehicle while offline. Please check your internet connection.');
+      return;
+    }
+    
     try {
       setError(null);
       
-      // Validate form
+      // Validate basic required fields
       if (!vehicleData.registration_number || !vehicleData.make || !vehicleData.model) {
         setError('Please fill in all required fields.');
         return;
       }
       
-      // If status is assigned, assigned_driver_id must be provided
-      if (vehicleData.status === 'assigned' && !vehicleData.assigned_driver_id) {
-        setError('Please select a driver when status is assigned.');
+      // Create a complete vehicle object with all necessary fields
+      const vehicleToInsert = {
+        registration_number: vehicleData.registration_number,
+        make: vehicleData.make,
+        model: vehicleData.model,
+        year: parseInt(vehicleData.year) || new Date().getFullYear(),
+        status: vehicleData.status || 'available',
+        notes: vehicleData.notes || null
+      };
+      
+      // Only include driver assignment if status is "assigned"
+      if (vehicleData.status === 'assigned') {
+        if (!vehicleData.assigned_driver_id) {
+          setError('Please select a driver when status is assigned.');
+          return;
+        }
+        vehicleToInsert.assigned_driver_id = vehicleData.assigned_driver_id;
+      }
+      
+      console.log('Inserting vehicle:', vehicleToInsert);
+      
+      // Insert vehicle with proper error handling
+      const { data, error } = await supabase
+        .from('vehicles')
+        .insert(vehicleToInsert)
+        .select();
+      
+      if (error) {
+        console.error('Database error:', error);
+        setError(`Failed to add vehicle: ${error.message}`);
         return;
       }
       
-      const { data, error } = await supabase
-        .from('vehicles')
-        .insert([vehicleData])
-        .select();
-      
-      if (error) throw error;
-      
-      // Vehicle will be added via realtime subscription
+      // Success handling
+      console.log('Vehicle added successfully:', data);
       setShowAddModal(false);
       setSuccessMessage('Vehicle added successfully!');
       setTimeout(() => setSuccessMessage(null), 3000);
       resetVehicleForm();
+      
+      // Refresh the vehicles list
+      fetchVehicles();
     } catch (err) {
       console.error('Error adding vehicle:', err);
-      setError('Failed to add vehicle. Please try again.');
+      if (err.message.includes('Failed to fetch') || err.message.includes('network')) {
+        setNetworkStatus(false);
+        setError('Network error. Please check your internet connection and try again.');
+      } else {
+        setError('Failed to add vehicle: ' + err.message);
+      }
     }
   };
 
   const handleUpdateVehicle = async () => {
+    if (!networkStatus) {
+      setError('Cannot update vehicle while offline. Please check your internet connection.');
+      return;
+    }
+    
     try {
       setError(null);
       
@@ -169,32 +241,65 @@ const AvailableVehicles = ({ onBack }) => {
         return;
       }
       
-      // If status is assigned, assigned_driver_id must be provided
-      if (vehicleData.status === 'assigned' && !vehicleData.assigned_driver_id) {
-        setError('Please select a driver when status is assigned.');
-        return;
+      // Create update object
+      const vehicleToUpdate = {
+        registration_number: vehicleData.registration_number,
+        make: vehicleData.make,
+        model: vehicleData.model,
+        year: parseInt(vehicleData.year) || new Date().getFullYear(),
+        status: vehicleData.status,
+        notes: vehicleData.notes || null
+      };
+      
+      // Handle driver assignment
+      if (vehicleData.status === 'assigned') {
+        if (!vehicleData.assigned_driver_id) {
+          setError('Please select a driver when status is assigned.');
+          return;
+        }
+        vehicleToUpdate.assigned_driver_id = vehicleData.assigned_driver_id;
+      } else {
+        // Remove driver assignment if status is not 'assigned'
+        vehicleToUpdate.assigned_driver_id = null;
       }
       
-      const { data, error } = await supabase
+      console.log('Updating vehicle:', vehicleToUpdate, 'ID:', currentVehicleId);
+      
+      const { error: updateError } = await supabase
         .from('vehicles')
-        .update(vehicleData)
-        .eq('id', currentVehicleId)
-        .select();
+        .update(vehicleToUpdate)
+        .eq('id', currentVehicleId);
       
-      if (error) throw error;
+      if (updateError) {
+        console.error('Update error details:', updateError);
+        throw updateError;
+      }
       
-      // Vehicle will be updated via realtime subscription
+      // Success handling
       setShowEditModal(false);
       setSuccessMessage('Vehicle updated successfully!');
       setTimeout(() => setSuccessMessage(null), 3000);
       resetVehicleForm();
+      
+      // Force refresh
+      fetchVehicles();
     } catch (err) {
       console.error('Error updating vehicle:', err);
-      setError('Failed to update vehicle. Please try again.');
+      if (err.message.includes('Failed to fetch') || err.message.includes('network')) {
+        setNetworkStatus(false);
+        setError('Network error. Please check your internet connection and try again.');
+      } else {
+        setError(`Failed to update vehicle: ${err.message || 'Unknown error'}`);
+      }
     }
   };
 
   const handleDeleteVehicle = async () => {
+    if (!networkStatus) {
+      setError('Cannot delete vehicle while offline. Please check your internet connection.');
+      return;
+    }
+    
     try {
       setError(null);
       
@@ -205,17 +310,29 @@ const AvailableVehicles = ({ onBack }) => {
       
       if (error) throw error;
       
-      // Vehicle will be removed via realtime subscription
       setShowDeleteModal(false);
       setSuccessMessage('Vehicle deleted successfully!');
       setTimeout(() => setSuccessMessage(null), 3000);
+      
+      // Force refresh
+      fetchVehicles();
     } catch (err) {
       console.error('Error deleting vehicle:', err);
-      setError('Failed to delete vehicle. Please try again.');
+      if (err.message.includes('Failed to fetch') || err.message.includes('network')) {
+        setNetworkStatus(false);
+        setError('Network error. Please check your internet connection and try again.');
+      } else {
+        setError('Failed to delete vehicle: ' + err.message);
+      }
     }
   };
   
   const handleUploadDocument = async () => {
+    if (!networkStatus) {
+      setError('Cannot upload document while offline. Please check your internet connection.');
+      return;
+    }
+    
     if (!documentFile || !documentName || !documentType) {
       setError('Please fill in all document fields.');
       return;
@@ -273,13 +390,23 @@ const AvailableVehicles = ({ onBack }) => {
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch (err) {
       console.error('Error uploading document:', err);
-      setError('Failed to upload document. Please try again.');
+      if (err.message.includes('Failed to fetch') || err.message.includes('network')) {
+        setNetworkStatus(false);
+        setError('Network error. Please check your internet connection and try again.');
+      } else {
+        setError('Failed to upload document: ' + err.message);
+      }
     } finally {
       setUploadLoading(false);
     }
   };
   
   const handleDownloadDocument = async (document) => {
+    if (!networkStatus) {
+      setError('Cannot download document while offline. Please check your internet connection.');
+      return;
+    }
+    
     try {
       const { data, error } = await supabase.storage
         .from('miles-express')
@@ -291,11 +418,21 @@ const AvailableVehicles = ({ onBack }) => {
       window.open(data.signedUrl, '_blank');
     } catch (err) {
       console.error('Error downloading document:', err);
-      setError('Failed to download document. Please try again.');
+      if (err.message.includes('Failed to fetch') || err.message.includes('network')) {
+        setNetworkStatus(false);
+        setError('Network error. Please check your internet connection and try again.');
+      } else {
+        setError('Failed to download document: ' + err.message);
+      }
     }
   };
   
   const handleDeleteDocument = async (documentId) => {
+    if (!networkStatus) {
+      setError('Cannot delete document while offline. Please check your internet connection.');
+      return;
+    }
+    
     try {
       // Get document details first
       const { data: document, error: fetchError } = await supabase
@@ -328,7 +465,12 @@ const AvailableVehicles = ({ onBack }) => {
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch (err) {
       console.error('Error deleting document:', err);
-      setError('Failed to delete document. Please try again.');
+      if (err.message.includes('Failed to fetch') || err.message.includes('network')) {
+        setNetworkStatus(false);
+        setError('Network error. Please check your internet connection and try again.');
+      } else {
+        setError('Failed to delete document: ' + err.message);
+      }
     }
   };
 
@@ -369,669 +511,604 @@ const AvailableVehicles = ({ onBack }) => {
     });
     setCurrentVehicleId(null);
   };
-
-  // Modal component
-  const Modal = ({ show, onClose, title, children, footer }) => {
-    if (!show) return null;
+  
+  // Handle input change without losing focus
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
     
-    return (
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 1000
-      }}>
-        <div style={{
-          backgroundColor: 'white',
-          borderRadius: '5px',
-          width: '500px',
-          maxWidth: '90%',
-          maxHeight: '90%',
-          overflowY: 'auto',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-        }}>
-          <div style={{ padding: '15px', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h3 style={{ margin: 0 }}>{title}</h3>
-            <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>&times;</button>
-          </div>
-          <div style={{ padding: '15px' }}>
-            {children}
-          </div>
-          {footer && (
-            <div style={{ padding: '15px', borderTop: '1px solid #eee', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
-              {footer}
-            </div>
-          )}
-        </div>
-      </div>
-    );
+    // Use a functional update to prevent focus issues
+    setVehicleData(prevData => {
+      const newData = { ...prevData };
+      
+      // Special handling for year to ensure it's a number
+      if (name === 'year') {
+        newData[name] = value === '' ? '' : parseInt(value);
+      } else if (name === 'status' && value !== 'assigned') {
+        // If changing from assigned to another status, clear driver
+        newData[name] = value;
+        newData.assigned_driver_id = null;
+      } else {
+        newData[name] = value;
+      }
+      
+      return newData;
+    });
+  };
+
+  const retryConnection = () => {
+    fetchVehicles();
   };
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+      <div className="d-flex justify-content-between align-items-center mb-4">
         <button 
+          className="btn btn-link ps-0"
           onClick={onBack}
-          style={{
-            background: 'none',
-            border: 'none',
-            fontSize: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            cursor: 'pointer'
-          }}
         >
-          ← Back to Vehicle Management
+          <i className="bi bi-arrow-left me-1"></i> Back to Vehicle Management
         </button>
         <button
+          className="btn btn-primary"
           onClick={() => setShowAddModal(true)}
-          style={{
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            padding: '8px 16px',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '5px'
-          }}
+          disabled={!networkStatus}
         >
-          <span>+</span> Add Vehicle
+          <i className="bi bi-plus-lg me-1"></i> Add Vehicle
         </button>
       </div>
       
-      <h2>Available Vehicles</h2>
+      <h2>Vehicle Management</h2>
       
-      {error && (
-        <div style={{ 
-          padding: '10px', 
-          marginBottom: '15px', 
-          backgroundColor: '#f8d7da', 
-          color: '#721c24',
-          borderRadius: '4px'
-        }}>
-          {error}
+      {!networkStatus && (
+        <div className="alert alert-warning mb-3">
+          <i className="bi bi-wifi-off me-2"></i>
+          <strong>Network connection issue detected.</strong> Some features may be unavailable.
+          <button className="btn btn-sm btn-outline-dark float-end" onClick={retryConnection}>
+            <i className="bi bi-arrow-repeat me-1"></i> Retry
+          </button>
         </div>
       )}
       
-      {successMessage && (
-        <div style={{ 
-          padding: '10px', 
-          marginBottom: '15px', 
-          backgroundColor: '#d4edda', 
-          color: '#155724',
-          borderRadius: '4px'
-        }}>
-          {successMessage}
-        </div>
-      )}
+      {error && <div className="alert alert-danger">{error}</div>}
+      {successMessage && <div className="alert alert-success">{successMessage}</div>}
       
       {loading ? (
-        <div style={{ textAlign: 'center', padding: '40px 0' }}>
-          <div style={{ 
-            border: '4px solid rgba(0, 0, 0, 0.1)',
-            borderLeftColor: '#007bff',
-            borderRadius: '50%',
-            width: '40px',
-            height: '40px',
-            margin: '0 auto 15px',
-            animation: 'spin 1s linear infinite'
-          }}></div>
-          <div>Loading vehicles...</div>
-          <style>
-            {`
-              @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-              }
-            `}
-          </style>
+        <div className="text-center my-5">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading vehicles...</span>
+          </div>
+        </div>
+      ) : !networkStatus && vehicles.length === 0 ? (
+        <div className="text-center p-5 bg-light rounded">
+          <div className="display-1 mb-3">🌐</div>
+          <h3>Network Connection Error</h3>
+          <p className="text-muted">Unable to load vehicles. Please check your internet connection.</p>
+          <button className="btn btn-outline-primary mt-3" onClick={retryConnection}>
+            <i className="bi bi-arrow-repeat me-1"></i> Retry Connection
+          </button>
         </div>
       ) : vehicles.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '40px 0', backgroundColor: '#f8f9fa', borderRadius: '5px' }}>
-          <div style={{ fontSize: '48px', marginBottom: '10px' }}>🚚</div>
+        <div className="text-center p-5 bg-light rounded">
+          <div className="display-1 mb-3">🚚</div>
           <h3>No vehicles found</h3>
-          <p>Add your first vehicle to get started</p>
+          <p className="text-muted">Add your first vehicle to get started</p>
         </div>
       ) : (
-        <div style={{ 
-          backgroundColor: 'white', 
-          borderRadius: '5px',
-          boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-          overflow: 'hidden'
-        }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ backgroundColor: '#f8f9fa', borderBottom: '2px solid #dee2e6' }}>
-                <th style={{ padding: '12px 15px', textAlign: 'left' }}>Registration</th>
-                <th style={{ padding: '12px 15px', textAlign: 'left' }}>Make & Model</th>
-                <th style={{ padding: '12px 15px', textAlign: 'left' }}>Year</th>
-                <th style={{ padding: '12px 15px', textAlign: 'left' }}>Status</th>
-                <th style={{ padding: '12px 15px', textAlign: 'left' }}>Driver</th>
-                <th style={{ padding: '12px 15px', textAlign: 'right' }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {vehicles.map(vehicle => (
-                <tr key={vehicle.id} style={{ borderBottom: '1px solid #dee2e6' }}>
-                  <td style={{ padding: '12px 15px' }}>{vehicle.registration_number}</td>
-                  <td style={{ padding: '12px 15px' }}>{vehicle.make} {vehicle.model}</td>
-                  <td style={{ padding: '12px 15px' }}>{vehicle.year}</td>
-                  <td style={{ padding: '12px 15px' }}>
-                    <span style={{ 
-                      backgroundColor: 
-                        vehicle.status === 'available' ? '#28a745' :
-                        vehicle.status === 'assigned' ? '#007bff' :
-                        vehicle.status === 'spare' ? '#17a2b8' :
-                        vehicle.status === 'maintenance' ? '#ffc107' : '#6c757d',
-                      color: vehicle.status === 'maintenance' ? 'black' : 'white',
-                      padding: '3px 8px',
-                      borderRadius: '12px',
-                      fontSize: '0.85rem'
-                    }}>
-                      {vehicle.status.charAt(0).toUpperCase() + vehicle.status.slice(1)}
-                    </span>
-                  </td>
-                  <td style={{ padding: '12px 15px' }}>
-                    {vehicle.driver?.full_name || 'None'}
-                  </td>
-                  <td style={{ padding: '12px 15px', textAlign: 'right' }}>
-                    <button 
-                      onClick={() => openEditModal(vehicle)}
-                      style={{
-                        backgroundColor: 'transparent',
-                        border: '1px solid #6c757d',
-                        borderRadius: '4px',
-                        padding: '4px 8px',
-                        marginRight: '5px',
-                        cursor: 'pointer'
-                      }}
-                      title="Edit Vehicle"
-                    >
-                      <span role="img" aria-label="Edit">✏️</span>
-                    </button>
-                    <button 
-                      onClick={() => openDocumentModal(vehicle)}
-                      style={{
-                        backgroundColor: 'transparent',
-                        border: '1px solid #17a2b8',
-                        borderRadius: '4px',
-                        padding: '4px 8px',
-                        marginRight: '5px',
-                        cursor: 'pointer'
-                      }}
-                      title="Manage Documents"
-                    >
-                      <span role="img" aria-label="Documents">📄</span>
-                    </button>
-                    <button 
-                      onClick={() => openDeleteModal(vehicle)}
-                      style={{
-                        backgroundColor: 'transparent',
-                        border: '1px solid #dc3545',
-                        color: '#dc3545',
-                        borderRadius: '4px',
-                        padding: '4px 8px',
-                        cursor: 'pointer'
-                      }}
-                      title="Delete Vehicle"
-                    >
-                      <span role="img" aria-label="Delete">🗑️</span>
-                    </button>
-                  </td>
+        <div className="card">
+          <div className="table-responsive">
+            <table className="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>Registration</th>
+                  <th>Make & Model</th>
+                  <th>Year</th>
+                  <th>Status</th>
+                  <th>Driver</th>
+                  <th className="text-end">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {vehicles.map(vehicle => (
+                  <tr key={vehicle.id}>
+                    <td>{vehicle.registration_number}</td>
+                    <td>{vehicle.make} {vehicle.model}</td>
+                    <td>{vehicle.year}</td>
+                    <td>
+                      <span className={`badge ${
+                        vehicle.status === 'available' ? 'bg-success' :
+                        vehicle.status === 'assigned' ? 'bg-primary' :
+                        vehicle.status === 'spare' ? 'bg-info' :
+                        vehicle.status === 'maintenance' ? 'bg-warning' : 'bg-secondary'
+                      }`}>
+                        {vehicle.status.charAt(0).toUpperCase() + vehicle.status.slice(1)}
+                      </span>
+                    </td>
+                    <td>{vehicle.driver?.full_name || 'None'}</td>
+                    <td className="text-end">
+                      <button 
+                        className="btn btn-sm btn-outline-secondary me-1"
+                        onClick={() => openEditModal(vehicle)}
+                        title="Edit Vehicle"
+                        disabled={!networkStatus}
+                      >
+                        <i className="bi bi-pencil"></i>
+                      </button>
+                      <button 
+                        className="btn btn-sm btn-outline-info me-1"
+                        onClick={() => openDocumentModal(vehicle)}
+                        title="Manage Documents"
+                        disabled={!networkStatus}
+                      >
+                        <i className="bi bi-file-earmark"></i>
+                      </button>
+                      <button 
+                        className="btn btn-sm btn-outline-danger"
+                        onClick={() => openDeleteModal(vehicle)}
+                        title="Delete Vehicle"
+                        disabled={!networkStatus}
+                      >
+                        <i className="bi bi-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
       
       {/* Add Vehicle Modal */}
-      <Modal 
-        show={showAddModal} 
-        onClose={() => setShowAddModal(false)} 
-        title="Add New Vehicle"
-        footer={
-          <>
-            <button 
-              onClick={() => setShowAddModal(false)}
-              style={{
-                backgroundColor: '#6c757d',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              Cancel
-            </button>
-            <button 
-              onClick={handleAddVehicle}
-              style={{
-                backgroundColor: '#007bff',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              Add Vehicle
-            </button>
-          </>
-        }
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Registration Number*</label>
-            <input
-              type="text"
-              value={vehicleData.registration_number}
-              onChange={(e) => setVehicleData({...vehicleData, registration_number: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-              required
-            />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Make*</label>
-            <input
-              type="text"
-              value={vehicleData.make}
-              onChange={(e) => setVehicleData({...vehicleData, make: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-              required
-            />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Model*</label>
-            <input
-              type="text"
-              value={vehicleData.model}
-              onChange={(e) => setVehicleData({...vehicleData, model: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-              required
-            />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Year</label>
-            <input
-              type="number"
-              value={vehicleData.year}
-              onChange={(e) => setVehicleData({...vehicleData, year: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-            />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Status</label>
-            <select
-              value={vehicleData.status}
-              onChange={(e) => setVehicleData({...vehicleData, status: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-            >
-              <option value="available">Available</option>
-              <option value="assigned">Assigned</option>
-              <option value="spare">Spare</option>
-              <option value="maintenance">Maintenance</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </div>
+      {showAddModal && (
+        <div className="modal-wrapper" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1050 }}>
+          {/* Backdrop with lower z-index */}
+          <div 
+            className="modal-backdrop show" 
+            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1040 }}
+            onClick={() => setShowAddModal(false)}
+          ></div>
           
-          {vehicleData.status === 'assigned' && (
-            <div>
-              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Assign to Driver*</label>
-              <select
-                value={vehicleData.assigned_driver_id || ''}
-                onChange={(e) => setVehicleData({...vehicleData, assigned_driver_id: e.target.value || null})}
-                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-                required={vehicleData.status === 'assigned'}
-              >
-                <option value="">Select a driver</option>
-                {drivers.map(driver => (
-                  <option key={driver.id} value={driver.id}>{driver.full_name}</option>
-                ))}
-              </select>
+          {/* Modal dialog with higher z-index */}
+          <div 
+            className="modal show d-block" 
+            tabIndex="-1" 
+            style={{ zIndex: 1050, position: 'relative', pointerEvents: 'none' }}
+          >
+            <div className="modal-dialog" style={{ pointerEvents: 'auto' }}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Add New Vehicle</h5>
+                  <button type="button" className="btn-close" onClick={() => setShowAddModal(false)}></button>
+                </div>
+                <div className="modal-body">
+                  <form id="addVehicleForm" onSubmit={(e) => { e.preventDefault(); handleAddVehicle(); }}>
+                    <div className="mb-3">
+                      <label htmlFor="registration_number" className="form-label">Registration Number*</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="registration_number"
+                        name="registration_number"
+                        value={vehicleData.registration_number}
+                        onChange={handleInputChange}
+                        required
+                        autoFocus
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="make" className="form-label">Make*</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="make"
+                        name="make"
+                        value={vehicleData.make}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="model" className="form-label">Model*</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="model"
+                        name="model"
+                        value={vehicleData.model}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="year" className="form-label">Year</label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="year"
+                        name="year"
+                        value={vehicleData.year}
+                        onChange={handleInputChange}
+                        min="1900"
+                        max={new Date().getFullYear() + 1}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="status" className="form-label">Status</label>
+                      <select
+                        className="form-select"
+                        id="status"
+                        name="status"
+                        value={vehicleData.status}
+                        onChange={handleInputChange}
+                      >
+                        <option value="available">Available</option>
+                        <option value="assigned">Assigned</option>
+                        <option value="spare">Spare</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="inactive">Inactive</option>
+                      </select>
+                    </div>
+                    
+                    {vehicleData.status === 'assigned' && (
+                      <div className="mb-3">
+                        <label htmlFor="assigned_driver_id" className="form-label">Assign to Driver*</label>
+                        <select
+                          className="form-select"
+                          id="assigned_driver_id"
+                          name="assigned_driver_id"
+                          value={vehicleData.assigned_driver_id || ''}
+                          onChange={handleInputChange}
+                          required={vehicleData.status === 'assigned'}
+                        >
+                          <option value="">Select a driver</option>
+                          {drivers.map(driver => (
+                            <option key={driver.id} value={driver.id}>{driver.full_name}</option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                    
+                    <div className="mb-3">
+                      <label htmlFor="notes" className="form-label">Notes</label>
+                      <textarea
+                        className="form-control"
+                        id="notes"
+                        name="notes"
+                        rows={3}
+                        value={vehicleData.notes}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </form>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>
+                    Cancel
+                  </button>
+                  <button type="submit" form="addVehicleForm" className="btn btn-primary">
+                    Add Vehicle
+                  </button>
+                </div>
+              </div>
             </div>
-          )}
-          
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Notes</label>
-            <textarea
-              rows={3}
-              value={vehicleData.notes}
-              onChange={(e) => setVehicleData({...vehicleData, notes: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-            />
-          </div>
-          
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Documents</label>
-            <p style={{ fontSize: '0.9rem', color: '#6c757d' }}>Documents can be added after creating the vehicle.</p>
           </div>
         </div>
-      </Modal>
+      )}
       
       {/* Edit Vehicle Modal */}
-      <Modal 
-        show={showEditModal} 
-        onClose={() => setShowEditModal(false)} 
-        title="Edit Vehicle"
-        footer={
-          <>
-            <button 
-              onClick={() => setShowEditModal(false)}
-              style={{
-                backgroundColor: '#6c757d',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              Cancel
-            </button>
-            <button 
-              onClick={handleUpdateVehicle}
-              style={{
-                backgroundColor: '#007bff',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              Update Vehicle
-            </button>
-          </>
-        }
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Registration Number*</label>
-            <input
-              type="text"
-              value={vehicleData.registration_number}
-              onChange={(e) => setVehicleData({...vehicleData, registration_number: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-              required
-            />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Make*</label>
-            <input
-              type="text"
-              value={vehicleData.make}
-              onChange={(e) => setVehicleData({...vehicleData, make: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-              required
-            />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Model*</label>
-            <input
-              type="text"
-              value={vehicleData.model}
-              onChange={(e) => setVehicleData({...vehicleData, model: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-              required
-            />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Year</label>
-            <input
-              type="number"
-              value={vehicleData.year}
-              onChange={(e) => setVehicleData({...vehicleData, year: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-            />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Status</label>
-            <select
-              value={vehicleData.status}
-              onChange={(e) => setVehicleData({...vehicleData, status: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-            >
-              <option value="available">Available</option>
-              <option value="assigned">Assigned</option>
-              <option value="spare">Spare</option>
-              <option value="maintenance">Maintenance</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </div>
+      {showEditModal && (
+        <div className="modal-wrapper" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1050 }}>
+          {/* Backdrop with lower z-index */}
+          <div 
+            className="modal-backdrop show" 
+            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1040 }}
+            onClick={() => setShowEditModal(false)}
+          ></div>
           
-          {vehicleData.status === 'assigned' && (
-            <div>
-              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Assign to Driver*</label>
-              <select
-                value={vehicleData.assigned_driver_id || ''}
-                onChange={(e) => setVehicleData({...vehicleData, assigned_driver_id: e.target.value || null})}
-                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-                required={vehicleData.status === 'assigned'}
-              >
-                <option value="">Select a driver</option>
-                {drivers.map(driver => (
-                  <option key={driver.id} value={driver.id}>{driver.full_name}</option>
-                ))}
-              </select>
+          {/* Modal dialog with higher z-index */}
+          <div 
+            className="modal show d-block" 
+            tabIndex="-1" 
+            style={{ zIndex: 1050, position: 'relative', pointerEvents: 'none' }}
+          >
+            <div className="modal-dialog" style={{ pointerEvents: 'auto' }}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Edit Vehicle</h5>
+                  <button type="button" className="btn-close" onClick={() => setShowEditModal(false)}></button>
+                </div>
+                <div className="modal-body">
+                  <form id="editVehicleForm" onSubmit={(e) => { e.preventDefault(); handleUpdateVehicle(); }}>
+                    <div className="mb-3">
+                      <label htmlFor="edit_registration_number" className="form-label">Registration Number*</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="edit_registration_number"
+                        name="registration_number"
+                        value={vehicleData.registration_number}
+                        onChange={handleInputChange}
+                        required
+                        autoFocus
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="edit_make" className="form-label">Make*</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="edit_make"
+                        name="make"
+                        value={vehicleData.make}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="edit_model" className="form-label">Model*</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="edit_model"
+                        name="model"
+                        value={vehicleData.model}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="edit_year" className="form-label">Year</label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="edit_year"
+                        name="year"
+                        value={vehicleData.year}
+                        onChange={handleInputChange}
+                        min="1900"
+                        max={new Date().getFullYear() + 1}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="edit_status" className="form-label">Status</label>
+                      <select
+                        className="form-select"
+                        id="edit_status"
+                        name="status"
+                        value={vehicleData.status}
+                        onChange={handleInputChange}
+                      >
+                        <option value="available">Available</option>
+                        <option value="assigned">Assigned</option>
+                        <option value="spare">Spare</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="inactive">Inactive</option>
+                      </select>
+                    </div>
+                    
+                    {vehicleData.status === 'assigned' && (
+                      <div className="mb-3">
+                        <label htmlFor="edit_assigned_driver_id" className="form-label">Assign to Driver*</label>
+                        <select
+                          className="form-select"
+                          id="edit_assigned_driver_id"
+                          name="assigned_driver_id"
+                          value={vehicleData.assigned_driver_id || ''}
+                          onChange={handleInputChange}
+                          required={vehicleData.status === 'assigned'}
+                        >
+                          <option value="">Select a driver</option>
+                          {drivers.map(driver => (
+                            <option key={driver.id} value={driver.id}>{driver.full_name}</option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                    
+                    <div className="mb-3">
+                      <label htmlFor="edit_notes" className="form-label">Notes</label>
+                      <textarea
+                        className="form-control"
+                        id="edit_notes"
+                        name="notes"
+                        rows={3}
+                        value={vehicleData.notes}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </form>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" onClick={() => setShowEditModal(false)}>
+                    Cancel
+                  </button>
+                  <button type="submit" form="editVehicleForm" className="btn btn-primary">
+                    Update Vehicle
+                  </button>
+                </div>
+              </div>
             </div>
-          )}
-          
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Notes</label>
-            <textarea
-              rows={3}
-              value={vehicleData.notes}
-              onChange={(e) => setVehicleData({...vehicleData, notes: e.target.value})}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-            />
           </div>
         </div>
-      </Modal>
-      
-      {/* Document Modal */}
-      <Modal 
-        show={showDocumentModal} 
-        onClose={() => setShowDocumentModal(false)} 
-        title="Vehicle Documents"
-        footer={
-          <button 
-            onClick={() => setShowDocumentModal(false)}
-            style={{
-              backgroundColor: '#6c757d',
-              color: 'white',
-              border: 'none',
-              padding: '8px 16px',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
-            Close
-          </button>
-        }
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-          <h4>Upload New Document</h4>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Name*</label>
-            <input
-              type="text"
-              value={documentName}
-              onChange={(e) => setDocumentName(e.target.value)}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-              required
-            />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Type*</label>
-            <select
-              value={documentType}
-              onChange={(e) => setDocumentType(e.target.value)}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-            >
-              <option value="registration">Registration</option>
-              <option value="insurance">Insurance</option>
-              <option value="maintenance">Maintenance Record</option>
-              <option value="inspection">Inspection Certificate</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>File*</label>
-            <input
-              type="file"
-              onChange={(e) => setDocumentFile(e.target.files[0])}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-              accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-            />
-            <p style={{ fontSize: '0.9rem', color: '#6c757d', marginTop: '5px' }}>
-              Supported formats: PDF, JPG, PNG, DOC, DOCX (max 5MB)
-            </p>
-          </div>
-          <button
-            onClick={handleUploadDocument}
-            disabled={uploadLoading}
-            style={{
-              backgroundColor: '#007bff',
-              color: 'white',
-              border: 'none',
-              padding: '8px 16px',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '5px'
-            }}
-          >
-            {uploadLoading ? 'Uploading...' : 'Upload Document'}
-          </button>
-          
-          <hr style={{ margin: '15px 0' }} />
-          
-          <h4>Existing Documents</h4>
-          {documents.length === 0 ? (
-            <p style={{ color: '#6c757d' }}>No documents found for this vehicle.</p>
-          ) : (
-            <div style={{ 
-              backgroundColor: 'white', 
-              borderRadius: '5px',
-              boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-              overflow: 'hidden'
-            }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                  <tr style={{ backgroundColor: '#f8f9fa', borderBottom: '1px solid #dee2e6' }}>
-                    <th style={{ padding: '10px', textAlign: 'left' }}>Name</th>
-                    <th style={{ padding: '10px', textAlign: 'left' }}>Type</th>
-                    <th style={{ padding: '10px', textAlign: 'right' }}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {documents.map(doc => (
-                    <tr key={doc.id} style={{ borderBottom: '1px solid #dee2e6' }}>
-                      <td style={{ padding: '10px' }}>{doc.name}</td>
-                      <td style={{ padding: '10px' }}>
-                        <span style={{ 
-                          backgroundColor: '#17a2b8',
-                          color: 'white',
-                          padding: '3px 8px',
-                          borderRadius: '12px',
-                          fontSize: '0.85rem'
-                        }}>
-                          {doc.type.charAt(0).toUpperCase() + doc.type.slice(1)}
-                        </span>
-                      </td>
-                      <td style={{ padding: '10px', textAlign: 'right' }}>
-                        <button 
-                          onClick={() => handleDownloadDocument(doc)}
-                          style={{
-                            backgroundColor: 'transparent',
-                            border: '1px solid #28a745',
-                            borderRadius: '4px',
-                            padding: '4px 8px',
-                            marginRight: '5px',
-                            cursor: 'pointer'
-                          }}
-                          title="Download Document"
-                        >
-                          <span role="img" aria-label="Download">📥</span>
-                        </button>
-                        <button 
-                          onClick={() => handleDeleteDocument(doc.id)}
-                          style={{
-                            backgroundColor: 'transparent',
-                            border: '1px solid #dc3545',
-                            color: '#dc3545',
-                            borderRadius: '4px',
-                            padding: '4px 8px',
-                            cursor: 'pointer'
-                          }}
-                          title="Delete Document"
-                        >
-                          <span role="img" aria-label="Delete">🗑️</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-          <p style={{ color: '#dc3545', fontWeight: 'bold', fontSize: '0.9rem' }}>
-            Maximum 4 documents allowed per vehicle.
-          </p>
-        </div>
-      </Modal>
+      )}
       
       {/* Delete Confirmation Modal */}
-      <Modal 
-        show={showDeleteModal} 
-        onClose={() => setShowDeleteModal(false)} 
-        title="Confirm Delete"
-        footer={
-          <>
-            <button 
-              onClick={() => setShowDeleteModal(false)}
-              style={{
-                backgroundColor: '#6c757d',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              Cancel
-            </button>
-            <button 
-              onClick={handleDeleteVehicle}
-              style={{
-                backgroundColor: '#dc3545',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              Delete Vehicle
-            </button>
-          </>
-        }
-      >
-        <p>Are you sure you want to delete this vehicle? This action cannot be undone.</p>
-        <p><strong>Warning:</strong> All associated documents and records will also be deleted.</p>
-      </Modal>
+      {showDeleteModal && (
+        <div className="modal-wrapper" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1050 }}>
+          {/* Backdrop with lower z-index */}
+          <div 
+            className="modal-backdrop show" 
+            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1040 }}
+            onClick={() => setShowDeleteModal(false)}
+          ></div>
+          
+          {/* Modal dialog with higher z-index */}
+          <div 
+            className="modal show d-block" 
+            tabIndex="-1" 
+            style={{ zIndex: 1050, position: 'relative', pointerEvents: 'none' }}
+          >
+            <div className="modal-dialog" style={{ pointerEvents: 'auto' }}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Confirm Delete</h5>
+                  <button type="button" className="btn-close" onClick={() => setShowDeleteModal(false)}></button>
+                </div>
+                <div className="modal-body">
+                  <p>Are you sure you want to delete this vehicle? This action cannot be undone.</p>
+                  <p className="text-danger"><strong>Warning:</strong> All associated documents and records will also be deleted.</p>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" onClick={() => setShowDeleteModal(false)}>
+                    Cancel
+                  </button>
+                  <button type="button" className="btn btn-danger" onClick={handleDeleteVehicle}>
+                    Delete Vehicle
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Document Modal */}
+      {showDocumentModal && (
+        <div className="modal-wrapper" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1050 }}>
+          {/* Backdrop with lower z-index */}
+          <div 
+            className="modal-backdrop show" 
+            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1040 }}
+            onClick={() => setShowDocumentModal(false)}
+          ></div>
+          
+          {/* Modal dialog with higher z-index */}
+          <div 
+            className="modal show d-block" 
+            tabIndex="-1" 
+            style={{ zIndex: 1050, position: 'relative', pointerEvents: 'none' }}
+          >
+            <div className="modal-dialog modal-lg" style={{ pointerEvents: 'auto' }}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Vehicle Documents</h5>
+                  <button type="button" className="btn-close" onClick={() => setShowDocumentModal(false)}></button>
+                </div>
+                <div className="modal-body">
+                  <h5>Upload New Document</h5>
+                  <form id="uploadDocumentForm" onSubmit={(e) => { e.preventDefault(); handleUploadDocument(); }} className="mb-4">
+                    <div className="mb-3">
+                      <label htmlFor="document_name" className="form-label">Document Name*</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="document_name"
+                        value={documentName}
+                        onChange={(e) => setDocumentName(e.target.value)}
+                        required
+                        placeholder="e.g., Insurance Policy 2023, Vehicle Registration"
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="document_type" className="form-label">Document Type*</label>
+                      <select
+                        className="form-select"
+                        id="document_type"
+                        value={documentType}
+                        onChange={(e) => setDocumentType(e.target.value)}
+                      >
+                        <option value="registration">Registration</option>
+                        <option value="insurance">Insurance</option>
+                        <option value="maintenance">Maintenance Record</option>
+                        <option value="inspection">Inspection Certificate</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="document_file" className="form-label">File*</label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="document_file"
+                        onChange={(e) => setDocumentFile(e.target.files[0])}
+                        accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                      />
+                      <div className="form-text">Supported formats: PDF, JPG, PNG, DOC, DOCX (max 5MB)</div>
+                    </div>
+                    <button 
+                      type="submit"
+                      className="btn btn-primary" 
+                      disabled={uploadLoading || !documentFile || !documentName || !documentType}
+                    >
+                      {uploadLoading ? (
+                        <>
+                          <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                          Uploading...
+                        </>
+                      ) : 'Upload Document'}
+                    </button>
+                  </form>
+                  
+                  <hr />
+                  
+                  <h5>Existing Documents</h5>
+                  {documents.length === 0 ? (
+                    <p className="text-muted">No documents found for this vehicle.</p>
+                  ) : (
+                    <div className="table-responsive">
+                      <table className="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Date Uploaded</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {documents.map(doc => (
+                            <tr key={doc.id}>
+                              <td>{doc.name}</td>
+                              <td>
+                                <span className="badge bg-info">
+                                  {doc.type.charAt(0).toUpperCase() + doc.type.slice(1)}
+                                </span>
+                              </td>
+                              <td>{new Date(doc.created_at).toLocaleDateString()}</td>
+                              <td>
+                                <button 
+                                  className="btn btn-sm btn-outline-primary me-1"
+                                  onClick={() => handleDownloadDocument(doc)}
+                                  title="Download Document"
+                                >
+                                  <i className="bi bi-download"></i>
+                                </button>
+                                <button 
+                                  className="btn btn-sm btn-outline-danger"
+                                  onClick={() => handleDeleteDocument(doc.id)}
+                                  title="Delete Document"
+                                >
+                                  <i className="bi bi-trash"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                  <p className="text-danger fw-bold mt-2">Maximum 4 documents allowed per vehicle.</p>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" onClick={() => setShowDocumentModal(false)}>
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

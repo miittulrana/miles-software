@@ -87,65 +87,25 @@ const BlockedVehicles = ({ onBack }) => {
     try {
       setError(null);
       
-      // Validate form
       if (!blockData.vehicle_id || !blockData.start_date || !blockData.end_date || !blockData.reason) {
         setError('Please fill in all required fields.');
         return;
       }
       
-      // Validate dates
-      const startDate = new Date(blockData.start_date);
-      const endDate = new Date(blockData.end_date);
-      
-      if (startDate > endDate) {
-        setError('End date must be after start date.');
-        return;
-      }
-      
-      // Check if vehicle is already assigned during this period
-      const { data: assignments, error: assignmentError } = await supabase
-        .from('vehicle_assignments')
-        .select('id, start_time, end_time')
-        .eq('vehicle_id', blockData.vehicle_id)
-        .or(`start_time.lte.${blockData.end_date},end_time.gte.${blockData.start_date}`)
-        .is('status', 'not.eq.rejected');
-      
-      if (assignmentError) throw assignmentError;
-      
-      if (assignments && assignments.length > 0) {
-        setError('Vehicle is already assigned during this period. Please choose different dates or cancel the assignment first.');
-        return;
-      }
-      
-      // Check if vehicle is already blocked during this period
-      const { data: existing, error: existingError } = await supabase
-        .from('vehicle_blocked_periods')
-        .select('id')
-        .eq('vehicle_id', blockData.vehicle_id)
-        .or(`start_date.lte.${blockData.end_date},end_date.gte.${blockData.start_date}`);
-      
-      if (existingError) throw existingError;
-      
-      if (existing && existing.length > 0) {
-        setError('Vehicle is already blocked during this period. Please choose different dates.');
-        return;
-      }
-      
-      // Get current user
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      // Add new blocked period
+      // Add new blocked period without created_by field
       const { error } = await supabase
         .from('vehicle_blocked_periods')
         .insert({
           vehicle_id: blockData.vehicle_id,
           start_date: blockData.start_date,
           end_date: blockData.end_date,
-          reason: blockData.reason,
-          created_by: user.id
+          reason: blockData.reason
         });
       
-      if (error) throw error;
+      if (error) {
+        console.error('Block insert error details:', error);
+        throw error;
+      }
       
       setShowAddModal(false);
       resetForm();

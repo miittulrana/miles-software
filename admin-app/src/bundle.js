@@ -52829,6 +52829,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Login */ "./src/components/Login.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -52851,147 +52856,140 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 var App = function App() {
+  var _session$user;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('dashboard'),
     _useState2 = _slicedToArray(_useState, 2),
     currentView = _useState2[0],
     setCurrentView = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
-    isAuthenticated = _useState4[0],
-    setIsAuthenticated = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    session = _useState4[0],
+    setSession = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState6 = _slicedToArray(_useState5, 2),
-    isAdmin = _useState6[0],
-    setIsAdmin = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    loading = _useState6[0],
+    setLoading = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState8 = _slicedToArray(_useState7, 2),
-    loading = _useState8[0],
-    setLoading = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    authError = _useState8[0],
+    setAuthError = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      online: true,
+      lastChecked: Date.now()
+    }),
     _useState10 = _slicedToArray(_useState9, 2),
-    user = _useState10[0],
-    setUser = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState12 = _slicedToArray(_useState11, 2),
-    authError = _useState12[0],
-    setAuthError = _useState12[1];
+    networkStatus = _useState10[0],
+    setNetworkStatus = _useState10[1];
 
   // Check authentication on mount
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    checkAuthentication();
-  }, []);
-  var checkAuthentication = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _userData$role, _yield$supabase$auth$, sessionData, sessionError, session, _yield$supabase$from$, userData, userError, userRole;
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            _context.prev = 0;
-            setLoading(true);
-            console.log("Checking authentication...");
+    var checkSession = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var _yield$supabase$auth$, sessionData, sessionError, _yield$supabase$from$, userData, userError;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              setLoading(true);
+              _context.prev = 1;
+              _context.next = 4;
+              return checkNetworkConnection();
+            case 4:
+              _context.next = 6;
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.getSession();
+            case 6:
+              _yield$supabase$auth$ = _context.sent;
+              sessionData = _yield$supabase$auth$.data;
+              sessionError = _yield$supabase$auth$.error;
+              if (!sessionError) {
+                _context.next = 11;
+                break;
+              }
+              throw sessionError;
+            case 11:
+              if (!sessionData.session) {
+                _context.next = 30;
+                break;
+              }
+              _context.next = 14;
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('role').eq('email', sessionData.session.user.email) // Using email to match users
+              .maybeSingle();
+            case 14:
+              _yield$supabase$from$ = _context.sent;
+              userData = _yield$supabase$from$.data;
+              userError = _yield$supabase$from$.error;
+              // Use maybeSingle to avoid errors
 
-            // Get current session
-            _context.next = 5;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.getSession();
-          case 5:
-            _yield$supabase$auth$ = _context.sent;
-            sessionData = _yield$supabase$auth$.data;
-            sessionError = _yield$supabase$auth$.error;
-            if (!sessionError) {
-              _context.next = 13;
+              // If error querying, log it but allow the user in for now
+              if (userError) {
+                console.error('User data fetch error:', userError);
+              }
+
+              // If no user found or not admin role, sign out
+              if (!(!userData || userData.role !== 'admin')) {
+                _context.next = 25;
+                break;
+              }
+              // Not an admin, sign out
+              console.error('Not authorized as admin');
+              _context.next = 22;
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.signOut();
+            case 22:
+              setSession(null);
+              _context.next = 28;
               break;
-            }
-            console.error("Session error:", sessionError);
-            setAuthError(sessionError.message);
-            setLoading(false);
-            return _context.abrupt("return");
-          case 13:
-            session = sessionData === null || sessionData === void 0 ? void 0 : sessionData.session;
-            console.log("Session:", session ? "Active" : "None");
-            if (session) {
-              _context.next = 18;
+            case 25:
+              // Valid admin session
+              console.log('Valid admin session');
+              setSession(sessionData.session);
+              setAuthError(null);
+            case 28:
+              _context.next = 31;
               break;
-            }
-            setLoading(false);
-            return _context.abrupt("return");
-          case 18:
-            // Set the authenticated user
-            setUser(session.user);
-            setIsAuthenticated(true);
-
-            // Now check if user is admin - FIXED QUERY
-            console.log("Checking if user is admin...");
-            console.log("User ID:", session.user.id);
-
-            // Get user from users table by ID
-            _context.next = 24;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('*') // Select all columns to see everything
-            .eq('id', session.user.id).single();
-          case 24:
-            _yield$supabase$from$ = _context.sent;
-            userData = _yield$supabase$from$.data;
-            userError = _yield$supabase$from$.error;
-            if (!userError) {
-              _context.next = 32;
+            case 30:
+              setSession(null);
+            case 31:
+              _context.next = 38;
               break;
-            }
-            console.error("Error fetching user data:", userError);
-            setAuthError("User data error: ".concat(userError.message));
-            setLoading(false);
-            return _context.abrupt("return");
-          case 32:
-            console.log("User data from DB:", userData);
+            case 33:
+              _context.prev = 33;
+              _context.t0 = _context["catch"](1);
+              console.error('Session error:', _context.t0);
 
-            // IMPORTANT: Check role in a case-insensitive way
-            userRole = userData === null || userData === void 0 || (_userData$role = userData.role) === null || _userData$role === void 0 ? void 0 : _userData$role.toString().toLowerCase();
-            console.log("User role:", userRole);
-            if (userRole === 'admin') {
-              console.log("✅ User is admin");
-              setIsAdmin(true);
-            } else {
-              console.log("❌ User is not admin");
-              setAuthError("Your account doesn't have admin privileges.");
-            }
-            _context.next = 42;
-            break;
-          case 38:
-            _context.prev = 38;
-            _context.t0 = _context["catch"](0);
-            console.error("Auth check error:", _context.t0);
-            setAuthError(_context.t0.message);
-          case 42:
-            _context.prev = 42;
-            setLoading(false);
-            return _context.finish(42);
-          case 45:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee, null, [[0, 38, 42, 45]]);
-    }));
-    return function checkAuthentication() {
-      return _ref.apply(this, arguments);
-    };
-  }();
+              // Check if this is a connection error
+              if (_context.t0.message && (_context.t0.message.includes('Failed to fetch') || _context.t0.message.includes('Network') || _context.t0.message.includes('connection'))) {
+                setNetworkStatus(_objectSpread(_objectSpread({}, networkStatus), {}, {
+                  online: false
+                }));
+              }
+              setSession(null);
+            case 38:
+              _context.prev = 38;
+              setLoading(false);
+              return _context.finish(38);
+            case 41:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[1, 33, 38, 41]]);
+      }));
+      return function checkSession() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+    checkSession();
 
-  // Auth state listener
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    // Listen for auth changes
     var _supabase$auth$onAuth = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.onAuthStateChange(/*#__PURE__*/function () {
         var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(event, session) {
           return _regeneratorRuntime().wrap(function _callee2$(_context2) {
             while (1) switch (_context2.prev = _context2.next) {
               case 0:
-                console.log("Auth state changed:", event);
-                if (event === 'SIGNED_IN' && session) {
-                  setUser(session.user);
-                  setIsAuthenticated(true);
-                  // Re-run the admin check when user signs in
-                  checkAuthentication();
-                } else if (event === 'SIGNED_OUT') {
-                  setUser(null);
-                  setIsAuthenticated(false);
-                  setIsAdmin(false);
-                  setAuthError(null);
+                console.log('Auth state changed:', event);
+                if (session) {
+                  // Only update session - we'll verify on page load and navigation
+                  setSession(session);
+                } else {
+                  setSession(null);
                 }
               case 2:
               case "end":
@@ -53003,51 +53001,100 @@ var App = function App() {
           return _ref2.apply(this, arguments);
         };
       }()),
-      authListener = _supabase$auth$onAuth.data;
+      subscription = _supabase$auth$onAuth.data.subscription;
+
+    // Also check for online/offline status
+    window.addEventListener('online', handleOnlineStatus);
+    window.addEventListener('offline', handleOfflineStatus);
     return function () {
-      var _authListener$subscri;
-      authListener === null || authListener === void 0 || (_authListener$subscri = authListener.subscription) === null || _authListener$subscri === void 0 || _authListener$subscri.unsubscribe();
+      subscription.unsubscribe();
+      window.removeEventListener('online', handleOnlineStatus);
+      window.removeEventListener('offline', handleOfflineStatus);
     };
   }, []);
 
-  // Handle sign out
-  var handleSignOut = /*#__PURE__*/function () {
+  // Check network connection
+  var checkNetworkConnection = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      var _yield$supabase$from$2, error, isOnline;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.signOut();
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('count', {
+              count: 'exact',
+              head: true
+            });
           case 3:
-            setUser(null);
-            setIsAuthenticated(false);
-            setIsAdmin(false);
-            setAuthError(null);
-            _context3.next = 12;
-            break;
-          case 9:
-            _context3.prev = 9;
+            _yield$supabase$from$2 = _context3.sent;
+            error = _yield$supabase$from$2.error;
+            isOnline = !error;
+            setNetworkStatus({
+              online: isOnline,
+              lastChecked: Date.now()
+            });
+            return _context3.abrupt("return", isOnline);
+          case 10:
+            _context3.prev = 10;
             _context3.t0 = _context3["catch"](0);
-            console.error('Sign out error:', _context3.t0);
-          case 12:
+            console.error('Network check failed:', _context3.t0);
+            setNetworkStatus({
+              online: false,
+              lastChecked: Date.now()
+            });
+            return _context3.abrupt("return", false);
+          case 15:
           case "end":
             return _context3.stop();
         }
-      }, _callee3, null, [[0, 9]]);
+      }, _callee3, null, [[0, 10]]);
     }));
-    return function handleSignOut() {
+    return function checkNetworkConnection() {
       return _ref3.apply(this, arguments);
     };
   }();
-
-  // Force admin mode for testing (remove this in production)
-  var forceAdminMode = function forceAdminMode() {
-    setIsAdmin(true);
-    setAuthError(null);
+  var handleOnlineStatus = function handleOnlineStatus() {
+    console.log('Browser reports online status');
+    checkNetworkConnection();
+  };
+  var handleOfflineStatus = function handleOfflineStatus() {
+    console.log('Browser reports offline status');
+    setNetworkStatus({
+      online: false,
+      lastChecked: Date.now()
+    });
   };
 
-  // Show loading screen while checking auth
+  // Handle sign out
+  var handleSignOut = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            _context4.next = 3;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.signOut();
+          case 3:
+            setSession(null);
+            _context4.next = 9;
+            break;
+          case 6:
+            _context4.prev = 6;
+            _context4.t0 = _context4["catch"](0);
+            console.error('Sign out error:', _context4.t0);
+          case 9:
+          case "end":
+            return _context4.stop();
+        }
+      }, _callee4, null, [[0, 6]]);
+    }));
+    return function handleSignOut() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+
+  // Show loading screen
   if (loading) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: "d-flex justify-content-center align-items-center vh-100"
@@ -53060,31 +53107,11 @@ var App = function App() {
   }
 
   // Show login screen if not authenticated
-  if (!isAuthenticated) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Login__WEBPACK_IMPORTED_MODULE_9__["default"], null);
-  }
-
-  // Show access denied message if not admin
-  if (!isAdmin) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      className: "container py-5 text-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      className: "card p-5 shadow"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
-      className: "mb-4"
-    }, "Access Denied"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-      className: "mb-4"
-    }, "You must be an admin to access this dashboard."), authError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      className: "alert alert-danger mb-4"
-    }, "Error: ", authError), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      className: "d-flex justify-content-center gap-3"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      onClick: handleSignOut,
-      className: "btn btn-primary"
-    }, "Sign Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      onClick: forceAdminMode,
-      className: "btn btn-warning"
-    }, "Override (Debug)"))));
+  if (!session) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Login__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      networkStatus: networkStatus,
+      onNetworkCheck: checkNetworkConnection
+    });
   }
 
   // Menu items for the sidebar
@@ -53122,25 +53149,39 @@ var App = function App() {
   var content;
   switch (currentView) {
     case 'vehicles':
-      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_VehicleManagement__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_VehicleManagement__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        networkStatus: networkStatus
+      });
       break;
     case 'drivers':
-      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DriverManagement__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DriverManagement__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        networkStatus: networkStatus
+      });
       break;
     case 'tracking':
-      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_VehicleTracking__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_VehicleTracking__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        networkStatus: networkStatus
+      });
       break;
     case 'issues':
-      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IssueReporting__WEBPACK_IMPORTED_MODULE_6__["default"], null);
+      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IssueReporting__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        networkStatus: networkStatus
+      });
       break;
     case 'api':
-      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ApiKeys__WEBPACK_IMPORTED_MODULE_7__["default"], null);
+      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ApiKeys__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        networkStatus: networkStatus
+      });
       break;
     case 'documents':
-      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DocumentManagement__WEBPACK_IMPORTED_MODULE_8__["default"], null);
+      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DocumentManagement__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        networkStatus: networkStatus
+      });
       break;
     default:
-      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Dashboard__WEBPACK_IMPORTED_MODULE_5__["default"], null);
+      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Dashboard__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        networkStatus: networkStatus
+      });
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "d-flex h-100"
@@ -53160,7 +53201,17 @@ var App = function App() {
     className: "bi bi-truck-flatbed me-2 fs-4"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: "fs-4"
-  }, "Miles Express")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
+  }, "Miles Express")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("hr", null), !networkStatus.online && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "alert alert-warning py-2 mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-wifi-off me-2"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("small", null, "Offline Mode"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "btn btn-sm btn-outline-dark float-end py-0 px-1",
+    onClick: checkNetworkConnection,
+    title: "Check connection"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-arrow-repeat"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: "nav nav-pills flex-column mb-auto"
   }, menuItems.map(function (item) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
@@ -53186,7 +53237,7 @@ var App = function App() {
     "aria-expanded": "false"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
     className: "bi bi-person-circle me-2"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, (user === null || user === void 0 ? void 0 : user.email) || 'Administrator')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, (session === null || session === void 0 || (_session$user = session.user) === null || _session$user === void 0 ? void 0 : _session$user.email) || 'User')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: "dropdown-menu dropdown-menu-dark text-small shadow",
     "aria-labelledby": "dropdownUser1"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
@@ -54682,167 +54733,68 @@ var Login = function Login() {
     _useState8 = _slicedToArray(_useState7, 2),
     error = _useState8[0],
     setError = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState10 = _slicedToArray(_useState9, 2),
-    initializing = _useState10[0],
-    setInitializing = _useState10[1];
-
-  // Check for existing session on component mount
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    var checkSession = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var _yield$supabase$auth$, data, _yield$supabase$from$, userData, userError;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              setInitializing(true);
-              _context.next = 4;
-              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.getSession();
-            case 4:
-              _yield$supabase$auth$ = _context.sent;
-              data = _yield$supabase$auth$.data;
-              if (!(data && data.session)) {
-                _context.next = 21;
-                break;
-              }
-              console.log("Found existing session");
-
-              // Get user details from users table
-              _context.next = 10;
-              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('role').eq('id', data.session.user.id).single();
-            case 10:
-              _yield$supabase$from$ = _context.sent;
-              userData = _yield$supabase$from$.data;
-              userError = _yield$supabase$from$.error;
-              if (!userError) {
-                _context.next = 16;
-                break;
-              }
-              console.error("Error fetching user role:", userError);
-              throw new Error('Could not verify user role. Please try again.');
-            case 16:
-              console.log("User data:", userData);
-
-              // If not admin, sign out
-              if (!(!userData || userData.role !== 'admin')) {
-                _context.next = 21;
-                break;
-              }
-              _context.next = 20;
-              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.signOut();
-            case 20:
-              setError('Access denied. This portal is for admin users only.');
-            case 21:
-              _context.next = 27;
-              break;
-            case 23:
-              _context.prev = 23;
-              _context.t0 = _context["catch"](0);
-              console.error('Session check error:', _context.t0);
-              setError(_context.t0.message || 'An error occurred during authentication');
-            case 27:
-              _context.prev = 27;
-              setInitializing(false);
-              return _context.finish(27);
-            case 30:
-            case "end":
-              return _context.stop();
-          }
-        }, _callee, null, [[0, 23, 27, 30]]);
-      }));
-      return function checkSession() {
-        return _ref.apply(this, arguments);
-      };
-    }();
-    checkSession();
-  }, []);
   var handleLogin = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-      var _yield$supabase$auth$2, data, signInError, _yield$supabase$from$2, userData, userError;
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
+    var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
+      var _yield$supabase$auth$, data, signInError;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
           case 0:
             e.preventDefault();
-            _context2.prev = 1;
+            _context.prev = 1;
             setLoading(true);
             setError(null);
+            console.log('Attempting login with:', email);
 
             // Sign in with email and password
-            _context2.next = 6;
+            _context.next = 7;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.signInWithPassword({
               email: email,
               password: password
             });
-          case 6:
-            _yield$supabase$auth$2 = _context2.sent;
-            data = _yield$supabase$auth$2.data;
-            signInError = _yield$supabase$auth$2.error;
+          case 7:
+            _yield$supabase$auth$ = _context.sent;
+            data = _yield$supabase$auth$.data;
+            signInError = _yield$supabase$auth$.error;
             if (!signInError) {
-              _context2.next = 11;
+              _context.next = 13;
               break;
             }
+            console.error('Authentication error:', signInError);
             throw signInError;
-          case 11:
-            console.log("Signed in successfully", data);
-
-            // Verify if user is admin
-            _context2.next = 14;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('role').eq('id', data.user.id).single();
-          case 14:
-            _yield$supabase$from$2 = _context2.sent;
-            userData = _yield$supabase$from$2.data;
-            userError = _yield$supabase$from$2.error;
-            if (!userError) {
-              _context2.next = 20;
-              break;
-            }
-            console.error("Error fetching user role:", userError);
-            throw new Error('Could not verify user role. Please try again.');
-          case 20:
-            console.log("User data after login:", userData);
-
-            // If not admin, sign out
-            if (!(!userData || userData.role !== 'admin')) {
-              _context2.next = 25;
-              break;
-            }
-            _context2.next = 24;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.signOut();
-          case 24:
-            throw new Error('Access denied. This portal is for admin users only.');
-          case 25:
-            _context2.next = 31;
+          case 13:
+            // Success! The App.jsx component will handle the session state
+            console.log('Login successful');
+            _context.next = 20;
             break;
-          case 27:
-            _context2.prev = 27;
-            _context2.t0 = _context2["catch"](1);
-            setError(_context2.t0.message || 'An error occurred during login');
-            console.error('Login error:', _context2.t0);
-          case 31:
-            _context2.prev = 31;
+          case 16:
+            _context.prev = 16;
+            _context.t0 = _context["catch"](1);
+            console.error('Login error:', _context.t0);
+
+            // Provide more user-friendly error messages
+            if (_context.t0.message.includes('Failed to fetch') || _context.t0.message.includes('Network')) {
+              setError('Network connection error. Please check your internet connection and try again.');
+            } else if (_context.t0.message.includes('Invalid login credentials')) {
+              setError('Invalid email or password. Please try again.');
+            } else if (_context.t0.message.includes('Email not confirmed')) {
+              setError('Please confirm your email address before logging in.');
+            } else {
+              setError(_context.t0.message || 'An error occurred during login. Please try again.');
+            }
+          case 20:
+            _context.prev = 20;
             setLoading(false);
-            return _context2.finish(31);
-          case 34:
+            return _context.finish(20);
+          case 23:
           case "end":
-            return _context2.stop();
+            return _context.stop();
         }
-      }, _callee2, null, [[1, 27, 31, 34]]);
+      }, _callee, null, [[1, 16, 20, 23]]);
     }));
     return function handleLogin(_x) {
-      return _ref2.apply(this, arguments);
+      return _ref.apply(this, arguments);
     };
   }();
-  if (initializing) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      className: "container vh-100 d-flex align-items-center justify-content-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      className: "spinner-border text-primary",
-      role: "status"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      className: "visually-hidden"
-    }, "Loading...")));
-  }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "container vh-100 d-flex align-items-center justify-content-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -54879,7 +54831,8 @@ var Login = function Login() {
       return setEmail(e.target.value);
     },
     required: true,
-    disabled: loading
+    disabled: loading,
+    autoFocus: true
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "mb-4"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
@@ -55027,54 +54980,46 @@ var VehicleManagement = function VehicleManagement() {
       default:
         // Main module selection screen
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Vehicle Management"), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-          style: {
-            padding: '10px',
-            marginBottom: '15px',
-            backgroundColor: '#f8d7da',
-            color: '#721c24',
-            borderRadius: '4px'
-          }
+          className: "alert alert-danger",
+          role: "alert"
         }, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-          style: {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-            gap: '20px',
-            marginTop: '20px'
-          }
+          className: "row row-cols-1 row-cols-md-3 g-4 mt-3"
         }, subModules.map(function (module) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
             key: module.id,
-            style: {
-              padding: '20px',
-              backgroundColor: 'white',
-              borderRadius: '5px',
-              boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-              cursor: 'pointer',
-              transition: 'transform 0.2s',
-              ':hover': {
-                transform: 'translateY(-5px)'
-              }
-            },
+            className: "col"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+            className: "card h-100 shadow-sm",
             onClick: function onClick() {
               return setCurrentSubModule(module.id);
+            },
+            style: {
+              cursor: 'pointer',
+              transition: 'transform 0.2s'
+            },
+            onMouseOver: function onMouseOver(e) {
+              return e.currentTarget.style.transform = 'translateY(-5px)';
+            },
+            onMouseOut: function onMouseOut(e) {
+              return e.currentTarget.style.transform = 'translateY(0)';
             }
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+            className: "card-body text-center"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
             style: {
               fontSize: '48px',
               marginBottom: '10px'
             }
-          }, module.icon), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, module.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-            style: {
-              color: '#6c757d'
-            }
-          }, module.description));
+          }, module.icon), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
+            className: "card-title"
+          }, module.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+            className: "card-text text-muted"
+          }, module.description))));
         })));
     }
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      padding: '20px'
-    }
+    className: "container py-4"
   }, renderSubModule());
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VehicleManagement);
@@ -55128,7 +55073,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 // Replace with your Mapbox token
-var MAPBOX_TOKEN = 'your-mapbox-token';
+var MAPBOX_TOKEN = 'sk.eyJ1IjoicmFuYWppNSIsImEiOiJjbThhd2hkenUxbW1yMmtzZm1qcHRodXI2In0.A9_ke0F5JrP5OYHd0tAVkg';
 var VehicleTracking = function VehicleTracking() {
   var mapContainer = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var map = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
@@ -56709,10 +56654,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -56744,27 +56685,31 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
     _useState10 = _slicedToArray(_useState9, 2),
     successMessage = _useState10[0],
     setSuccessMessage = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState12 = _slicedToArray(_useState11, 2),
+    networkStatus = _useState12[0],
+    setNetworkStatus = _useState12[1];
 
   // Modal states
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState12 = _slicedToArray(_useState11, 2),
-    showAddModal = _useState12[0],
-    setShowAddModal = _useState12[1];
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    showEditModal = _useState14[0],
-    setShowEditModal = _useState14[1];
+    showAddModal = _useState14[0],
+    setShowAddModal = _useState14[1];
   var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState16 = _slicedToArray(_useState15, 2),
-    showDeleteModal = _useState16[0],
-    setShowDeleteModal = _useState16[1];
+    showEditModal = _useState16[0],
+    setShowEditModal = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    showDocumentModal = _useState18[0],
-    setShowDocumentModal = _useState18[1];
+    showDeleteModal = _useState18[0],
+    setShowDeleteModal = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    showDocumentModal = _useState20[0],
+    setShowDocumentModal = _useState20[1];
 
   // Form data
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       registration_number: '',
       make: '',
       model: '',
@@ -56773,66 +56718,68 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
       notes: '',
       assigned_driver_id: null
     }),
-    _useState20 = _slicedToArray(_useState19, 2),
-    vehicleData = _useState20[0],
-    setVehicleData = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState22 = _slicedToArray(_useState21, 2),
-    documents = _useState22[0],
-    setDocuments = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    vehicleData = _useState22[0],
+    setVehicleData = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState24 = _slicedToArray(_useState23, 2),
-    currentVehicleId = _useState24[0],
-    setCurrentVehicleId = _useState24[1];
+    documents = _useState24[0],
+    setDocuments = _useState24[1];
   var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState26 = _slicedToArray(_useState25, 2),
-    documentFile = _useState26[0],
-    setDocumentFile = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    currentVehicleId = _useState26[0],
+    setCurrentVehicleId = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState28 = _slicedToArray(_useState27, 2),
-    documentName = _useState28[0],
-    setDocumentName = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('registration'),
+    documentFile = _useState28[0],
+    setDocumentFile = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState30 = _slicedToArray(_useState29, 2),
-    documentType = _useState30[0],
-    setDocumentType = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    documentName = _useState30[0],
+    setDocumentName = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('registration'),
     _useState32 = _slicedToArray(_useState31, 2),
-    uploadLoading = _useState32[0],
-    setUploadLoading = _useState32[1];
+    documentType = _useState32[0],
+    setDocumentType = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState34 = _slicedToArray(_useState33, 2),
+    uploadLoading = _useState34[0],
+    setUploadLoading = _useState34[1];
 
   // Fetch vehicles and drivers on component mount
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     fetchVehicles();
     fetchDrivers();
 
-    // Subscribe to realtime vehicle changes
-    var subscription = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('public:vehicles').on('postgres_changes', {
-      event: '*',
-      schema: 'public',
-      table: 'vehicles'
-    }, function (payload) {
-      console.log('Vehicle change detected:', payload);
-      if (payload.eventType === 'INSERT') {
-        setVehicles(function (prev) {
-          return [payload["new"]].concat(_toConsumableArray(prev));
-        });
-      } else if (payload.eventType === 'UPDATE') {
-        setVehicles(function (prev) {
-          return prev.map(function (vehicle) {
-            return vehicle.id === payload["new"].id ? payload["new"] : vehicle;
-          });
-        });
-      } else if (payload.eventType === 'DELETE') {
-        setVehicles(function (prev) {
-          return prev.filter(function (vehicle) {
-            return vehicle.id !== payload.old.id;
-          });
-        });
-      }
-    }).subscribe();
+    // Set up real-time subscription for vehicles with error handling
+    var subscription;
+    try {
+      subscription = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('public:vehicles').on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'vehicles'
+      }, function (payload) {
+        console.log('Vehicle change detected:', payload);
+        fetchVehicles();
+      }).subscribe(function (status) {
+        console.log('Supabase realtime status:', status);
+        if (status === 'CHANNEL_ERROR') {
+          console.error('Supabase realtime connection error');
+          setNetworkStatus(false);
+        }
+      });
+    } catch (err) {
+      console.error('Error setting up realtime subscription:', err);
+      setNetworkStatus(false);
+    }
     return function () {
-      subscription.unsubscribe();
+      if (subscription) {
+        try {
+          subscription.unsubscribe();
+        } catch (err) {
+          console.error('Error unsubscribing from channel:', err);
+        }
+      }
     };
   }, []);
   var fetchVehicles = /*#__PURE__*/function () {
@@ -56844,37 +56791,54 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
             _context.prev = 0;
             setLoading(true);
             setError(null);
-            _context.next = 5;
+            console.log("Fetching vehicles from Supabase...");
+            _context.next = 6;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select("\n          *,\n          driver:assigned_driver_id(id, full_name)\n        ").order('created_at', {
               ascending: false
             });
-          case 5:
+          case 6:
             _yield$supabase$from$ = _context.sent;
             data = _yield$supabase$from$.data;
             _error = _yield$supabase$from$.error;
             if (!_error) {
-              _context.next = 10;
+              _context.next = 15;
               break;
             }
+            console.error('Supabase error:', _error);
+            if (!(_error.message.includes('Failed to fetch') || _error.message.includes('network') || _error.message.includes('connection'))) {
+              _context.next = 14;
+              break;
+            }
+            setNetworkStatus(false);
+            throw new Error('Network connection issue. Please check your internet connection.');
+          case 14:
             throw _error;
-          case 10:
+          case 15:
+            // Network is good if we get here
+            setNetworkStatus(true);
+            console.log("Fetched vehicles:", (data === null || data === void 0 ? void 0 : data.length) || 0);
             setVehicles(data || []);
-            _context.next = 17;
+            _context.next = 24;
             break;
-          case 13:
-            _context.prev = 13;
+          case 20:
+            _context.prev = 20;
             _context.t0 = _context["catch"](0);
             console.error('Error fetching vehicles:', _context.t0);
-            setError('Failed to load vehicles. Please try again.');
-          case 17:
-            _context.prev = 17;
+            if (_context.t0.message.includes('Failed to fetch') || _context.t0.message.includes('network') || _context.t0.message.includes('connection')) {
+              setNetworkStatus(false);
+              setError('Network error. Please check your internet connection and try again.');
+            } else {
+              setError('Failed to load vehicles. Error: ' + _context.t0.message);
+            }
+          case 24:
+            _context.prev = 24;
             setLoading(false);
-            return _context.finish(17);
-          case 20:
+            return _context.finish(24);
+          case 27:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 13, 17, 20]]);
+      }, _callee, null, [[0, 20, 24, 27]]);
     }));
     return function fetchVehicles() {
       return _ref2.apply(this, arguments);
@@ -56887,30 +56851,34 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
-            _context2.next = 3;
+            console.log("Fetching drivers...");
+            _context2.next = 4;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('id, full_name').eq('role', 'driver');
-          case 3:
+          case 4:
             _yield$supabase$from$2 = _context2.sent;
             data = _yield$supabase$from$2.data;
             _error2 = _yield$supabase$from$2.error;
             if (!_error2) {
-              _context2.next = 8;
+              _context2.next = 10;
               break;
             }
+            console.error('Error fetching drivers:', _error2);
             throw _error2;
-          case 8:
+          case 10:
+            console.log("Fetched drivers:", (data === null || data === void 0 ? void 0 : data.length) || 0);
             setDrivers(data || []);
-            _context2.next = 14;
+            _context2.next = 17;
             break;
-          case 11:
-            _context2.prev = 11;
+          case 14:
+            _context2.prev = 14;
             _context2.t0 = _context2["catch"](0);
             console.error('Error fetching drivers:', _context2.t0);
-          case 14:
+            // Don't show an error message here as it's secondary to the vehicles
+          case 17:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[0, 11]]);
+      }, _callee2, null, [[0, 14]]);
     }));
     return function fetchDrivers() {
       return _ref3.apply(this, arguments);
@@ -56957,59 +56925,95 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
   }();
   var handleAddVehicle = /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-      var _yield$supabase$from$4, data, _error4;
+      var vehicleToInsert, _yield$supabase$from$4, data, _error4;
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
         while (1) switch (_context4.prev = _context4.next) {
           case 0:
-            _context4.prev = 0;
+            if (networkStatus) {
+              _context4.next = 3;
+              break;
+            }
+            setError('Cannot add vehicle while offline. Please check your internet connection.');
+            return _context4.abrupt("return");
+          case 3:
+            _context4.prev = 3;
             setError(null);
 
-            // Validate form
+            // Validate basic required fields
             if (!(!vehicleData.registration_number || !vehicleData.make || !vehicleData.model)) {
-              _context4.next = 5;
+              _context4.next = 8;
               break;
             }
             setError('Please fill in all required fields.');
             return _context4.abrupt("return");
-          case 5:
-            if (!(vehicleData.status === 'assigned' && !vehicleData.assigned_driver_id)) {
-              _context4.next = 8;
+          case 8:
+            // Create a complete vehicle object with all necessary fields
+            vehicleToInsert = {
+              registration_number: vehicleData.registration_number,
+              make: vehicleData.make,
+              model: vehicleData.model,
+              year: parseInt(vehicleData.year) || new Date().getFullYear(),
+              status: vehicleData.status || 'available',
+              notes: vehicleData.notes || null
+            }; // Only include driver assignment if status is "assigned"
+            if (!(vehicleData.status === 'assigned')) {
+              _context4.next = 14;
+              break;
+            }
+            if (vehicleData.assigned_driver_id) {
+              _context4.next = 13;
               break;
             }
             setError('Please select a driver when status is assigned.');
             return _context4.abrupt("return");
-          case 8:
-            _context4.next = 10;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').insert([vehicleData]).select();
-          case 10:
+          case 13:
+            vehicleToInsert.assigned_driver_id = vehicleData.assigned_driver_id;
+          case 14:
+            console.log('Inserting vehicle:', vehicleToInsert);
+
+            // Insert vehicle with proper error handling
+            _context4.next = 17;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').insert(vehicleToInsert).select();
+          case 17:
             _yield$supabase$from$4 = _context4.sent;
             data = _yield$supabase$from$4.data;
             _error4 = _yield$supabase$from$4.error;
             if (!_error4) {
-              _context4.next = 15;
+              _context4.next = 24;
               break;
             }
-            throw _error4;
-          case 15:
-            // Vehicle will be added via realtime subscription
+            console.error('Database error:', _error4);
+            setError("Failed to add vehicle: ".concat(_error4.message));
+            return _context4.abrupt("return");
+          case 24:
+            // Success handling
+            console.log('Vehicle added successfully:', data);
             setShowAddModal(false);
             setSuccessMessage('Vehicle added successfully!');
             setTimeout(function () {
               return setSuccessMessage(null);
             }, 3000);
             resetVehicleForm();
-            _context4.next = 25;
+
+            // Refresh the vehicles list
+            fetchVehicles();
+            _context4.next = 36;
             break;
-          case 21:
-            _context4.prev = 21;
-            _context4.t0 = _context4["catch"](0);
+          case 32:
+            _context4.prev = 32;
+            _context4.t0 = _context4["catch"](3);
             console.error('Error adding vehicle:', _context4.t0);
-            setError('Failed to add vehicle. Please try again.');
-          case 25:
+            if (_context4.t0.message.includes('Failed to fetch') || _context4.t0.message.includes('network')) {
+              setNetworkStatus(false);
+              setError('Network error. Please check your internet connection and try again.');
+            } else {
+              setError('Failed to add vehicle: ' + _context4.t0.message);
+            }
+          case 36:
           case "end":
             return _context4.stop();
         }
-      }, _callee4, null, [[0, 21]]);
+      }, _callee4, null, [[3, 32]]);
     }));
     return function handleAddVehicle() {
       return _ref5.apply(this, arguments);
@@ -57017,59 +57021,95 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
   }();
   var handleUpdateVehicle = /*#__PURE__*/function () {
     var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-      var _yield$supabase$from$5, data, _error5;
+      var vehicleToUpdate, _yield$supabase$from$5, updateError;
       return _regeneratorRuntime().wrap(function _callee5$(_context5) {
         while (1) switch (_context5.prev = _context5.next) {
           case 0:
-            _context5.prev = 0;
+            if (networkStatus) {
+              _context5.next = 3;
+              break;
+            }
+            setError('Cannot update vehicle while offline. Please check your internet connection.');
+            return _context5.abrupt("return");
+          case 3:
+            _context5.prev = 3;
             setError(null);
 
             // Validate form
             if (!(!vehicleData.registration_number || !vehicleData.make || !vehicleData.model)) {
-              _context5.next = 5;
+              _context5.next = 8;
               break;
             }
             setError('Please fill in all required fields.');
             return _context5.abrupt("return");
-          case 5:
-            if (!(vehicleData.status === 'assigned' && !vehicleData.assigned_driver_id)) {
-              _context5.next = 8;
+          case 8:
+            // Create update object
+            vehicleToUpdate = {
+              registration_number: vehicleData.registration_number,
+              make: vehicleData.make,
+              model: vehicleData.model,
+              year: parseInt(vehicleData.year) || new Date().getFullYear(),
+              status: vehicleData.status,
+              notes: vehicleData.notes || null
+            }; // Handle driver assignment
+            if (!(vehicleData.status === 'assigned')) {
+              _context5.next = 16;
+              break;
+            }
+            if (vehicleData.assigned_driver_id) {
+              _context5.next = 13;
               break;
             }
             setError('Please select a driver when status is assigned.');
             return _context5.abrupt("return");
-          case 8:
-            _context5.next = 10;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').update(vehicleData).eq('id', currentVehicleId).select();
-          case 10:
+          case 13:
+            vehicleToUpdate.assigned_driver_id = vehicleData.assigned_driver_id;
+            _context5.next = 17;
+            break;
+          case 16:
+            // Remove driver assignment if status is not 'assigned'
+            vehicleToUpdate.assigned_driver_id = null;
+          case 17:
+            console.log('Updating vehicle:', vehicleToUpdate, 'ID:', currentVehicleId);
+            _context5.next = 20;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').update(vehicleToUpdate).eq('id', currentVehicleId);
+          case 20:
             _yield$supabase$from$5 = _context5.sent;
-            data = _yield$supabase$from$5.data;
-            _error5 = _yield$supabase$from$5.error;
-            if (!_error5) {
-              _context5.next = 15;
+            updateError = _yield$supabase$from$5.error;
+            if (!updateError) {
+              _context5.next = 25;
               break;
             }
-            throw _error5;
-          case 15:
-            // Vehicle will be updated via realtime subscription
+            console.error('Update error details:', updateError);
+            throw updateError;
+          case 25:
+            // Success handling
             setShowEditModal(false);
             setSuccessMessage('Vehicle updated successfully!');
             setTimeout(function () {
               return setSuccessMessage(null);
             }, 3000);
             resetVehicleForm();
-            _context5.next = 25;
+
+            // Force refresh
+            fetchVehicles();
+            _context5.next = 36;
             break;
-          case 21:
-            _context5.prev = 21;
-            _context5.t0 = _context5["catch"](0);
+          case 32:
+            _context5.prev = 32;
+            _context5.t0 = _context5["catch"](3);
             console.error('Error updating vehicle:', _context5.t0);
-            setError('Failed to update vehicle. Please try again.');
-          case 25:
+            if (_context5.t0.message.includes('Failed to fetch') || _context5.t0.message.includes('network')) {
+              setNetworkStatus(false);
+              setError('Network error. Please check your internet connection and try again.');
+            } else {
+              setError("Failed to update vehicle: ".concat(_context5.t0.message || 'Unknown error'));
+            }
+          case 36:
           case "end":
             return _context5.stop();
         }
-      }, _callee5, null, [[0, 21]]);
+      }, _callee5, null, [[3, 32]]);
     }));
     return function handleUpdateVehicle() {
       return _ref6.apply(this, arguments);
@@ -57077,41 +57117,55 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
   }();
   var handleDeleteVehicle = /*#__PURE__*/function () {
     var _ref7 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-      var _yield$supabase$from$6, _error6;
+      var _yield$supabase$from$6, _error5;
       return _regeneratorRuntime().wrap(function _callee6$(_context6) {
         while (1) switch (_context6.prev = _context6.next) {
           case 0:
-            _context6.prev = 0;
-            setError(null);
-            _context6.next = 4;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles')["delete"]().eq('id', currentVehicleId);
-          case 4:
-            _yield$supabase$from$6 = _context6.sent;
-            _error6 = _yield$supabase$from$6.error;
-            if (!_error6) {
-              _context6.next = 8;
+            if (networkStatus) {
+              _context6.next = 3;
               break;
             }
-            throw _error6;
-          case 8:
-            // Vehicle will be removed via realtime subscription
+            setError('Cannot delete vehicle while offline. Please check your internet connection.');
+            return _context6.abrupt("return");
+          case 3:
+            _context6.prev = 3;
+            setError(null);
+            _context6.next = 7;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles')["delete"]().eq('id', currentVehicleId);
+          case 7:
+            _yield$supabase$from$6 = _context6.sent;
+            _error5 = _yield$supabase$from$6.error;
+            if (!_error5) {
+              _context6.next = 11;
+              break;
+            }
+            throw _error5;
+          case 11:
             setShowDeleteModal(false);
             setSuccessMessage('Vehicle deleted successfully!');
             setTimeout(function () {
               return setSuccessMessage(null);
             }, 3000);
-            _context6.next = 17;
+
+            // Force refresh
+            fetchVehicles();
+            _context6.next = 21;
             break;
-          case 13:
-            _context6.prev = 13;
-            _context6.t0 = _context6["catch"](0);
-            console.error('Error deleting vehicle:', _context6.t0);
-            setError('Failed to delete vehicle. Please try again.');
           case 17:
+            _context6.prev = 17;
+            _context6.t0 = _context6["catch"](3);
+            console.error('Error deleting vehicle:', _context6.t0);
+            if (_context6.t0.message.includes('Failed to fetch') || _context6.t0.message.includes('network')) {
+              setNetworkStatus(false);
+              setError('Network error. Please check your internet connection and try again.');
+            } else {
+              setError('Failed to delete vehicle: ' + _context6.t0.message);
+            }
+          case 21:
           case "end":
             return _context6.stop();
         }
-      }, _callee6, null, [[0, 13]]);
+      }, _callee6, null, [[3, 17]]);
     }));
     return function handleDeleteVehicle() {
       return _ref7.apply(this, arguments);
@@ -57123,56 +57177,63 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
       return _regeneratorRuntime().wrap(function _callee7$(_context7) {
         while (1) switch (_context7.prev = _context7.next) {
           case 0:
-            if (!(!documentFile || !documentName || !documentType)) {
+            if (networkStatus) {
               _context7.next = 3;
+              break;
+            }
+            setError('Cannot upload document while offline. Please check your internet connection.');
+            return _context7.abrupt("return");
+          case 3:
+            if (!(!documentFile || !documentName || !documentType)) {
+              _context7.next = 6;
               break;
             }
             setError('Please fill in all document fields.');
             return _context7.abrupt("return");
-          case 3:
-            _context7.prev = 3;
+          case 6:
+            _context7.prev = 6;
             setUploadLoading(true);
             setError(null);
 
             // Check if we already have 4 documents for this vehicle
-            _context7.next = 8;
+            _context7.next = 11;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').select('*', {
               count: 'exact',
               head: true
             }).eq('vehicle_id', currentVehicleId);
-          case 8:
+          case 11:
             _yield$supabase$from$7 = _context7.sent;
             count = _yield$supabase$from$7.count;
             countError = _yield$supabase$from$7.error;
             if (!countError) {
-              _context7.next = 13;
+              _context7.next = 16;
               break;
             }
             throw countError;
-          case 13:
+          case 16:
             if (!(count >= 4)) {
-              _context7.next = 16;
+              _context7.next = 19;
               break;
             }
             setError('Maximum 4 documents allowed per vehicle. Please delete an existing document first.');
             return _context7.abrupt("return");
-          case 16:
+          case 19:
             // Upload file to storage
             fileExt = documentFile.name.split('.').pop();
             fileName = "".concat(Date.now(), ".").concat(fileExt);
             filePath = "vehicle-documents/".concat(currentVehicleId, "/").concat(fileName);
-            _context7.next = 21;
+            _context7.next = 24;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').upload(filePath, documentFile);
-          case 21:
+          case 24:
             _yield$supabase$stora = _context7.sent;
             uploadError = _yield$supabase$stora.error;
             if (!uploadError) {
-              _context7.next = 25;
+              _context7.next = 28;
               break;
             }
             throw uploadError;
-          case 25:
-            _context7.next = 27;
+          case 28:
+            _context7.next = 30;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').insert({
               vehicle_id: currentVehicleId,
               name: documentName,
@@ -57180,15 +57241,15 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
               file_path: filePath,
               file_type: fileExt
             });
-          case 27:
+          case 30:
             _yield$supabase$from$8 = _context7.sent;
             insertError = _yield$supabase$from$8.error;
             if (!insertError) {
-              _context7.next = 31;
+              _context7.next = 34;
               break;
             }
             throw insertError;
-          case 31:
+          case 34:
             // Refresh document list
             fetchVehicleDocuments(currentVehicleId);
 
@@ -57200,22 +57261,27 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
             setTimeout(function () {
               return setSuccessMessage(null);
             }, 3000);
-            _context7.next = 43;
+            _context7.next = 46;
             break;
-          case 39:
-            _context7.prev = 39;
-            _context7.t0 = _context7["catch"](3);
+          case 42:
+            _context7.prev = 42;
+            _context7.t0 = _context7["catch"](6);
             console.error('Error uploading document:', _context7.t0);
-            setError('Failed to upload document. Please try again.');
-          case 43:
-            _context7.prev = 43;
-            setUploadLoading(false);
-            return _context7.finish(43);
+            if (_context7.t0.message.includes('Failed to fetch') || _context7.t0.message.includes('network')) {
+              setNetworkStatus(false);
+              setError('Network error. Please check your internet connection and try again.');
+            } else {
+              setError('Failed to upload document: ' + _context7.t0.message);
+            }
           case 46:
+            _context7.prev = 46;
+            setUploadLoading(false);
+            return _context7.finish(46);
+          case 49:
           case "end":
             return _context7.stop();
         }
-      }, _callee7, null, [[3, 39, 43, 46]]);
+      }, _callee7, null, [[6, 42, 46, 49]]);
     }));
     return function handleUploadDocument() {
       return _ref8.apply(this, arguments);
@@ -57223,37 +57289,49 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
   }();
   var handleDownloadDocument = /*#__PURE__*/function () {
     var _ref9 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8(document) {
-      var _yield$supabase$stora2, data, _error7;
+      var _yield$supabase$stora2, data, _error6;
       return _regeneratorRuntime().wrap(function _callee8$(_context8) {
         while (1) switch (_context8.prev = _context8.next) {
           case 0:
-            _context8.prev = 0;
-            _context8.next = 3;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').createSignedUrl(document.file_path, 60);
-          case 3:
-            _yield$supabase$stora2 = _context8.sent;
-            data = _yield$supabase$stora2.data;
-            _error7 = _yield$supabase$stora2.error;
-            if (!_error7) {
-              _context8.next = 8;
+            if (networkStatus) {
+              _context8.next = 3;
               break;
             }
-            throw _error7;
-          case 8:
+            setError('Cannot download document while offline. Please check your internet connection.');
+            return _context8.abrupt("return");
+          case 3:
+            _context8.prev = 3;
+            _context8.next = 6;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').createSignedUrl(document.file_path, 60);
+          case 6:
+            _yield$supabase$stora2 = _context8.sent;
+            data = _yield$supabase$stora2.data;
+            _error6 = _yield$supabase$stora2.error;
+            if (!_error6) {
+              _context8.next = 11;
+              break;
+            }
+            throw _error6;
+          case 11:
             // Open the URL in a new tab
             window.open(data.signedUrl, '_blank');
-            _context8.next = 15;
+            _context8.next = 18;
             break;
-          case 11:
-            _context8.prev = 11;
-            _context8.t0 = _context8["catch"](0);
+          case 14:
+            _context8.prev = 14;
+            _context8.t0 = _context8["catch"](3);
             console.error('Error downloading document:', _context8.t0);
-            setError('Failed to download document. Please try again.');
-          case 15:
+            if (_context8.t0.message.includes('Failed to fetch') || _context8.t0.message.includes('network')) {
+              setNetworkStatus(false);
+              setError('Network error. Please check your internet connection and try again.');
+            } else {
+              setError('Failed to download document: ' + _context8.t0.message);
+            }
+          case 18:
           case "end":
             return _context8.stop();
         }
-      }, _callee8, null, [[0, 11]]);
+      }, _callee8, null, [[3, 14]]);
     }));
     return function handleDownloadDocument(_x2) {
       return _ref9.apply(this, arguments);
@@ -57265,41 +57343,48 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
       return _regeneratorRuntime().wrap(function _callee9$(_context9) {
         while (1) switch (_context9.prev = _context9.next) {
           case 0:
-            _context9.prev = 0;
-            _context9.next = 3;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').select('file_path').eq('id', documentId).single();
+            if (networkStatus) {
+              _context9.next = 3;
+              break;
+            }
+            setError('Cannot delete document while offline. Please check your internet connection.');
+            return _context9.abrupt("return");
           case 3:
+            _context9.prev = 3;
+            _context9.next = 6;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').select('file_path').eq('id', documentId).single();
+          case 6:
             _yield$supabase$from$9 = _context9.sent;
             document = _yield$supabase$from$9.data;
             fetchError = _yield$supabase$from$9.error;
             if (!fetchError) {
-              _context9.next = 8;
+              _context9.next = 11;
               break;
             }
             throw fetchError;
-          case 8:
-            _context9.next = 10;
+          case 11:
+            _context9.next = 13;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').remove([document.file_path]);
-          case 10:
+          case 13:
             _yield$supabase$stora3 = _context9.sent;
             storageError = _yield$supabase$stora3.error;
             if (!storageError) {
-              _context9.next = 14;
+              _context9.next = 17;
               break;
             }
             throw storageError;
-          case 14:
-            _context9.next = 16;
+          case 17:
+            _context9.next = 19;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents')["delete"]().eq('id', documentId);
-          case 16:
+          case 19:
             _yield$supabase$from$10 = _context9.sent;
             deleteError = _yield$supabase$from$10.error;
             if (!deleteError) {
-              _context9.next = 20;
+              _context9.next = 23;
               break;
             }
             throw deleteError;
-          case 20:
+          case 23:
             // Update the documents list
             setDocuments(documents.filter(function (doc) {
               return doc.id !== documentId;
@@ -57308,18 +57393,23 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
             setTimeout(function () {
               return setSuccessMessage(null);
             }, 3000);
-            _context9.next = 29;
+            _context9.next = 32;
             break;
-          case 25:
-            _context9.prev = 25;
-            _context9.t0 = _context9["catch"](0);
+          case 28:
+            _context9.prev = 28;
+            _context9.t0 = _context9["catch"](3);
             console.error('Error deleting document:', _context9.t0);
-            setError('Failed to delete document. Please try again.');
-          case 29:
+            if (_context9.t0.message.includes('Failed to fetch') || _context9.t0.message.includes('network')) {
+              setNetworkStatus(false);
+              setError('Network error. Please check your internet connection and try again.');
+            } else {
+              setError('Failed to delete document: ' + _context9.t0.message);
+            }
+          case 32:
           case "end":
             return _context9.stop();
         }
-      }, _callee9, null, [[0, 25]]);
+      }, _callee9, null, [[3, 28]]);
     }));
     return function handleDeleteDocument(_x3) {
       return _ref10.apply(this, arguments);
@@ -57360,419 +57450,249 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
     setCurrentVehicleId(null);
   };
 
-  // Modal component
-  var Modal = function Modal(_ref11) {
-    var show = _ref11.show,
-      onClose = _ref11.onClose,
-      title = _ref11.title,
-      children = _ref11.children,
-      footer = _ref11.footer;
-    if (!show) return null;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      style: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 1000
+  // Handle input change without losing focus
+  var handleInputChange = function handleInputChange(e) {
+    var _e$target = e.target,
+      name = _e$target.name,
+      value = _e$target.value;
+
+    // Use a functional update to prevent focus issues
+    setVehicleData(function (prevData) {
+      var newData = _objectSpread({}, prevData);
+
+      // Special handling for year to ensure it's a number
+      if (name === 'year') {
+        newData[name] = value === '' ? '' : parseInt(value);
+      } else if (name === 'status' && value !== 'assigned') {
+        // If changing from assigned to another status, clear driver
+        newData[name] = value;
+        newData.assigned_driver_id = null;
+      } else {
+        newData[name] = value;
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      style: {
-        backgroundColor: 'white',
-        borderRadius: '5px',
-        width: '500px',
-        maxWidth: '90%',
-        maxHeight: '90%',
-        overflowY: 'auto',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      style: {
-        padding: '15px',
-        borderBottom: '1px solid #eee',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
-      style: {
-        margin: 0
-      }
-    }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      onClick: onClose,
-      style: {
-        background: 'none',
-        border: 'none',
-        fontSize: '1.5rem',
-        cursor: 'pointer'
-      }
-    }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      style: {
-        padding: '15px'
-      }
-    }, children), footer && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      style: {
-        padding: '15px',
-        borderTop: '1px solid #eee',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        gap: '10px'
-      }
-    }, footer)));
+      return newData;
+    });
+  };
+  var retryConnection = function retryConnection() {
+    fetchVehicles();
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: '20px'
-    }
+    className: "d-flex justify-content-between align-items-center mb-4"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: onBack,
-    style: {
-      background: 'none',
-      border: 'none',
-      fontSize: '1rem',
-      display: 'flex',
-      alignItems: 'center',
-      cursor: 'pointer'
-    }
-  }, "\u2190 Back to Vehicle Management"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "btn btn-link ps-0",
+    onClick: onBack
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-arrow-left me-1"
+  }), " Back to Vehicle Management"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "btn btn-primary",
     onClick: function onClick() {
       return setShowAddModal(true);
     },
-    style: {
-      backgroundColor: '#007bff',
-      color: 'white',
-      border: 'none',
-      padding: '8px 16px',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '5px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "+"), " Add Vehicle")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Available Vehicles"), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      padding: '10px',
-      marginBottom: '15px',
-      backgroundColor: '#f8d7da',
-      color: '#721c24',
-      borderRadius: '4px'
-    }
+    disabled: !networkStatus
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-plus-lg me-1"
+  }), " Add Vehicle")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Vehicle Management"), !networkStatus && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "alert alert-warning mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-wifi-off me-2"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Network connection issue detected."), " Some features may be unavailable.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "btn btn-sm btn-outline-dark float-end",
+    onClick: retryConnection
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-arrow-repeat me-1"
+  }), " Retry")), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "alert alert-danger"
   }, error), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      padding: '10px',
-      marginBottom: '15px',
-      backgroundColor: '#d4edda',
-      color: '#155724',
-      borderRadius: '4px'
-    }
+    className: "alert alert-success"
   }, successMessage), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      textAlign: 'center',
-      padding: '40px 0'
-    }
+    className: "text-center my-5"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      border: '4px solid rgba(0, 0, 0, 0.1)',
-      borderLeftColor: '#007bff',
-      borderRadius: '50%',
-      width: '40px',
-      height: '40px',
-      margin: '0 auto 15px',
-      animation: 'spin 1s linear infinite'
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading vehicles..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("style", null, "\n              @keyframes spin {\n                0% { transform: rotate(0deg); }\n                100% { transform: rotate(360deg); }\n              }\n            ")) : vehicles.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      textAlign: 'center',
-      padding: '40px 0',
-      backgroundColor: '#f8f9fa',
-      borderRadius: '5px'
-    }
+    className: "spinner-border",
+    role: "status"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "visually-hidden"
+  }, "Loading vehicles..."))) : !networkStatus && vehicles.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "text-center p-5 bg-light rounded"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      fontSize: '48px',
-      marginBottom: '10px'
-    }
-  }, "\uD83D\uDE9A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "No vehicles found"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Add your first vehicle to get started")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      backgroundColor: 'white',
-      borderRadius: '5px',
-      boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-      overflow: 'hidden'
-    }
+    className: "display-1 mb-3"
+  }, "\uD83C\uDF10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Network Connection Error"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: "text-muted"
+  }, "Unable to load vehicles. Please check your internet connection."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "btn btn-outline-primary mt-3",
+    onClick: retryConnection
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-arrow-repeat me-1"
+  }), " Retry Connection")) : vehicles.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "text-center p-5 bg-light rounded"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "display-1 mb-3"
+  }, "\uD83D\uDE9A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "No vehicles found"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: "text-muted"
+  }, "Add your first vehicle to get started")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "card"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "table-responsive"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("table", {
-    style: {
-      width: '100%',
-      borderCollapse: 'collapse'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
-    style: {
-      backgroundColor: '#f8f9fa',
-      borderBottom: '2px solid #dee2e6'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Registration"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Make & Model"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Year"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Driver"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
-      textAlign: 'right'
-    }
+    className: "table table-hover mb-0"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Registration"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Make & Model"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Year"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Driver"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
+    className: "text-end"
   }, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, vehicles.map(function (vehicle) {
     var _vehicle$driver;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
-      key: vehicle.id,
-      style: {
-        borderBottom: '1px solid #dee2e6'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, vehicle.registration_number), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, vehicle.make, " ", vehicle.model), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, vehicle.year), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      style: {
-        backgroundColor: vehicle.status === 'available' ? '#28a745' : vehicle.status === 'assigned' ? '#007bff' : vehicle.status === 'spare' ? '#17a2b8' : vehicle.status === 'maintenance' ? '#ffc107' : '#6c757d',
-        color: vehicle.status === 'maintenance' ? 'black' : 'white',
-        padding: '3px 8px',
-        borderRadius: '12px',
-        fontSize: '0.85rem'
-      }
-    }, vehicle.status.charAt(0).toUpperCase() + vehicle.status.slice(1))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, ((_vehicle$driver = vehicle.driver) === null || _vehicle$driver === void 0 ? void 0 : _vehicle$driver.full_name) || 'None'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px',
-        textAlign: 'right'
-      }
+      key: vehicle.id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, vehicle.registration_number), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, vehicle.make, " ", vehicle.model), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, vehicle.year), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      className: "badge ".concat(vehicle.status === 'available' ? 'bg-success' : vehicle.status === 'assigned' ? 'bg-primary' : vehicle.status === 'spare' ? 'bg-info' : vehicle.status === 'maintenance' ? 'bg-warning' : 'bg-secondary')
+    }, vehicle.status.charAt(0).toUpperCase() + vehicle.status.slice(1))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, ((_vehicle$driver = vehicle.driver) === null || _vehicle$driver === void 0 ? void 0 : _vehicle$driver.full_name) || 'None'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
+      className: "text-end"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      className: "btn btn-sm btn-outline-secondary me-1",
       onClick: function onClick() {
         return openEditModal(vehicle);
       },
-      style: {
-        backgroundColor: 'transparent',
-        border: '1px solid #6c757d',
-        borderRadius: '4px',
-        padding: '4px 8px',
-        marginRight: '5px',
-        cursor: 'pointer'
-      },
-      title: "Edit Vehicle"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      role: "img",
-      "aria-label": "Edit"
-    }, "\u270F\uFE0F")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      title: "Edit Vehicle",
+      disabled: !networkStatus
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-pencil"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      className: "btn btn-sm btn-outline-info me-1",
       onClick: function onClick() {
         return openDocumentModal(vehicle);
       },
-      style: {
-        backgroundColor: 'transparent',
-        border: '1px solid #17a2b8',
-        borderRadius: '4px',
-        padding: '4px 8px',
-        marginRight: '5px',
-        cursor: 'pointer'
-      },
-      title: "Manage Documents"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      role: "img",
-      "aria-label": "Documents"
-    }, "\uD83D\uDCC4")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      title: "Manage Documents",
+      disabled: !networkStatus
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-file-earmark"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      className: "btn btn-sm btn-outline-danger",
       onClick: function onClick() {
         return openDeleteModal(vehicle);
       },
-      style: {
-        backgroundColor: 'transparent',
-        border: '1px solid #dc3545',
-        color: '#dc3545',
-        borderRadius: '4px',
-        padding: '4px 8px',
-        cursor: 'pointer'
-      },
-      title: "Delete Vehicle"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      role: "img",
-      "aria-label": "Delete"
-    }, "\uD83D\uDDD1\uFE0F"))));
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
-    show: showAddModal,
-    onClose: function onClose() {
+      title: "Delete Vehicle",
+      disabled: !networkStatus
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-trash"
+    }))));
+  }))))), showAddModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-wrapper",
+    style: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 1050
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-backdrop show",
+    style: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 1040
+    },
+    onClick: function onClick() {
       return setShowAddModal(false);
-    },
-    title: "Add New Vehicle",
-    footer: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      onClick: function onClick() {
-        return setShowAddModal(false);
-      },
-      style: {
-        backgroundColor: '#6c757d',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
-      }
-    }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      onClick: handleAddVehicle,
-      style: {
-        backgroundColor: '#007bff',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
-      }
-    }, "Add Vehicle"))
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal show d-block",
+    tabIndex: "-1",
+    style: {
+      zIndex: 1050,
+      position: 'relative',
+      pointerEvents: 'none'
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-dialog",
     style: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '15px'
+      pointerEvents: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-content"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-header"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", {
+    className: "modal-title"
+  }, "Add New Vehicle"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "button",
+    className: "btn-close",
+    onClick: function onClick() {
+      return setShowAddModal(false);
     }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    id: "addVehicleForm",
+    onSubmit: function onSubmit(e) {
+      e.preventDefault();
+      handleAddVehicle();
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "registration_number",
+    className: "form-label"
   }, "Registration Number*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
+    className: "form-control",
+    id: "registration_number",
+    name: "registration_number",
     value: vehicleData.registration_number,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        registration_number: e.target.value
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    },
-    required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+    onChange: handleInputChange,
+    required: true,
+    autoFocus: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "make",
+    className: "form-label"
   }, "Make*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
+    className: "form-control",
+    id: "make",
+    name: "make",
     value: vehicleData.make,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        make: e.target.value
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    },
+    onChange: handleInputChange,
     required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "model",
+    className: "form-label"
   }, "Model*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
+    className: "form-control",
+    id: "model",
+    name: "model",
     value: vehicleData.model,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        model: e.target.value
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    },
+    onChange: handleInputChange,
     required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "year",
+    className: "form-label"
   }, "Year"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "number",
+    className: "form-control",
+    id: "year",
+    name: "year",
     value: vehicleData.year,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        year: e.target.value
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+    onChange: handleInputChange,
+    min: "1900",
+    max: new Date().getFullYear() + 1
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "status",
+    className: "form-label"
   }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
+    className: "form-select",
+    id: "status",
+    name: "status",
     value: vehicleData.status,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        status: e.target.value
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    }
+    onChange: handleInputChange
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "available"
   }, "Available"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
@@ -57783,25 +57703,17 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
     value: "maintenance"
   }, "Maintenance"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "inactive"
-  }, "Inactive"))), vehicleData.status === 'assigned' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+  }, "Inactive"))), vehicleData.status === 'assigned' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "assigned_driver_id",
+    className: "form-label"
   }, "Assign to Driver*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
+    className: "form-select",
+    id: "assigned_driver_id",
+    name: "assigned_driver_id",
     value: vehicleData.assigned_driver_id || '',
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        assigned_driver_id: e.target.value || null
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    },
+    onChange: handleInputChange,
     required: vehicleData.status === 'assigned'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: ""
@@ -57810,174 +57722,151 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
       key: driver.id,
       value: driver.id
     }, driver.full_name);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "notes",
+    className: "form-label"
   }, "Notes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
+    className: "form-control",
+    id: "notes",
+    name: "notes",
     rows: 3,
     value: vehicleData.notes,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        notes: e.target.value
-      }));
+    onChange: handleInputChange
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-footer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "button",
+    className: "btn btn-secondary",
+    onClick: function onClick() {
+      return setShowAddModal(false);
+    }
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit",
+    form: "addVehicleForm",
+    className: "btn btn-primary"
+  }, "Add Vehicle")))))), showEditModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-wrapper",
+    style: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 1050
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-backdrop show",
+    style: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 1040
     },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
-  }, "Documents"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    style: {
-      fontSize: '0.9rem',
-      color: '#6c757d'
-    }
-  }, "Documents can be added after creating the vehicle.")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
-    show: showEditModal,
-    onClose: function onClose() {
+    onClick: function onClick() {
       return setShowEditModal(false);
-    },
-    title: "Edit Vehicle",
-    footer: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      onClick: function onClick() {
-        return setShowEditModal(false);
-      },
-      style: {
-        backgroundColor: '#6c757d',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
-      }
-    }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      onClick: handleUpdateVehicle,
-      style: {
-        backgroundColor: '#007bff',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
-      }
-    }, "Update Vehicle"))
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal show d-block",
+    tabIndex: "-1",
+    style: {
+      zIndex: 1050,
+      position: 'relative',
+      pointerEvents: 'none'
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-dialog",
     style: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '15px'
+      pointerEvents: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-content"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-header"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", {
+    className: "modal-title"
+  }, "Edit Vehicle"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "button",
+    className: "btn-close",
+    onClick: function onClick() {
+      return setShowEditModal(false);
     }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    id: "editVehicleForm",
+    onSubmit: function onSubmit(e) {
+      e.preventDefault();
+      handleUpdateVehicle();
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "edit_registration_number",
+    className: "form-label"
   }, "Registration Number*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
+    className: "form-control",
+    id: "edit_registration_number",
+    name: "registration_number",
     value: vehicleData.registration_number,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        registration_number: e.target.value
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    },
-    required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+    onChange: handleInputChange,
+    required: true,
+    autoFocus: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "edit_make",
+    className: "form-label"
   }, "Make*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
+    className: "form-control",
+    id: "edit_make",
+    name: "make",
     value: vehicleData.make,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        make: e.target.value
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    },
+    onChange: handleInputChange,
     required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "edit_model",
+    className: "form-label"
   }, "Model*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
+    className: "form-control",
+    id: "edit_model",
+    name: "model",
     value: vehicleData.model,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        model: e.target.value
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    },
+    onChange: handleInputChange,
     required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "edit_year",
+    className: "form-label"
   }, "Year"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "number",
+    className: "form-control",
+    id: "edit_year",
+    name: "year",
     value: vehicleData.year,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        year: e.target.value
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+    onChange: handleInputChange,
+    min: "1900",
+    max: new Date().getFullYear() + 1
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "edit_status",
+    className: "form-label"
   }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
+    className: "form-select",
+    id: "edit_status",
+    name: "status",
     value: vehicleData.status,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        status: e.target.value
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    }
+    onChange: handleInputChange
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "available"
   }, "Available"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
@@ -57988,25 +57877,17 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
     value: "maintenance"
   }, "Maintenance"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "inactive"
-  }, "Inactive"))), vehicleData.status === 'assigned' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+  }, "Inactive"))), vehicleData.status === 'assigned' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "edit_assigned_driver_id",
+    className: "form-label"
   }, "Assign to Driver*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
+    className: "form-select",
+    id: "edit_assigned_driver_id",
+    name: "assigned_driver_id",
     value: vehicleData.assigned_driver_id || '',
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        assigned_driver_id: e.target.value || null
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    },
+    onChange: handleInputChange,
     required: vehicleData.status === 'assigned'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: ""
@@ -58015,86 +57896,177 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
       key: driver.id,
       value: driver.id
     }, driver.full_name);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "edit_notes",
+    className: "form-label"
   }, "Notes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
+    className: "form-control",
+    id: "edit_notes",
+    name: "notes",
     rows: 3,
     value: vehicleData.notes,
-    onChange: function onChange(e) {
-      return setVehicleData(_objectSpread(_objectSpread({}, vehicleData), {}, {
-        notes: e.target.value
-      }));
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
+    onChange: handleInputChange
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-footer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "button",
+    className: "btn btn-secondary",
+    onClick: function onClick() {
+      return setShowEditModal(false);
     }
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
-    show: showDocumentModal,
-    onClose: function onClose() {
-      return setShowDocumentModal(false);
-    },
-    title: "Vehicle Documents",
-    footer: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      onClick: function onClick() {
-        return setShowDocumentModal(false);
-      },
-      style: {
-        backgroundColor: '#6c757d',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
-      }
-    }, "Close")
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit",
+    form: "editVehicleForm",
+    className: "btn btn-primary"
+  }, "Update Vehicle")))))), showDeleteModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-wrapper",
+    style: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 1050
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-backdrop show",
     style: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '15px'
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 1040
+    },
+    onClick: function onClick() {
+      return setShowDeleteModal(false);
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "Upload New Document"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal show d-block",
+    tabIndex: "-1",
     style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
+      zIndex: 1050,
+      position: 'relative',
+      pointerEvents: 'none'
     }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-dialog",
+    style: {
+      pointerEvents: 'auto'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-content"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-header"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", {
+    className: "modal-title"
+  }, "Confirm Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "button",
+    className: "btn-close",
+    onClick: function onClick() {
+      return setShowDeleteModal(false);
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Are you sure you want to delete this vehicle? This action cannot be undone."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: "text-danger"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Warning:"), " All associated documents and records will also be deleted.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-footer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "button",
+    className: "btn btn-secondary",
+    onClick: function onClick() {
+      return setShowDeleteModal(false);
+    }
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "button",
+    className: "btn btn-danger",
+    onClick: handleDeleteVehicle
+  }, "Delete Vehicle")))))), showDocumentModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-wrapper",
+    style: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 1050
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-backdrop show",
+    style: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 1040
+    },
+    onClick: function onClick() {
+      return setShowDocumentModal(false);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal show d-block",
+    tabIndex: "-1",
+    style: {
+      zIndex: 1050,
+      position: 'relative',
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-dialog modal-lg",
+    style: {
+      pointerEvents: 'auto'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-content"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-header"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", {
+    className: "modal-title"
+  }, "Vehicle Documents"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "button",
+    className: "btn-close",
+    onClick: function onClick() {
+      return setShowDocumentModal(false);
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", null, "Upload New Document"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    id: "uploadDocumentForm",
+    onSubmit: function onSubmit(e) {
+      e.preventDefault();
+      handleUploadDocument();
+    },
+    className: "mb-4"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "document_name",
+    className: "form-label"
   }, "Document Name*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
+    className: "form-control",
+    id: "document_name",
     value: documentName,
     onChange: function onChange(e) {
       return setDocumentName(e.target.value);
     },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    },
-    required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+    required: true,
+    placeholder: "e.g., Insurance Policy 2023, Vehicle Registration"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "document_type",
+    className: "form-label"
   }, "Document Type*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
+    className: "form-select",
+    id: "document_type",
     value: documentType,
     onChange: function onChange(e) {
       return setDocumentType(e.target.value);
-    },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "registration"
@@ -58106,181 +58078,68 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
     value: "inspection"
   }, "Inspection Certificate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "other"
-  }, "Other"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    style: {
-      display: 'block',
-      marginBottom: '5px',
-      fontWeight: 'bold'
-    }
+  }, "Other"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "document_file",
+    className: "form-label"
   }, "File*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "file",
+    className: "form-control",
+    id: "document_file",
     onChange: function onChange(e) {
       return setDocumentFile(e.target.files[0]);
     },
-    style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
-    },
     accept: ".pdf,.jpg,.jpeg,.png,.doc,.docx"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    style: {
-      fontSize: '0.9rem',
-      color: '#6c757d',
-      marginTop: '5px'
-    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "form-text"
   }, "Supported formats: PDF, JPG, PNG, DOC, DOCX (max 5MB)")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: handleUploadDocument,
-    disabled: uploadLoading,
-    style: {
-      backgroundColor: '#007bff',
-      color: 'white',
-      border: 'none',
-      padding: '8px 16px',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '5px'
-    }
-  }, uploadLoading ? 'Uploading...' : 'Upload Document'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("hr", {
-    style: {
-      margin: '15px 0'
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "Existing Documents"), documents.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    style: {
-      color: '#6c757d'
-    }
+    type: "submit",
+    className: "btn btn-primary",
+    disabled: uploadLoading || !documentFile || !documentName || !documentType
+  }, uploadLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "spinner-border spinner-border-sm me-1",
+    role: "status",
+    "aria-hidden": "true"
+  }), "Uploading...") : 'Upload Document')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", null, "Existing Documents"), documents.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: "text-muted"
   }, "No documents found for this vehicle.") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      backgroundColor: 'white',
-      borderRadius: '5px',
-      boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-      overflow: 'hidden'
-    }
+    className: "table-responsive"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("table", {
-    style: {
-      width: '100%',
-      borderCollapse: 'collapse'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
-    style: {
-      backgroundColor: '#f8f9fa',
-      borderBottom: '1px solid #dee2e6'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '10px',
-      textAlign: 'left'
-    }
-  }, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '10px',
-      textAlign: 'left'
-    }
-  }, "Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '10px',
-      textAlign: 'right'
-    }
-  }, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, documents.map(function (doc) {
+    className: "table table-bordered"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Date Uploaded"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, documents.map(function (doc) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
-      key: doc.id,
-      style: {
-        borderBottom: '1px solid #dee2e6'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '10px'
-      }
-    }, doc.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '10px'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      style: {
-        backgroundColor: '#17a2b8',
-        color: 'white',
-        padding: '3px 8px',
-        borderRadius: '12px',
-        fontSize: '0.85rem'
-      }
-    }, doc.type.charAt(0).toUpperCase() + doc.type.slice(1))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '10px',
-        textAlign: 'right'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      key: doc.id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, doc.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      className: "badge bg-info"
+    }, doc.type.charAt(0).toUpperCase() + doc.type.slice(1))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, new Date(doc.created_at).toLocaleDateString()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      className: "btn btn-sm btn-outline-primary me-1",
       onClick: function onClick() {
         return handleDownloadDocument(doc);
       },
-      style: {
-        backgroundColor: 'transparent',
-        border: '1px solid #28a745',
-        borderRadius: '4px',
-        padding: '4px 8px',
-        marginRight: '5px',
-        cursor: 'pointer'
-      },
       title: "Download Document"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      role: "img",
-      "aria-label": "Download"
-    }, "\uD83D\uDCE5")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-download"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      className: "btn btn-sm btn-outline-danger",
       onClick: function onClick() {
         return handleDeleteDocument(doc.id);
       },
-      style: {
-        backgroundColor: 'transparent',
-        border: '1px solid #dc3545',
-        color: '#dc3545',
-        borderRadius: '4px',
-        padding: '4px 8px',
-        cursor: 'pointer'
-      },
       title: "Delete Document"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      role: "img",
-      "aria-label": "Delete"
-    }, "\uD83D\uDDD1\uFE0F"))));
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-trash"
+    }))));
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    style: {
-      color: '#dc3545',
-      fontWeight: 'bold',
-      fontSize: '0.9rem'
+    className: "text-danger fw-bold mt-2"
+  }, "Maximum 4 documents allowed per vehicle.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal-footer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "button",
+    className: "btn btn-secondary",
+    onClick: function onClick() {
+      return setShowDocumentModal(false);
     }
-  }, "Maximum 4 documents allowed per vehicle."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
-    show: showDeleteModal,
-    onClose: function onClose() {
-      return setShowDeleteModal(false);
-    },
-    title: "Confirm Delete",
-    footer: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      onClick: function onClick() {
-        return setShowDeleteModal(false);
-      },
-      style: {
-        backgroundColor: '#6c757d',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
-      }
-    }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      onClick: handleDeleteVehicle,
-      style: {
-        backgroundColor: '#dc3545',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
-      }
-    }, "Delete Vehicle"))
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Are you sure you want to delete this vehicle? This action cannot be undone."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Warning:"), " All associated documents and records will also be deleted.")));
+  }, "Close")))))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AvailableVehicles);
 
@@ -58448,14 +58307,12 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }();
   var handleAddBlock = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var startDate, endDate, _yield$supabase$from$3, assignments, assignmentError, _yield$supabase$from$4, existing, existingError, _yield$supabase$auth$, user, _yield$supabase$from$5, _error;
+      var _yield$supabase$from$3, _error;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
             setError(null);
-
-            // Validate form
             if (!(!blockData.vehicle_id || !blockData.start_date || !blockData.end_date || !blockData.reason)) {
               _context2.next = 5;
               break;
@@ -58463,94 +58320,41 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
             setError('Please fill in all required fields.');
             return _context2.abrupt("return");
           case 5:
-            // Validate dates
-            startDate = new Date(blockData.start_date);
-            endDate = new Date(blockData.end_date);
-            if (!(startDate > endDate)) {
-              _context2.next = 10;
-              break;
-            }
-            setError('End date must be after start date.');
-            return _context2.abrupt("return");
-          case 10:
-            _context2.next = 12;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('id, start_time, end_time').eq('vehicle_id', blockData.vehicle_id).or("start_time.lte.".concat(blockData.end_date, ",end_time.gte.").concat(blockData.start_date)).is('status', 'not.eq.rejected');
-          case 12:
-            _yield$supabase$from$3 = _context2.sent;
-            assignments = _yield$supabase$from$3.data;
-            assignmentError = _yield$supabase$from$3.error;
-            if (!assignmentError) {
-              _context2.next = 17;
-              break;
-            }
-            throw assignmentError;
-          case 17:
-            if (!(assignments && assignments.length > 0)) {
-              _context2.next = 20;
-              break;
-            }
-            setError('Vehicle is already assigned during this period. Please choose different dates or cancel the assignment first.');
-            return _context2.abrupt("return");
-          case 20:
-            _context2.next = 22;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('id').eq('vehicle_id', blockData.vehicle_id).or("start_date.lte.".concat(blockData.end_date, ",end_date.gte.").concat(blockData.start_date));
-          case 22:
-            _yield$supabase$from$4 = _context2.sent;
-            existing = _yield$supabase$from$4.data;
-            existingError = _yield$supabase$from$4.error;
-            if (!existingError) {
-              _context2.next = 27;
-              break;
-            }
-            throw existingError;
-          case 27:
-            if (!(existing && existing.length > 0)) {
-              _context2.next = 30;
-              break;
-            }
-            setError('Vehicle is already blocked during this period. Please choose different dates.');
-            return _context2.abrupt("return");
-          case 30:
-            _context2.next = 32;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.getUser();
-          case 32:
-            _yield$supabase$auth$ = _context2.sent;
-            user = _yield$supabase$auth$.data.user;
-            _context2.next = 36;
+            _context2.next = 7;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').insert({
               vehicle_id: blockData.vehicle_id,
               start_date: blockData.start_date,
               end_date: blockData.end_date,
-              reason: blockData.reason,
-              created_by: user.id
+              reason: blockData.reason
             });
-          case 36:
-            _yield$supabase$from$5 = _context2.sent;
-            _error = _yield$supabase$from$5.error;
+          case 7:
+            _yield$supabase$from$3 = _context2.sent;
+            _error = _yield$supabase$from$3.error;
             if (!_error) {
-              _context2.next = 40;
+              _context2.next = 12;
               break;
             }
+            console.error('Block insert error details:', _error);
             throw _error;
-          case 40:
+          case 12:
             setShowAddModal(false);
             resetForm();
             setSuccessMessage('Vehicle blocked successfully!');
             setTimeout(function () {
               return setSuccessMessage(null);
             }, 3000);
-            _context2.next = 50;
+            _context2.next = 22;
             break;
-          case 46:
-            _context2.prev = 46;
+          case 18:
+            _context2.prev = 18;
             _context2.t0 = _context2["catch"](0);
             console.error('Error blocking vehicle:', _context2.t0);
             setError('Failed to block vehicle. Please try again.');
-          case 50:
+          case 22:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[0, 46]]);
+      }, _callee2, null, [[0, 18]]);
     }));
     return function handleAddBlock() {
       return _ref3.apply(this, arguments);
@@ -58558,7 +58362,7 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }();
   var handleUpdateBlock = /*#__PURE__*/function () {
     var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      var startDate, endDate, _yield$supabase$from$6, currentBlock, currentError, _yield$supabase$from$7, assignments, assignmentError, _yield$supabase$from$8, existing, existingError, _yield$supabase$from$9, _error2;
+      var startDate, endDate, _yield$supabase$from$4, currentBlock, currentError, _yield$supabase$from$5, assignments, assignmentError, _yield$supabase$from$6, existing, existingError, _yield$supabase$from$7, _error2;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
@@ -58586,9 +58390,9 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
             _context3.next = 12;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('*').eq('id', currentBlockId).single();
           case 12:
-            _yield$supabase$from$6 = _context3.sent;
-            currentBlock = _yield$supabase$from$6.data;
-            currentError = _yield$supabase$from$6.error;
+            _yield$supabase$from$4 = _context3.sent;
+            currentBlock = _yield$supabase$from$4.data;
+            currentError = _yield$supabase$from$4.error;
             if (!currentError) {
               _context3.next = 17;
               break;
@@ -58598,9 +58402,9 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
             _context3.next = 19;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('id, start_time, end_time').eq('vehicle_id', blockData.vehicle_id).or("start_time.lte.".concat(blockData.end_date, ",end_time.gte.").concat(blockData.start_date)).is('status', 'not.eq.rejected');
           case 19:
-            _yield$supabase$from$7 = _context3.sent;
-            assignments = _yield$supabase$from$7.data;
-            assignmentError = _yield$supabase$from$7.error;
+            _yield$supabase$from$5 = _context3.sent;
+            assignments = _yield$supabase$from$5.data;
+            assignmentError = _yield$supabase$from$5.error;
             if (!assignmentError) {
               _context3.next = 24;
               break;
@@ -58617,9 +58421,9 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
             _context3.next = 29;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('id').eq('vehicle_id', blockData.vehicle_id).neq('id', currentBlockId).or("start_date.lte.".concat(blockData.end_date, ",end_date.gte.").concat(blockData.start_date));
           case 29:
-            _yield$supabase$from$8 = _context3.sent;
-            existing = _yield$supabase$from$8.data;
-            existingError = _yield$supabase$from$8.error;
+            _yield$supabase$from$6 = _context3.sent;
+            existing = _yield$supabase$from$6.data;
+            existingError = _yield$supabase$from$6.error;
             if (!existingError) {
               _context3.next = 34;
               break;
@@ -58641,8 +58445,8 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
               reason: blockData.reason
             }).eq('id', currentBlockId);
           case 39:
-            _yield$supabase$from$9 = _context3.sent;
-            _error2 = _yield$supabase$from$9.error;
+            _yield$supabase$from$7 = _context3.sent;
+            _error2 = _yield$supabase$from$7.error;
             if (!_error2) {
               _context3.next = 43;
               break;
@@ -58674,7 +58478,7 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }();
   var handleDeleteBlock = /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-      var _yield$supabase$from$10, _error3;
+      var _yield$supabase$from$8, _error3;
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
         while (1) switch (_context4.prev = _context4.next) {
           case 0:
@@ -58683,8 +58487,8 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
             _context4.next = 4;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods')["delete"]().eq('id', currentBlockId);
           case 4:
-            _yield$supabase$from$10 = _context4.sent;
-            _error3 = _yield$supabase$from$10.error;
+            _yield$supabase$from$8 = _context4.sent;
+            _error3 = _yield$supabase$from$8.error;
             if (!_error3) {
               _context4.next = 8;
               break;
@@ -59635,7 +59439,7 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
   }, [currentDate, selectedVehicle]);
   var fetchData = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _yield$supabase$from$, vehiclesData, vehiclesError, startOfMonth, endOfMonth, startDate, endDate, query, _yield$query, assignmentsData, assignmentsError, blockedQuery, _yield$blockedQuery, blockedData, blockedError;
+      var _yield$supabase$from$, vehiclesData, vehiclesError, startOfMonth, endOfMonth, startDateStr, endDateStr, query, _yield$query, assignmentsData, assignmentsError, blockedQuery, _yield$blockedQuery, blockedData, blockedError;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -59643,78 +59447,97 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
             setLoading(true);
             setError(null);
 
-            // Get all vehicles
+            // Get all vehicles - simple query, less likely to fail
             _context.next = 5;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('id, registration_number, make, model, status');
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('id, registration_number, make, model, status').order('registration_number', {
+              ascending: true
+            });
           case 5:
             _yield$supabase$from$ = _context.sent;
             vehiclesData = _yield$supabase$from$.data;
             vehiclesError = _yield$supabase$from$.error;
-            if (!vehiclesError) {
-              _context.next = 10;
-              break;
+            if (vehiclesError) {
+              console.error('Error fetching vehicles:', vehiclesError);
+              setVehicles([]);
+            } else {
+              setVehicles(vehiclesData || []);
             }
-            throw vehiclesError;
-          case 10:
-            // Calculate month range for filtering
+
+            // Get assignments with simplified query
+            _context.prev = 9;
+            // Format dates for filtering
             startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-            endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0); // Format dates for Supabase
-            startDate = startOfMonth.toISOString();
-            endDate = endOfMonth.toISOString(); // Get vehicle assignments for the month
-            query = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select("\n          id,\n          vehicle_id,\n          driver_id,\n          start_time,\n          end_time,\n          is_temporary,\n          status,\n          created_by,\n          users!vehicle_assignments_driver_id_fkey(id, full_name)\n        ").or("start_time.lte.".concat(endDate, ",end_time.gte.").concat(startDate)).order('start_time', {
-              ascending: true
-            }); // Filter by vehicle if selected
+            endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0, 23, 59, 59);
+            startDateStr = startOfMonth.toISOString();
+            endDateStr = endOfMonth.toISOString();
+            console.log("Fetching data for: ".concat(startDateStr, " to ").concat(endDateStr));
+
+            // Simplified assignments query
+            query = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('*').gte('start_time', startDateStr).lte('start_time', endDateStr);
             if (selectedVehicle !== 'all') {
               query = query.eq('vehicle_id', selectedVehicle);
             }
-            _context.next = 18;
+            _context.next = 19;
             return query;
-          case 18:
+          case 19:
             _yield$query = _context.sent;
             assignmentsData = _yield$query.data;
             assignmentsError = _yield$query.error;
-            if (!assignmentsError) {
-              _context.next = 23;
-              break;
+            if (assignmentsError) {
+              console.error('Error fetching assignments:', assignmentsError);
+              setAssignments([]);
+            } else {
+              setAssignments(assignmentsData || []);
             }
-            throw assignmentsError;
-          case 23:
-            // Get blocked periods for the month
-            blockedQuery = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select("\n          id,\n          vehicle_id,\n          start_date,\n          end_date,\n          reason,\n          created_by,\n          created_at\n        ").or("start_date.lte.".concat(endDate, ",end_date.gte.").concat(startDate)); // Filter by vehicle if selected
+            _context.next = 29;
+            break;
+          case 25:
+            _context.prev = 25;
+            _context.t0 = _context["catch"](9);
+            console.error('Error processing assignments:', _context.t0);
+            setAssignments([]);
+          case 29:
+            _context.prev = 29;
+            blockedQuery = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('*');
             if (selectedVehicle !== 'all') {
               blockedQuery = blockedQuery.eq('vehicle_id', selectedVehicle);
             }
-            _context.next = 27;
+            _context.next = 34;
             return blockedQuery;
-          case 27:
+          case 34:
             _yield$blockedQuery = _context.sent;
             blockedData = _yield$blockedQuery.data;
             blockedError = _yield$blockedQuery.error;
-            if (!blockedError) {
-              _context.next = 32;
-              break;
+            if (blockedError) {
+              console.error('Error fetching blocked periods:', blockedError);
+              setBlockedPeriods([]);
+            } else {
+              setBlockedPeriods(blockedData || []);
             }
-            throw blockedError;
-          case 32:
-            setVehicles(vehiclesData || []);
-            setAssignments(assignmentsData || []);
-            setBlockedPeriods(blockedData || []);
-            _context.next = 41;
+            _context.next = 44;
             break;
-          case 37:
-            _context.prev = 37;
-            _context.t0 = _context["catch"](0);
-            console.error('Error fetching calendar data:', _context.t0);
-            setError('Failed to load calendar data. Please try again.');
-          case 41:
-            _context.prev = 41;
-            setLoading(false);
-            return _context.finish(41);
+          case 40:
+            _context.prev = 40;
+            _context.t1 = _context["catch"](29);
+            console.error('Error processing blocked periods:', _context.t1);
+            setBlockedPeriods([]);
           case 44:
+            _context.next = 50;
+            break;
+          case 46:
+            _context.prev = 46;
+            _context.t2 = _context["catch"](0);
+            console.error('Error fetching calendar data:', _context.t2);
+            setError('Failed to load calendar data. Please try again.');
+          case 50:
+            _context.prev = 50;
+            setLoading(false);
+            return _context.finish(50);
+          case 53:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 37, 41, 44]]);
+      }, _callee, null, [[0, 46, 50, 53], [9, 25], [29, 40]]);
     }));
     return function fetchData() {
       return _ref2.apply(this, arguments);
@@ -59767,44 +59590,62 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
   // Check if a vehicle has events on a specific day
   var getEventsForDay = function getEventsForDay(vehicleId, day) {
     if (!day) return [];
-    var date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-    date.setHours(0, 0, 0, 0);
-    var events = [];
+    try {
+      // Create a date object for the current day
+      var date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+      date.setHours(0, 0, 0, 0);
 
-    // Check assignments
-    assignments.forEach(function (assignment) {
-      if (assignment.vehicle_id === vehicleId) {
-        var startDate = new Date(assignment.start_time);
-        startDate.setHours(0, 0, 0, 0);
-        var endDate = new Date(assignment.end_time || assignment.start_time);
-        endDate.setHours(0, 0, 0, 0);
-        if (date >= startDate && date <= endDate) {
-          events.push({
-            type: 'assignment',
-            data: assignment,
-            color: assignment.is_temporary ? '#17a2b8' : '#007bff'
-          });
-        }
-      }
-    });
+      // Format as ISO date string for comparison
+      var dateStr = date.toISOString().split('T')[0];
+      var events = [];
 
-    // Check blocked periods
-    blockedPeriods.forEach(function (block) {
-      if (block.vehicle_id === vehicleId) {
-        var startDate = new Date(block.start_date);
-        startDate.setHours(0, 0, 0, 0);
-        var endDate = new Date(block.end_date);
-        endDate.setHours(0, 0, 0, 0);
-        if (date >= startDate && date <= endDate) {
-          events.push({
-            type: 'blocked',
-            data: block,
-            color: '#dc3545'
-          });
+      // Check assignments
+      assignments.forEach(function (assignment) {
+        if (assignment.vehicle_id === vehicleId) {
+          var startDate = new Date(assignment.start_time);
+          startDate.setHours(0, 0, 0, 0);
+
+          // Default end date is far in the future if not specified
+          var endDate;
+          if (assignment.end_time) {
+            endDate = new Date(assignment.end_time);
+            endDate.setHours(23, 59, 59, 999);
+          } else {
+            // If no end date, consider it ongoing indefinitely
+            endDate = new Date(9999, 11, 31);
+          }
+          if (date >= startDate && date <= endDate) {
+            events.push({
+              type: 'assignment',
+              data: assignment,
+              color: assignment.is_temporary ? '#17a2b8' : '#007bff'
+            });
+          }
         }
-      }
-    });
-    return events;
+      });
+
+      // Check blocked periods
+      blockedPeriods.forEach(function (block) {
+        if (block.vehicle_id === vehicleId) {
+          // Handle date comparison properly
+          var blockStartStr = block.start_date.split('T')[0];
+          var blockEndStr = block.end_date.split('T')[0];
+
+          // Compare as date strings for simplicity (YYYY-MM-DD format)
+          if (dateStr >= blockStartStr && dateStr <= blockEndStr) {
+            events.push({
+              type: 'blocked',
+              data: block,
+              color: '#dc3545'
+            });
+          }
+        }
+      });
+      return events;
+    } catch (error) {
+      console.error("Error getting events for day:", error, "Date:", day);
+      return [];
+    }
   };
 
   // Helper function to format date
@@ -59902,6 +59743,11 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
 
   // Weekday headers
   var weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  // Get today's info
+  var today = new Date();
+  var isCurrentMonth = today.getMonth() === currentDate.getMonth() && today.getFullYear() === currentDate.getFullYear();
+  var currentDay = today.getDate();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       display: 'flex',
@@ -59940,7 +59786,9 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: '15px'
+      marginBottom: '15px',
+      flexWrap: 'wrap',
+      gap: '10px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: handlePreviousMonth,
@@ -60010,7 +59858,9 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       display: 'flex',
-      marginBottom: '10px'
+      flexWrap: 'wrap',
+      marginBottom: '10px',
+      gap: '10px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
@@ -60061,23 +59911,29 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
     }
   }, "Click on any colored cell to view details")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
+      overflowX: 'auto'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(7, 1fr)',
-      marginBottom: '5px'
+      gridTemplateColumns: 'repeat(7, minmax(80px, 1fr))',
+      position: 'sticky',
+      top: 0,
+      backgroundColor: '#f8f9fa',
+      zIndex: 1
     }
   }, weekdays.map(function (day, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: index,
       style: {
-        padding: '5px',
-        backgroundColor: '#f8f9fa',
+        padding: '8px',
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: '0.9rem'
+        borderBottom: '2px solid #dee2e6',
+        borderRight: index < 6 ? '1px solid #dee2e6' : 'none'
       }
     }, day);
-  })), selectedVehicle === 'all' ?
-  // Display all vehicles in a list with their calendars
+  })), selectedVehicle === 'all' ? (/* All vehicles view */
   vehicles.map(function (vehicle) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: vehicle.id,
@@ -60093,40 +59949,45 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
     }, vehicle.registration_number, " (", vehicle.make, " ", vehicle.model, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
         display: 'grid',
-        gridTemplateColumns: 'repeat(7, 1fr)',
+        gridTemplateColumns: 'repeat(7, minmax(80px, 1fr))',
         gap: '2px'
       }
     }, calendarDays.map(function (day, index) {
       var events = getEventsForDay(vehicle.id, day);
       var hasEvents = events.length > 0;
+
+      // Check if this is today
+      var isToday = isCurrentMonth && day === currentDay;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
         key: index,
         style: {
-          height: '40px',
-          border: '1px solid #dee2e6',
-          backgroundColor: day ? 'white' : '#f8f9fa',
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'relative'
+          height: '50px',
+          border: isToday ? '2px solid #007bff' : '1px solid #dee2e6',
+          backgroundColor: day ? isToday ? '#f0f8ff' : 'white' : '#f8f9fa',
+          position: 'relative',
+          overflow: 'hidden'
         }
       }, day && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
         style: {
           padding: '2px 5px',
           fontSize: '0.8rem',
-          textAlign: 'right'
+          textAlign: 'right',
+          fontWeight: isToday ? 'bold' : 'normal'
         }
       }, day), hasEvents && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
         style: {
           position: 'absolute',
           top: '18px',
-          left: '0',
-          right: '0',
-          bottom: '0',
+          left: '2px',
+          right: '2px',
+          bottom: '2px',
           backgroundColor: events[0].color,
+          borderRadius: '3px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          opacity: 0.9
         },
         onClick: function onClick() {
           return showEventDetails({
@@ -60139,28 +60000,32 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
         style: {
           color: 'white',
           fontSize: '0.8rem',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          textShadow: '0px 0px 2px rgba(0,0,0,0.5)'
         }
       }, events.length))));
     })));
-  }) :
+  })) :
   /*#__PURE__*/
-  // Display a single vehicle calendar with more details
+  /* Single vehicle view - with more details */
   react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(7, 1fr)',
-      gap: '2px'
+      gridTemplateColumns: 'repeat(7, minmax(120px, 1fr))',
+      gap: '3px'
     }
   }, calendarDays.map(function (day, index) {
     var events = getEventsForDay(selectedVehicle, day);
     var hasEvents = events.length > 0;
+
+    // Check if this is today
+    var isToday = isCurrentMonth && day === currentDay;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: index,
       style: {
-        height: '100px',
-        border: '1px solid #dee2e6',
-        backgroundColor: day ? 'white' : '#f8f9fa',
+        minHeight: '120px',
+        border: isToday ? '2px solid #007bff' : '1px solid #dee2e6',
+        backgroundColor: day ? isToday ? '#f0f8ff' : 'white' : '#f8f9fa',
         padding: '5px',
         position: 'relative',
         overflow: 'hidden'
@@ -60168,7 +60033,7 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
     }, day && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
         fontSize: '0.9rem',
-        fontWeight: 'bold',
+        fontWeight: isToday ? 'bold' : 'normal',
         textAlign: 'right',
         marginBottom: '5px'
       }
@@ -60180,15 +60045,16 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
         key: idx,
         style: {
-          padding: '2px 5px',
+          padding: '4px 6px',
           backgroundColor: event.color,
           color: 'white',
-          borderRadius: '2px',
-          marginBottom: '2px',
+          borderRadius: '3px',
+          marginBottom: '4px',
           cursor: 'pointer',
           whiteSpace: 'nowrap',
           overflow: 'hidden',
-          textOverflow: 'ellipsis'
+          textOverflow: 'ellipsis',
+          textShadow: '0px 0px 2px rgba(0,0,0,0.3)'
         },
         onClick: function onClick() {
           return showEventDetails({
@@ -60199,7 +60065,7 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
             day: day
           });
         }
-      }, event.type === 'assignment' ? "".concat(event.data.users.full_name.split(' ')[0]) : "Blocked: ".concat(event.data.reason.substring(0, 10), "..."));
+      }, event.type === 'assignment' ? "".concat(event.data.users.full_name.split(' ')[0]) : "Blocked: ".concat(event.data.reason.substring(0, 15)).concat(event.data.reason.length > 15 ? '...' : ''));
     })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
         height: '70px',
@@ -60210,7 +60076,7 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
         fontSize: '0.8rem'
       }
     }, "Available")));
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
+  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
     show: showEventModal,
     onClose: function onClose() {
       return setShowEventModal(false);
@@ -60256,7 +60122,7 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
       style: {
         margin: '0'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Status:"), " ", event.data.status)), event.type === 'blocked' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Status:"), " ", event.data.status.charAt(0).toUpperCase() + event.data.status.slice(1))), event.type === 'blocked' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
       style: {
         margin: '0 0 5px 0'
       }
@@ -61924,9 +61790,9 @@ var VehicleLogs = function VehicleLogs(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getCurrentUser: () => (/* binding */ getCurrentUser),
-/* harmony export */   getUserRole: () => (/* binding */ getUserRole),
-/* harmony export */   isAdmin: () => (/* binding */ isAdmin),
-/* harmony export */   supabase: () => (/* binding */ supabase)
+/* harmony export */   isUserAdmin: () => (/* binding */ isUserAdmin),
+/* harmony export */   supabase: () => (/* binding */ supabase),
+/* harmony export */   testConnection: () => (/* binding */ testConnection)
 /* harmony export */ });
 /* harmony import */ var _supabase_supabase_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @supabase/supabase-js */ "./node_modules/@supabase/supabase-js/dist/module/index.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -61936,112 +61802,140 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 // admin-app/src/supabaseClient.js
 
 
-// Initialize with values from .env file (or hard-coded for the example)
-var supabaseUrl = 'https://srhjbbtpedfsqmfrizzn.supabase.co';
-var supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyaGpiYnRwZWRmc3FtZnJpenpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNDc5OTMsImV4cCI6MjA1NzYyMzk5M30.EPwvUaSrezYHRqUTuVbfYcVPQUanhs7Kh8RxzCydo5Q';
+// FIXED: Using the correct Supabase URL and API key
+var supabaseUrl = 'https://vtuxejdnmpdfisgdgbdd.supabase.co';
+var supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0dXhlamRubXBkZmlzZ2RnYmRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNzg1MjcsImV4cCI6MjA1NzY1NDUyN30.ebDSQ_KZG8skVPxFfcQVr1loX52DuYooBHRKx95sC8k';
 
 // Create Supabase client
-var supabase = (0,_supabase_supabase_js__WEBPACK_IMPORTED_MODULE_0__.createClient)(supabaseUrl, supabaseAnonKey);
+var supabase = (0,_supabase_supabase_js__WEBPACK_IMPORTED_MODULE_0__.createClient)(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: false
+  }
+});
 
-// Authentication helpers
-var getCurrentUser = /*#__PURE__*/function () {
+// Helper to check if Supabase is reachable
+var testConnection = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var _yield$supabase$auth$, data, error;
+    var _yield$supabase$from$, data, error;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
           _context.next = 3;
-          return supabase.auth.getUser();
+          return supabase.from('vehicles').select('count', {
+            count: 'exact',
+            head: true
+          });
         case 3:
-          _yield$supabase$auth$ = _context.sent;
-          data = _yield$supabase$auth$.data;
-          error = _yield$supabase$auth$.error;
-          if (!error) {
-            _context.next = 8;
-            break;
-          }
-          throw error;
-        case 8:
-          return _context.abrupt("return", (data === null || data === void 0 ? void 0 : data.user) || null);
-        case 11:
-          _context.prev = 11;
+          _yield$supabase$from$ = _context.sent;
+          data = _yield$supabase$from$.data;
+          error = _yield$supabase$from$.error;
+          return _context.abrupt("return", {
+            success: !error,
+            error: error
+          });
+        case 9:
+          _context.prev = 9;
           _context.t0 = _context["catch"](0);
-          console.error('Error getting current user:', _context.t0);
-          return _context.abrupt("return", null);
-        case 15:
+          console.error('Supabase connection test failed:', _context.t0);
+          return _context.abrupt("return", {
+            success: false,
+            error: _context.t0.message || 'Connection test failed'
+          });
+        case 13:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 11]]);
+    }, _callee, null, [[0, 9]]);
   }));
-  return function getCurrentUser() {
+  return function testConnection() {
     return _ref.apply(this, arguments);
   };
 }();
-var getUserRole = /*#__PURE__*/function () {
+
+// Helper to get current user
+var getCurrentUser = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var user, _yield$supabase$from$, data, error;
+    var _yield$supabase$auth$, user, error;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           _context2.prev = 0;
           _context2.next = 3;
-          return getCurrentUser();
+          return supabase.auth.getUser();
         case 3:
-          user = _context2.sent;
-          if (user) {
-            _context2.next = 6;
-            break;
-          }
-          return _context2.abrupt("return", null);
-        case 6:
-          _context2.next = 8;
-          return supabase.from('users').select('role').eq('id', user.id).single();
-        case 8:
-          _yield$supabase$from$ = _context2.sent;
-          data = _yield$supabase$from$.data;
-          error = _yield$supabase$from$.error;
+          _yield$supabase$auth$ = _context2.sent;
+          user = _yield$supabase$auth$.data.user;
+          error = _yield$supabase$auth$.error;
           if (!error) {
-            _context2.next = 13;
+            _context2.next = 8;
             break;
           }
           throw error;
-        case 13:
-          return _context2.abrupt("return", (data === null || data === void 0 ? void 0 : data.role) || null);
-        case 16:
-          _context2.prev = 16;
+        case 8:
+          return _context2.abrupt("return", user);
+        case 11:
+          _context2.prev = 11;
           _context2.t0 = _context2["catch"](0);
-          console.error('Error getting user role:', _context2.t0);
+          console.error('Error fetching current user:', _context2.t0);
           return _context2.abrupt("return", null);
-        case 20:
+        case 15:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 16]]);
+    }, _callee2, null, [[0, 11]]);
   }));
-  return function getUserRole() {
+  return function getCurrentUser() {
     return _ref2.apply(this, arguments);
   };
 }();
-var isAdmin = /*#__PURE__*/function () {
+
+// Helper to check if user is admin
+var isUserAdmin = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-    var role;
+    var _yield$supabase$auth$2, user, _yield$supabase$from$2, data, error;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
-          _context3.next = 2;
-          return getUserRole();
-        case 2:
-          role = _context3.sent;
-          return _context3.abrupt("return", role === 'admin');
-        case 4:
+          _context3.prev = 0;
+          _context3.next = 3;
+          return supabase.auth.getUser();
+        case 3:
+          _yield$supabase$auth$2 = _context3.sent;
+          user = _yield$supabase$auth$2.data.user;
+          if (user) {
+            _context3.next = 7;
+            break;
+          }
+          return _context3.abrupt("return", false);
+        case 7:
+          _context3.next = 9;
+          return supabase.from('users').select('role').eq('email', user.email).single();
+        case 9:
+          _yield$supabase$from$2 = _context3.sent;
+          data = _yield$supabase$from$2.data;
+          error = _yield$supabase$from$2.error;
+          if (!(error || !data)) {
+            _context3.next = 14;
+            break;
+          }
+          return _context3.abrupt("return", false);
+        case 14:
+          return _context3.abrupt("return", data.role === 'admin');
+        case 17:
+          _context3.prev = 17;
+          _context3.t0 = _context3["catch"](0);
+          console.error('Error checking admin status:', _context3.t0);
+          return _context3.abrupt("return", false);
+        case 21:
         case "end":
           return _context3.stop();
       }
-    }, _callee3);
+    }, _callee3, null, [[0, 17]]);
   }));
-  return function isAdmin() {
+  return function isUserAdmin() {
     return _ref3.apply(this, arguments);
   };
 }();
