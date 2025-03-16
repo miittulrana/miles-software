@@ -432,7 +432,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderRadius: SIZES.borderRadius,
     marginBottom: SIZES.sm,
-    ...SHADOWS.small,
+    // Inline shadow definition
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   historyHeaderText: {
     fontSize: FONTS.size.md,

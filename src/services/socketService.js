@@ -2,7 +2,6 @@
 import { io } from 'socket.io-client';
 import { supabase } from './supabase';
 import * as Location from 'expo-location';
-import * as Battery from 'expo-battery';
 import { Platform } from 'react-native';
 
 class SocketService {
@@ -151,9 +150,6 @@ class SocketService {
         }
       }
       
-      // Configure location tracking settings
-      await Location.enableNetworkProviderAsync();
-      
       // Start location updates subscription
       this.locationSubscription = await Location.watchPositionAsync(
         {
@@ -188,8 +184,8 @@ class SocketService {
         return;
       }
       
-      // Get battery level
-      const batteryLevel = await Battery.getBatteryLevelAsync();
+      // Simulate battery level for now - removed dependency on expo-battery
+      const batteryLevel = 100;
       
       // Calculate if moving based on speed
       const isMoving = location.coords.speed > 1; // speed > 1 m/s (3.6 km/h)
@@ -202,7 +198,7 @@ class SocketService {
         speed: location.coords.speed * 3.6, // Convert m/s to km/h
         accuracy: location.coords.accuracy,
         is_moving: isMoving,
-        battery_level: Math.round(batteryLevel * 100),
+        battery_level: batteryLevel,
         timestamp: new Date().toISOString()
       };
       

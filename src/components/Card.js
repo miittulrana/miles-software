@@ -1,7 +1,7 @@
-// src/components/Card.js
+// src/components/Card.js - WITH INLINE SHADOWS
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { COLORS, SIZES, SHADOWS } from '../utils/theme';
+import { COLORS, SIZES } from '../utils/theme';
 
 const Card = ({
   children,
@@ -58,18 +58,34 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   
-  // Elevation styles
+  // Elevation styles with inline shadow definitions
   noneElevation: {
-    ...SHADOWS.none,
+    shadowColor: 'transparent',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    elevation: 0,
   },
   smallElevation: {
-    ...SHADOWS.small,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
   },
   mediumElevation: {
-    ...SHADOWS.medium,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   largeElevation: {
-    ...SHADOWS.large,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
   },
   
   // Padding styles
