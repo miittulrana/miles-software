@@ -30,61 +30,87 @@ class MapService {
   // Initialize the map in the provided container
   initializeMap(container, token, options = {}) {
     if (this.isInitialized) {
-      return;
+      console.log("Map already initialized, cleaning up first");
+      this.cleanup();
     }
 
-    // Set Mapbox access token
-    mapboxgl.accessToken = token;
+    try {
+      // Set Mapbox access token
+      mapboxgl.accessToken = token;
 
-    // Create the map
-    this.map = new mapboxgl.Map({
-      container,
-      style: options.mapStyle || 'mapbox://styles/mapbox/streets-v11',
-      center: options.center || MALTA_CENTER,
-      zoom: options.zoom || DEFAULT_ZOOM,
-      pitch: options.pitch || DEFAULT_PITCH,
-      bearing: options.bearing || 0,
-      antialias: true // Enables smoother rendering for 3D
-    });
+      console.log("Creating map with container:", container);
+      console.log("Using Mapbox token:", token.substring(0, 10) + '...');
 
-    // Add navigation controls
-    this.map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-    // Add fullscreen control
-    this.map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
-
-    // Add geolocate control
-    this.map.addControl(
-      new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true
-        },
-        trackUserLocation: true
-      }),
-      'top-right'
-    );
-
-    // Add scale control
-    this.map.addControl(new mapboxgl.ScaleControl({
-      maxWidth: 100,
-      unit: 'metric'
-    }), 'bottom-left');
-
-    // Wait for map to load
-    this.map.on('load', () => {
-      // Add 3D building layer if enabled
-      if (options.show3DBuildings) {
-        this.add3DBuildings();
-      }
-
-      // Map is now initialized
-      this.isInitialized = true;
+      // Verify container has dimensions
+      const rect = container.getBoundingClientRect();
+      console.log("Container dimensions:", rect.width, "x", rect.height);
       
-      // Execute any callback provided
-      if (options.onMapLoaded) {
-        options.onMapLoaded(this.map);
+      if (rect.width === 0 || rect.height === 0) {
+        console.warn("Container has zero dimensions, map may fail to initialize");
       }
-    });
+
+      // Create the map
+      this.map = new mapboxgl.Map({
+        container,
+        style: options.mapStyle || 'mapbox://styles/mapbox/streets-v11',
+        center: options.center || MALTA_CENTER,
+        zoom: options.zoom || DEFAULT_ZOOM,
+        pitch: options.pitch || DEFAULT_PITCH,
+        bearing: options.bearing || 0,
+        antialias: true, // Enables smoother rendering for 3D
+        attributionControl: true // Required by Mapbox terms of service
+      });
+
+      // Add navigation controls
+      this.map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+      // Add fullscreen control
+      this.map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
+
+      // Add geolocate control
+      this.map.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true
+          },
+          trackUserLocation: true
+        }),
+        'top-right'
+      );
+
+      // Add scale control
+      this.map.addControl(new mapboxgl.ScaleControl({
+        maxWidth: 100,
+        unit: 'metric'
+      }), 'bottom-left');
+
+      // Track errors
+      this.map.on('error', (e) => {
+        console.error("Mapbox error:", e);
+      });
+
+      // Wait for map to load
+      this.map.on('load', () => {
+        console.log("Map loaded successfully");
+        
+        // Add 3D building layer if enabled
+        if (options.show3DBuildings) {
+          this.add3DBuildings();
+        }
+
+        // Map is now initialized
+        this.isInitialized = true;
+        
+        // Execute any callback provided
+        if (options.onMapLoaded) {
+          options.onMapLoaded(this.map);
+        }
+      });
+      
+    } catch (error) {
+      console.error("Error initializing map:", error);
+      throw error;
+    }
   }
 
   // Add 3D building extrusion layer
@@ -102,33 +128,39 @@ class MapService {
       return;
     }
 
-    this.map.addLayer({
-      'id': '3d-buildings',
-      'source': 'composite',
-      'source-layer': 'building',
-      'filter': ['==', 'extrude', 'true'],
-      'type': 'fill-extrusion',
-      'minzoom': 14,
-      'paint': {
-        'fill-extrusion-color': '#aaa',
-        'fill-extrusion-height': [
-          'interpolate', ['linear'], ['zoom'],
-          14, 0,
-          16, ['get', 'height']
-        ],
-        'fill-extrusion-base': [
-          'interpolate', ['linear'], ['zoom'],
-          14, 0,
-          16, ['get', 'min_height']
-        ],
-        'fill-extrusion-opacity': 0.6
-      }
-    }, 'road-label');
+    try {
+      this.map.addLayer({
+        'id': '3d-buildings',
+        'source': 'composite',
+        'source-layer': 'building',
+        'filter': ['==', 'extrude', 'true'],
+        'type': 'fill-extrusion',
+        'minzoom': 14,
+        'paint': {
+          'fill-extrusion-color': '#aaa',
+          'fill-extrusion-height': [
+            'interpolate', ['linear'], ['zoom'],
+            14, 0,
+            16, ['get', 'height']
+          ],
+          'fill-extrusion-base': [
+            'interpolate', ['linear'], ['zoom'],
+            14, 0,
+            16, ['get', 'min_height']
+          ],
+          'fill-extrusion-opacity': 0.6
+        }
+      }, 'road-label');
+    } catch (error) {
+      console.error("Error adding 3D buildings:", error);
+      // Just log the error, don't rethrow it as this is non-critical
+    }
   }
 
   // Add or update a vehicle marker on the map
   updateVehicleMarker(vehicle, location) {
     if (!this.map || !this.isInitialized) {
+      console.warn("Map not initialized, can't update marker");
       return;
     }
 
@@ -142,107 +174,120 @@ class MapService {
     
     const vehicleColor = this.vehicleColors.get(vehicleId);
     
-    // Check if we already have a marker for this vehicle
-    if (this.markers.has(vehicleId)) {
-      const marker = this.markers.get(vehicleId);
-      const currentLngLat = marker.getLngLat();
-      
-      // Only animate if the position has changed significantly
-      if (Math.abs(currentLngLat.lng - location.longitude) > 0.00001 || 
-          Math.abs(currentLngLat.lat - location.latitude) > 0.00001) {
+    try {
+      // Check if we already have a marker for this vehicle
+      if (this.markers.has(vehicleId)) {
+        const marker = this.markers.get(vehicleId);
+        const currentLngLat = marker.getLngLat();
         
-        // Smooth animation to new position
-        this._animateMarkerMovement(
-          marker, 
-          currentLngLat, 
-          { lng: location.longitude, lat: location.latitude },
-          ANIMATION_DURATION
-        );
-      }
-      
-      // Update marker element (direction, status, etc.)
-      const element = this.markerElements.get(vehicleId);
-      if (element) {
-        // Update vehicle direction/heading arrow
-        if (location.heading !== undefined) {
-          const arrowElement = element.querySelector('.vehicle-direction');
-          if (arrowElement) {
-            arrowElement.style.transform = `rotate(${location.heading}deg)`;
+        // Only animate if the position has changed significantly
+        if (Math.abs(currentLngLat.lng - location.longitude) > 0.00001 || 
+            Math.abs(currentLngLat.lat - location.latitude) > 0.00001) {
+          
+          // Smooth animation to new position
+          this._animateMarkerMovement(
+            marker, 
+            currentLngLat, 
+            { lng: location.longitude, lat: location.latitude },
+            ANIMATION_DURATION
+          );
+        }
+        
+        // Update marker element (direction, status, etc.)
+        const element = this.markerElements.get(vehicleId);
+        if (element) {
+          // Update vehicle direction/heading arrow
+          if (location.heading !== undefined) {
+            const arrowElement = element.querySelector('.vehicle-direction');
+            if (arrowElement) {
+              arrowElement.style.transform = `rotate(${location.heading}deg)`;
+            }
+          }
+          
+          // Update vehicle status indicator
+          const statusElement = element.querySelector('.vehicle-status');
+          if (statusElement) {
+            statusElement.className = `vehicle-status ${location.is_moving ? 'moving' : 'stopped'}`;
           }
         }
+      } else {
+        // Create a new marker if one doesn't exist
+        const element = this._createMarkerElement(vehicle, vehicleColor);
         
-        // Update vehicle status indicator
-        const statusElement = element.querySelector('.vehicle-status');
-        if (statusElement) {
-          statusElement.className = `vehicle-status ${location.is_moving ? 'moving' : 'stopped'}`;
-        }
+        // Create the marker
+        const marker = new mapboxgl.Marker({
+          element,
+          anchor: 'center'
+        })
+          .setLngLat([location.longitude, location.latitude])
+          .addTo(this.map);
+        
+        // Store references
+        this.markers.set(vehicleId, marker);
+        this.markerElements.set(vehicleId, element);
+        
+        // Add click handler
+        element.addEventListener('click', () => {
+          this.selectVehicle(vehicleId);
+          this.onVehicleClickCallbacks.forEach(callback => callback(vehicleId));
+        });
       }
-    } else {
-      // Create a new marker if one doesn't exist
-      const element = this._createMarkerElement(vehicle, vehicleColor);
-      
-      // Create the marker
-      const marker = new mapboxgl.Marker({
-        element,
-        anchor: 'center'
-      })
-        .setLngLat([location.longitude, location.latitude])
-        .addTo(this.map);
-      
-      // Store references
-      this.markers.set(vehicleId, marker);
-      this.markerElements.set(vehicleId, element);
-      
-      // Add click handler
-      element.addEventListener('click', () => {
-        this.selectVehicle(vehicleId);
-        this.onVehicleClickCallbacks.forEach(callback => callback(vehicleId));
-      });
+    } catch (error) {
+      console.error("Error updating vehicle marker:", error);
+      // Just log the error, don't rethrow it
     }
   }
 
   // Remove a vehicle marker from the map
   removeVehicleMarker(vehicleId) {
     if (this.markers.has(vehicleId)) {
-      // Remove the marker from the map
-      this.markers.get(vehicleId).remove();
-      
-      // Remove from our collections
-      this.markers.delete(vehicleId);
-      this.markerElements.delete(vehicleId);
-      
-      // If this was the selected vehicle, clear selection
-      if (this.selectedVehicleId === vehicleId) {
-        this.selectedVehicleId = null;
+      try {
+        // Remove the marker from the map
+        this.markers.get(vehicleId).remove();
+        
+        // Remove from our collections
+        this.markers.delete(vehicleId);
+        this.markerElements.delete(vehicleId);
+        
+        // If this was the selected vehicle, clear selection
+        if (this.selectedVehicleId === vehicleId) {
+          this.selectedVehicleId = null;
+        }
+      } catch (error) {
+        console.error("Error removing vehicle marker:", error);
       }
     }
   }
 
   // Select a vehicle (highlight it on the map)
   selectVehicle(vehicleId) {
-    // Clear previous selection
-    if (this.selectedVehicleId && this.markerElements.has(this.selectedVehicleId)) {
-      const prevElement = this.markerElements.get(this.selectedVehicleId);
-      prevElement.classList.remove('selected');
-    }
-    
-    // Set new selection
-    this.selectedVehicleId = vehicleId;
-    
-    // Highlight new selection
-    if (vehicleId && this.markerElements.has(vehicleId)) {
-      const element = this.markerElements.get(vehicleId);
-      element.classList.add('selected');
-      
-      // Center map on this vehicle
-      if (this.markers.has(vehicleId)) {
-        this.map.flyTo({
-          center: this.markers.get(vehicleId).getLngLat(),
-          zoom: 15,
-          pitch: 60,
-          duration: 1000
-        });
+    try {
+      // Clear previous selection
+      if (this.selectedVehicleId && this.markerElements.has(this.selectedVehicleId)) {
+        const prevElement = this.markerElements.get(this.selectedVehicleId);
+        prevElement.classList.remove('selected');
       }
+      
+      // Set new selection
+      this.selectedVehicleId = vehicleId;
+      
+      // Highlight new selection
+      if (vehicleId && this.markerElements.has(vehicleId)) {
+        const element = this.markerElements.get(vehicleId);
+        element.classList.add('selected');
+        
+        // Center map on this vehicle
+        if (this.markers.has(vehicleId) && this.map) {
+          this.map.flyTo({
+            center: this.markers.get(vehicleId).getLngLat(),
+            zoom: 15,
+            pitch: 60,
+            duration: 1000
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error selecting vehicle:", error);
     }
   }
 
@@ -263,40 +308,45 @@ class MapService {
 
   // Clean up the map service
   cleanup() {
-    // Remove all markers
-    this.markers.forEach(marker => marker.remove());
-    this.markers.clear();
-    this.markerElements.clear();
-    
-    // Clear other state
-    this.vehicleColors.clear();
-    this.selectedVehicleId = null;
-    this.colorIndex = 0;
-    
-    // Remove map if it exists
-    if (this.map) {
-      this.map.remove();
-      this.map = null;
+    try {
+      // Remove all markers
+      this.markers.forEach(marker => marker.remove());
+      this.markers.clear();
+      this.markerElements.clear();
+      
+      // Clear other state
+      this.vehicleColors.clear();
+      this.selectedVehicleId = null;
+      this.colorIndex = 0;
+      this.onVehicleClickCallbacks = [];
+      
+      // Remove map if it exists
+      if (this.map) {
+        this.map.remove();
+        this.map = null;
+      }
+      
+      this.isInitialized = false;
+    } catch (error) {
+      console.error("Error cleaning up map:", error);
     }
-    
-    this.isInitialized = false;
   }
 
   // Create a custom marker element for a vehicle
   _createMarkerElement(vehicle, color) {
     // Create container element
     const element = document.createElement('div');
-    element.className = 'vehicle-marker';
+    element.className = 'vehicle-marker-container';
     element.id = `marker-${vehicle.id}`;
     
     // Create marker content
     element.innerHTML = `
-      <div class="marker-container">
-        <div class="vehicle-icon" style="background-color: ${color}">
-          <i class="bi bi-truck"></i>
-        </div>
-        <div class="vehicle-direction">↑</div>
-        <div class="vehicle-status stopped"></div>
+      <div class="vehicle-icon" style="background-color: ${color}">
+        <i class="bi bi-truck"></i>
+      </div>
+      <div class="vehicle-direction">↑</div>
+      <div class="vehicle-status stopped"></div>
+      <div class="vehicle-info">
         <div class="vehicle-label">${vehicle.registration_number || 'Unknown'}</div>
       </div>
     `;
@@ -306,27 +356,33 @@ class MapService {
 
   // Animate marker movement with smooth transition
   _animateMarkerMovement(marker, startPos, endPos, duration) {
-    const startTime = Date.now();
-    
-    const animate = () => {
-      // Calculate progress
-      const progress = Math.min((Date.now() - startTime) / duration, 1);
+    try {
+      const startTime = Date.now();
       
-      // Calculate current position using easing function
-      const lng = startPos.lng + (endPos.lng - startPos.lng) * this._easeInOutCubic(progress);
-      const lat = startPos.lat + (endPos.lat - startPos.lat) * this._easeInOutCubic(progress);
+      const animate = () => {
+        // Calculate progress
+        const progress = Math.min((Date.now() - startTime) / duration, 1);
+        
+        // Calculate current position using easing function
+        const lng = startPos.lng + (endPos.lng - startPos.lng) * this._easeInOutCubic(progress);
+        const lat = startPos.lat + (endPos.lat - startPos.lat) * this._easeInOutCubic(progress);
+        
+        // Update marker position
+        marker.setLngLat([lng, lat]);
+        
+        // Continue animation if not complete
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
       
-      // Update marker position
-      marker.setLngLat([lng, lat]);
-      
-      // Continue animation if not complete
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-    
-    // Start animation
-    animate();
+      // Start animation
+      animate();
+    } catch (error) {
+      console.error("Error animating marker:", error);
+      // Fall back to immediate position update
+      marker.setLngLat([endPos.lng, endPos.lat]);
+    }
   }
 
   // Cubic easing function for smooth movement

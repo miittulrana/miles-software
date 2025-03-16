@@ -7,8 +7,7 @@ import socketService from '../services/socketService';
 import VehicleDetailsPanel from './tracking/VehicleDetailsPanel';
 import './VehicleTracking.css';
 
-// Updated: Use a public token (pk.) instead of secret key (sk.)
-// Replace this with your own public Mapbox token
+// Updated token - replace with your valid Mapbox public token
 const MAPBOX_TOKEN = 'pk.eyJ1IjoicmFuYWppNSIsImEiOiJjbGZzemJqZWYwMGV0M29wYjFjeHQ5MnR2In0.cM3GwYflKjAIfuZ7MBJMQA';
 
 const VehicleTracking = ({ networkStatus }) => {
@@ -31,9 +30,9 @@ const VehicleTracking = ({ networkStatus }) => {
   const [mapStyle, setMapStyle] = useState('streets-v11');
   const [vehiclesLoaded, setVehiclesLoaded] = useState(false);
   
-  // Initialize map and socket connection
+  // Initialize map independently of data
   useEffect(() => {
-    initializeTracking();
+    initializeMap();
     
     // Cleanup on unmount
     return () => {
@@ -42,7 +41,20 @@ const VehicleTracking = ({ networkStatus }) => {
     };
   }, []);
   
-  // Update map when active vehicles change - only after vehicles are loaded
+  // Load vehicles in a separate effect
+  useEffect(() => {
+    fetchVehicles();
+  }, []);
+  
+  // Connect to socket and fetch locations after vehicles are loaded
+  useEffect(() => {
+    if (vehiclesLoaded) {
+      connectToSocketServer();
+      fetchInitialVehicleLocations();
+    }
+  }, [vehiclesLoaded]);
+  
+  // Update map when active vehicles change - only after vehicles are loaded and map is initialized
   useEffect(() => {
     if (!mapInitialized || !activeVehicles.length || !vehiclesLoaded) return;
     
@@ -75,12 +87,9 @@ const VehicleTracking = ({ networkStatus }) => {
     }
   }, [selectedVehicleId, vehicles]);
   
-  // Initialize tracking system
-  const initializeTracking = async () => {
+  // Initialize map only - separated from data loading
+  const initializeMap = () => {
     try {
-      setLoading(true);
-      
-      // Initialize the map with Mapbox
       if (mapContainerRef.current && !mapInitialized) {
         console.log("Initializing map with container:", mapContainerRef.current);
         
@@ -101,23 +110,9 @@ const VehicleTracking = ({ networkStatus }) => {
           setSelectedVehicleId(vehicleId);
         });
       }
-      
-      // Load all vehicles first
-      await fetchVehicles();
-      
-      // Then connect to socket server
-      connectToSocketServer();
-      
-      // Then load initial vehicle locations - after vehicles are loaded
-      if (vehiclesLoaded) {
-        await fetchInitialVehicleLocations();
-      }
-      
     } catch (err) {
-      console.error('Error initializing tracking:', err);
-      setError('Failed to initialize tracking system. Please refresh the page and try again.');
-    } finally {
-      setLoading(false);
+      console.error('Error initializing map:', err);
+      setError('Failed to initialize map: ' + err.message);
     }
   };
   
@@ -195,7 +190,7 @@ const VehicleTracking = ({ networkStatus }) => {
     });
   };
   
-  // Fetch all vehicles from Supabase - IMPROVED ERROR HANDLING
+  // Fetch all vehicles from Supabase with improved error handling
   const fetchVehicles = async () => {
     try {
       console.log("Fetching vehicles data...");
@@ -203,6 +198,8 @@ const VehicleTracking = ({ networkStatus }) => {
       // Check network status first
       if (!networkStatus.online) {
         console.log("Network is offline, using cached vehicles if available");
+        setVehiclesLoaded(true); // Set as loaded anyway to proceed
+        setLoading(false);
         return;
       }
       
@@ -232,20 +229,19 @@ const VehicleTracking = ({ networkStatus }) => {
       }
       
       setVehiclesLoaded(true);
-      
-      // Now that vehicles are loaded, we can fetch locations
-      await fetchInitialVehicleLocations();
+      setLoading(false);
       
     } catch (err) {
       console.error('Error fetching vehicles:', err);
       setError(`Failed to load vehicles: ${err.message}`);
-      setVehiclesLoaded(false);  // Mark as not loaded on error
+      setVehiclesLoaded(true); // Set as loaded anyway to proceed
+      setLoading(false);
     }
   };
   
-  // Fetch initial vehicle locations - COMPLETELY REWORKED WITH ROBUST ERROR HANDLING
+  // Fetch initial vehicle locations with robust error handling
   const fetchInitialVehicleLocations = async () => {
-    if (!vehiclesLoaded || vehicles.length === 0) {
+    if (!vehiclesLoaded) {
       console.log("Skipping location fetch - vehicles not loaded yet");
       return;
     }
@@ -431,7 +427,7 @@ const VehicleTracking = ({ networkStatus }) => {
     });
   };
   
-  // Filter for active vehicles only - IMPROVED NULL CHECKING
+  // Filter for active vehicles only - with proper null checking
   const getActiveVehicleIds = () => {
     return activeVehicles.filter(v => v && v.id).map(v => v.id);
   };
@@ -458,6 +454,17 @@ const VehicleTracking = ({ networkStatus }) => {
     
     return colors[index % colors.length];
   };
+
+  // Try to handle map reload
+  const handleMapReload = () => {
+    if (mapService.map) {
+      mapService.cleanup();
+    }
+    setMapInitialized(false);
+    setTimeout(() => {
+      initializeMap();
+    }, 500);
+  };
   
   return (
     <div className="vehicle-tracking-container">
@@ -471,6 +478,14 @@ const VehicleTracking = ({ networkStatus }) => {
         >
           <i className="bi bi-exclamation-triangle me-2"></i>
           {error}
+          <Button 
+            variant="link" 
+            className="ms-2" 
+            onClick={handleMapReload}
+            size="sm"
+          >
+            Try Reloading Map
+          </Button>
         </Alert>
       )}
       
@@ -656,6 +671,14 @@ const VehicleTracking = ({ networkStatus }) => {
               >
                 <i className="bi bi-arrow-repeat"></i>
               </button>
+              
+              <button 
+                className="control-button"
+                onClick={handleMapReload}
+                title="Reload Map"
+              >
+                <i className="bi bi-arrow-clockwise"></i>
+              </button>
             </div>
           </div>
           
@@ -669,7 +692,13 @@ const VehicleTracking = ({ networkStatus }) => {
             <div 
               ref={mapContainerRef} 
               className="map-content"
-              style={{ height: "calc(100vh - 60px)" }}  // Explicit height added here
+              style={{ 
+                height: "100%", 
+                width: "100%",
+                position: "absolute",
+                top: 0,
+                left: 0
+              }}
             />
           )}
           
