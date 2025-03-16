@@ -8,7 +8,12 @@ class SocketService {
     this.listeners = new Map();
     this.reconnectAttempts = 0;
     this.maxReconnectAttempts = 5;
-    this.serverUrl = 'http://localhost:3001'; // Change in production
+    
+    // Set to localhost for development - this is a key issue
+    // Change this URL to match your actual socket server
+    this.serverUrl = window.location.hostname === 'localhost' 
+      ? 'http://localhost:3001'  // Local development
+      : 'http://localhost:3001'; // Replace with your production URL when deploying
   }
 
   // Initialize socket connection
@@ -17,10 +22,14 @@ class SocketService {
       return;
     }
 
-    // Create socket instance
+    console.log("Attempting to connect to socket server at:", this.serverUrl);
+
+    // Create socket instance with improved connection settings
     this.socket = io(this.serverUrl, {
       reconnectionAttempts: this.maxReconnectAttempts,
-      timeout: 10000,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      timeout: 20000, // Increased timeout
       transports: ['websocket', 'polling']
     });
 
@@ -43,7 +52,7 @@ class SocketService {
     });
 
     this.socket.on('connect_error', (error) => {
-      console.error('Socket connection error:', error);
+      console.error('Socket connection error:', error.message);
       this.reconnectAttempts += 1;
       
       // Notify any registered error listeners
@@ -51,6 +60,7 @@ class SocketService {
       
       // If max reconnect attempts reached, stop trying
       if (this.reconnectAttempts >= this.maxReconnectAttempts) {
+        console.error('Maximum reconnection attempts reached. Stopping reconnection attempts.');
         this.socket.disconnect();
         this._notifyListeners('max_reconnect_attempts', {});
       }
@@ -132,6 +142,8 @@ class SocketService {
 
   // Manual reconnection attempt
   reconnect() {
+    console.log("Manually attempting to reconnect to socket server");
+    this.reconnectAttempts = 0;
     this.disconnect();
     this.connect();
   }

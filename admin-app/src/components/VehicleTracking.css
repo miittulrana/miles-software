@@ -336,17 +336,40 @@
     margin-bottom: 8px;
   }
   
-  /* Map container */
+  /* Map container - UPDATED FOR BETTER VISIBILITY */
   .map-container {
     flex: 1;
     position: relative;
     overflow: hidden;
-    height: 100%; /* Ensure it takes full height */
+    height: 100%; 
+    width: 100%;
+    min-height: 500px;
+    background-color: #f7f7f7; /* Light background so you can tell if the container is rendering */
   }
   
   .map-content {
-    height: 100% !important; /* Force full height of parent */
-    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1;
+  }
+  
+  /* Force Mapbox-specific containers to fill the space */
+  .mapboxgl-map {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .mapboxgl-canvas {
+    outline: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
   }
   
   .map-loading {
@@ -360,17 +383,18 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(255, 255, 255, 0.8);
-    z-index: 1;
+    z-index: 10;
   }
   
   .map-controls {
     position: absolute;
     top: 10px;
     left: 10px;
-    z-index: 1;
-    background-color: white;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    padding: 5px;
   }
   
   .control-group {
@@ -408,6 +432,129 @@
     background-color: #007bff;
     color: white;
     border-color: #007bff;
+  }
+  
+  /* Vehicle Marker Styles for Map */
+  .vehicle-marker-container {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    transition: transform 0.2s ease-out;
+    z-index: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  }
+  
+  .vehicle-marker-container:hover {
+    transform: scale(1.1);
+    z-index: 2;
+  }
+  
+  .vehicle-marker-container.selected {
+    transform: scale(1.2);
+    z-index: 3;
+  }
+  
+  .vehicle-marker-container.selected .vehicle-icon {
+    box-shadow: 0 0 0 3px white, 0 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .vehicle-icon {
+    width: 100%;
+    height: 100%;
+    background-color: #3498db;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    transition: all 0.2s ease-out;
+    border: 2px solid white;
+  }
+  
+  .vehicle-direction {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 20px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    transition: transform 0.5s ease-out;
+    pointer-events: none;
+  }
+  
+  .vehicle-status {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  
+  .vehicle-status.moving {
+    background-color: #2ecc71; /* Green when moving */
+    box-shadow: 0 0 5px 1px rgba(46, 204, 113, 0.5);
+    animation: pulse 2s infinite;
+  }
+  
+  .vehicle-status.stopped {
+    background-color: #e74c3c; /* Red when stopped */
+  }
+
+  /* Force hardware acceleration for all map-related elements */
+.map-container, 
+.map-content, 
+.mapboxgl-map, 
+.mapboxgl-canvas-container,
+.mapboxgl-canvas {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fix specific issues with Electron and Mapbox GL integration */
+.mapboxgl-canvas {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* This is critically important for Electron */
+.mapboxgl-canvas-container {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+}
+
+/* Add explicit z-index values to ensure proper display order */
+.mapboxgl-map {
+  z-index: 1 !important;
+}
+
+.mapboxgl-control-container {
+  z-index: 10 !important;
+}
+
+/* Ensure the map content doesn't get clipped */
+.map-content {
+  overflow: visible !important;
+}
+  
+  /* Animation for moving vehicles */
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
   }
   
   /* Responsive adjustments */

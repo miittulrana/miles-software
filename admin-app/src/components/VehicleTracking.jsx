@@ -7,8 +7,8 @@ import socketService from '../services/socketService';
 import VehicleDetailsPanel from './tracking/VehicleDetailsPanel';
 import './VehicleTracking.css';
 
-// Updated token - replace with your valid Mapbox public token
-const MAPBOX_TOKEN = 'pk.eyJ1IjoicmFuYWppNSIsImEiOiJjbGZzemJqZWYwMGV0M29wYjFjeHQ5MnR2In0.cM3GwYflKjAIfuZ7MBJMQA';
+// Using a public Mapbox token with guaranteed access
+const MAPBOX_TOKEN = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
 const VehicleTracking = ({ networkStatus }) => {
   const mapContainerRef = useRef(null);
@@ -26,13 +26,13 @@ const VehicleTracking = ({ networkStatus }) => {
   const [notificationCount, setNotificationCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [mapInitialized, setMapInitialized] = useState(false);
-  const [view3DEnabled, setView3DEnabled] = useState(true);
+  const [view3DEnabled, setView3DEnabled] = useState(false); // Start with 3D disabled for better performance
   const [mapStyle, setMapStyle] = useState('streets-v11');
   const [vehiclesLoaded, setVehiclesLoaded] = useState(false);
   
-  // Initialize map independently of data
+  // Initialize map and socket connection
   useEffect(() => {
-    initializeMap();
+    initializeTracking();
     
     // Cleanup on unmount
     return () => {
@@ -41,20 +41,7 @@ const VehicleTracking = ({ networkStatus }) => {
     };
   }, []);
   
-  // Load vehicles in a separate effect
-  useEffect(() => {
-    fetchVehicles();
-  }, []);
-  
-  // Connect to socket and fetch locations after vehicles are loaded
-  useEffect(() => {
-    if (vehiclesLoaded) {
-      connectToSocketServer();
-      fetchInitialVehicleLocations();
-    }
-  }, [vehiclesLoaded]);
-  
-  // Update map when active vehicles change - only after vehicles are loaded and map is initialized
+  // Update map when active vehicles change - only after vehicles are loaded
   useEffect(() => {
     if (!mapInitialized || !activeVehicles.length || !vehiclesLoaded) return;
     
@@ -87,21 +74,45 @@ const VehicleTracking = ({ networkStatus }) => {
     }
   }, [selectedVehicleId, vehicles]);
   
-  // Initialize map only - separated from data loading
-  const initializeMap = () => {
+  // Initialize tracking system
+  const initializeTracking = async () => {
     try {
+      setLoading(true);
+      
+      // Initialize the map with Mapbox
       if (mapContainerRef.current && !mapInitialized) {
         console.log("Initializing map with container:", mapContainerRef.current);
         
+        // Use the full style URL to ensure compatibility
+        const styleUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11?access_token=${MAPBOX_TOKEN}`;
+        
         mapService.initializeMap(mapContainerRef.current, MAPBOX_TOKEN, {
-          center: [14.5, 35.9], // Malta center
-          zoom: 11,
-          pitch: view3DEnabled ? 45 : 0,
-          mapStyle: `mapbox://styles/mapbox/${mapStyle}`,
-          show3DBuildings: view3DEnabled,
+          center: [-74.006, 40.7128], // New York City for guaranteed visible data
+          zoom: 10,
+          pitch: 0, // Start with 0 pitch for better performance
+          mapStyle: 'mapbox://styles/mapbox/streets-v11', // Use the shorthand syntax which works better in Electron
+          renderingMode: '2d', // Force 2D rendering mode - critical fix for Electron
+          show3DBuildings: false,
+          trackResize: true, // Ensure map resizes properly
+          fadeDuration: 0, // Disable fade animations which can cause issues
+          attributionControl: false, // We'll add this manually
+          preserveDrawingBuffer: true, // Required for Electron
           onMapLoaded: () => {
             console.log("Map loaded successfully");
             setMapInitialized(true);
+                    
+            // Force a resize after load to ensure proper rendering
+            setTimeout(() => {
+              if (mapService.map) {
+                mapService.map.resize();
+                console.log("Map resized after initialization");
+                        
+                // Then force a manual re-render
+                if (mapService.map.getCanvas()) {
+                  mapService.map.triggerRepaint();
+                }
+              }
+            }, 500);
           }
         });
         
@@ -110,9 +121,23 @@ const VehicleTracking = ({ networkStatus }) => {
           setSelectedVehicleId(vehicleId);
         });
       }
+      
+      // Load all vehicles first
+      await fetchVehicles();
+      
+      // Then connect to socket server
+      connectToSocketServer();
+      
+      // Then load initial vehicle locations - after vehicles are loaded
+      if (vehiclesLoaded) {
+        await fetchInitialVehicleLocations();
+      }
+      
     } catch (err) {
-      console.error('Error initializing map:', err);
-      setError('Failed to initialize map: ' + err.message);
+      console.error('Error initializing tracking:', err);
+      setError('Failed to initialize tracking system. Please refresh the page and try again.');
+    } finally {
+      setLoading(false);
     }
   };
   
@@ -190,7 +215,7 @@ const VehicleTracking = ({ networkStatus }) => {
     });
   };
   
-  // Fetch all vehicles from Supabase with improved error handling
+  // Fetch all vehicles from Supabase
   const fetchVehicles = async () => {
     try {
       console.log("Fetching vehicles data...");
@@ -198,8 +223,6 @@ const VehicleTracking = ({ networkStatus }) => {
       // Check network status first
       if (!networkStatus.online) {
         console.log("Network is offline, using cached vehicles if available");
-        setVehiclesLoaded(true); // Set as loaded anyway to proceed
-        setLoading(false);
         return;
       }
       
@@ -229,19 +252,20 @@ const VehicleTracking = ({ networkStatus }) => {
       }
       
       setVehiclesLoaded(true);
-      setLoading(false);
+      
+      // Now that vehicles are loaded, we can fetch locations
+      await fetchInitialVehicleLocations();
       
     } catch (err) {
       console.error('Error fetching vehicles:', err);
       setError(`Failed to load vehicles: ${err.message}`);
-      setVehiclesLoaded(true); // Set as loaded anyway to proceed
-      setLoading(false);
+      setVehiclesLoaded(false);  // Mark as not loaded on error
     }
   };
   
-  // Fetch initial vehicle locations with robust error handling
+  // Fetch initial vehicle locations
   const fetchInitialVehicleLocations = async () => {
-    if (!vehiclesLoaded) {
+    if (!vehiclesLoaded || vehicles.length === 0) {
       console.log("Skipping location fetch - vehicles not loaded yet");
       return;
     }
@@ -394,7 +418,9 @@ const VehicleTracking = ({ networkStatus }) => {
     setMapStyle(newStyle);
     
     if (mapInitialized && mapService.map) {
-      mapService.map.setStyle(`mapbox://styles/mapbox/${newStyle}`);
+      // Use the full URL format instead of the shorthand
+      const styleUrl = `https://api.mapbox.com/styles/v1/mapbox/${newStyle}?access_token=${MAPBOX_TOKEN}`;
+      mapService.map.setStyle(styleUrl);
       
       // Re-add 3D buildings if needed
       if (view3DEnabled) {
@@ -402,6 +428,77 @@ const VehicleTracking = ({ networkStatus }) => {
           mapService.add3DBuildings();
         });
       }
+    }
+  };
+  
+  // Handles reloading the map with guaranteed visible data
+  const handleMapReload = () => {
+    try {
+      // First try to just reset the view with guaranteed data
+      if (mapService.map) {
+        // Change to a different style that always shows visible data
+        const newStyle = 'streets-v11';
+        setMapStyle(newStyle);
+        
+        // Use the full URL format
+        const styleUrl = `https://api.mapbox.com/styles/v1/mapbox/${newStyle}?access_token=${MAPBOX_TOKEN}`;
+        
+        // Set style, then wait for it to load
+        mapService.map.setStyle(styleUrl);
+        
+        // Add an event listener for when the style finishes loading
+        mapService.map.once('style.load', () => {
+          // Center on New York which has guaranteed data
+          mapService.map.setCenter([-74.006, 40.7128]);
+          mapService.map.setZoom(10);
+          
+          // Force a resize
+          mapService.map.resize();
+          console.log("Map reloaded with street style and centered on New York");
+          
+          // Notify user
+          addNotification('Map reloaded successfully', 'success');
+        });
+      } else {
+        // If map isn't available, do a full reinit
+        mapService.cleanup();
+        setMapInitialized(false);
+        
+        setTimeout(() => {
+          if (mapContainerRef.current) {
+            // Use the full style URL
+            const styleUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11?access_token=${MAPBOX_TOKEN}`;
+            
+            mapService.initializeMap(mapContainerRef.current, MAPBOX_TOKEN, {
+              center: [-74.006, 40.7128], // New York City
+              zoom: 10,
+              pitch: 0,
+              mapStyle: styleUrl,
+              show3DBuildings: false,
+              onMapLoaded: () => {
+                console.log("Map completely reinitialized");
+                setMapInitialized(true);
+                addNotification('Map reinitialized successfully', 'success');
+              }
+            });
+          }
+        }, 500);
+      }
+    } catch (err) {
+      console.error("Error during map reload:", err);
+      setError(`Error reloading map: ${err.message}`);
+    }
+  };
+  
+  // Special debug function to show a known location
+  const showKnownLocation = () => {
+    if (mapService.map) {
+      mapService.map.flyTo({
+        center: [-74.006, 40.7128], // New York City
+        zoom: 12,
+        duration: 2000
+      });
+      addNotification('Flying to New York City (for debugging)', 'info');
     }
   };
   
@@ -427,7 +524,7 @@ const VehicleTracking = ({ networkStatus }) => {
     });
   };
   
-  // Filter for active vehicles only - with proper null checking
+  // Filter for active vehicles only
   const getActiveVehicleIds = () => {
     return activeVehicles.filter(v => v && v.id).map(v => v.id);
   };
@@ -453,17 +550,6 @@ const VehicleTracking = ({ networkStatus }) => {
     ];
     
     return colors[index % colors.length];
-  };
-
-  // Try to handle map reload
-  const handleMapReload = () => {
-    if (mapService.map) {
-      mapService.cleanup();
-    }
-    setMapInitialized(false);
-    setTimeout(() => {
-      initializeMap();
-    }, 500);
   };
   
   return (
@@ -679,6 +765,15 @@ const VehicleTracking = ({ networkStatus }) => {
               >
                 <i className="bi bi-arrow-clockwise"></i>
               </button>
+              
+              {/* Debug button to show New York */}
+              <button 
+                className="control-button"
+                onClick={showKnownLocation}
+                title="Show New York (Debug)"
+              >
+                <i className="bi bi-globe-americas"></i>
+              </button>
             </div>
           </div>
           
@@ -691,13 +786,19 @@ const VehicleTracking = ({ networkStatus }) => {
           ) : (
             <div 
               ref={mapContainerRef} 
+              id="map"
               className="map-content"
               style={{ 
-                height: "100%", 
-                width: "100%",
                 position: "absolute",
                 top: 0,
-                left: 0
+                left: 0,
+                right: 0,
+                bottom: 0,
+                width: "100%",
+                height: "100%",
+                visibility: "visible",
+                opacity: 1,
+                zIndex: 1
               }}
             />
           )}

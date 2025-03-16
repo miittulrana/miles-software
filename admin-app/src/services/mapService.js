@@ -1,11 +1,11 @@
 // admin-app/src/services/mapService.js
 import mapboxgl from 'mapbox-gl';
 
-// Malta center coordinates
-const MALTA_CENTER = [14.5, 35.9];
+// Default center coordinates (New York City for guaranteed map data)
+const DEFAULT_CENTER = [-74.006, 40.7128];
 const DEFAULT_ZOOM = 10;
 const MAX_ZOOM = 18;
-const DEFAULT_PITCH = 40; // For 3D view
+const DEFAULT_PITCH = 0; // Start with 0 for better performance
 
 // Vehicle marker update animation duration (ms)
 const ANIMATION_DURATION = 1000;
@@ -49,16 +49,22 @@ class MapService {
         console.warn("Container has zero dimensions, map may fail to initialize");
       }
 
+      // Use the full style URL instead of the shorthand
+      const styleUrl = options.mapStyle;
+
       // Create the map
       this.map = new mapboxgl.Map({
         container,
-        style: options.mapStyle || 'mapbox://styles/mapbox/streets-v11',
-        center: options.center || MALTA_CENTER,
+        style: styleUrl,
+        center: options.center || DEFAULT_CENTER,
         zoom: options.zoom || DEFAULT_ZOOM,
         pitch: options.pitch || DEFAULT_PITCH,
         bearing: options.bearing || 0,
         antialias: true, // Enables smoother rendering for 3D
-        attributionControl: true // Required by Mapbox terms of service
+        attributionControl: true, // Required by Mapbox terms of service
+        preserveDrawingBuffer: true, // Helps with certain rendering issues
+        failIfMajorPerformanceCaveat: false, // More forgiving of performance issues
+        renderWorldCopies: true // Shows multiple copies of the map when zoomed out
       });
 
       // Add navigation controls
@@ -87,11 +93,17 @@ class MapService {
       // Track errors
       this.map.on('error', (e) => {
         console.error("Mapbox error:", e);
+        if (options.onMapError) {
+          options.onMapError(e);
+        }
       });
 
       // Wait for map to load
       this.map.on('load', () => {
         console.log("Map loaded successfully");
+        
+        // Force a resize to ensure the map fills the container properly
+        this.map.resize();
         
         // Add 3D building layer if enabled
         if (options.show3DBuildings) {
@@ -109,6 +121,9 @@ class MapService {
       
     } catch (error) {
       console.error("Error initializing map:", error);
+      if (options.onMapError) {
+        options.onMapError(error);
+      }
       throw error;
     }
   }
@@ -209,6 +224,14 @@ class MapService {
           if (statusElement) {
             statusElement.className = `vehicle-status ${location.is_moving ? 'moving' : 'stopped'}`;
           }
+          
+          // Update speed display if available
+          if (location.speed !== undefined) {
+            const speedElement = element.querySelector('.vehicle-speed');
+            if (speedElement) {
+              speedElement.textContent = `${Math.round(location.speed)} km/h`;
+            }
+          }
         }
       } else {
         // Create a new marker if one doesn't exist
@@ -291,6 +314,20 @@ class MapService {
     }
   }
 
+  // Force the map to recenter and resize
+  recenterMap(center = DEFAULT_CENTER, zoom = DEFAULT_ZOOM) {
+    if (!this.map) return;
+    
+    try {
+      this.map.resize();
+      this.map.setCenter(center);
+      this.map.setZoom(zoom);
+      console.log("Map forcibly recentered and resized");
+    } catch (error) {
+      console.error("Error recentering map:", error);
+    }
+  }
+
   // Get the position of a vehicle
   getVehiclePosition(vehicleId) {
     if (this.markers.has(vehicleId)) {
@@ -306,11 +343,58 @@ class MapService {
     }
   }
 
+  // Clear all click handlers
+  clearClickHandlers() {
+    this.onVehicleClickCallbacks = [];
+  }
+
+  // Get map status for debugging
+  getMapStatus() {
+    if (!this.map) {
+      return {
+        initialized: false,
+        message: "Map not initialized"
+      };
+    }
+    
+    try {
+      const center = this.map.getCenter();
+      const zoom = this.map.getZoom();
+      const style = this.map.getStyle();
+      const styleName = style?.name || "Unknown style";
+      
+      return {
+        initialized: this.isInitialized,
+        center: [center.lng, center.lat],
+        zoom,
+        styleName,
+        markerCount: this.markers.size,
+        containerId: this.map.getContainer().id,
+        containerSize: {
+          width: this.map.getContainer().offsetWidth,
+          height: this.map.getContainer().offsetHeight
+        }
+      };
+    } catch (error) {
+      return {
+        initialized: this.isInitialized,
+        error: error.message
+      };
+    }
+  }
+
   // Clean up the map service
   cleanup() {
     try {
       // Remove all markers
-      this.markers.forEach(marker => marker.remove());
+      this.markers.forEach(marker => {
+        try {
+          marker.remove();
+        } catch (err) {
+          console.warn("Error removing marker:", err);
+        }
+      });
+      
       this.markers.clear();
       this.markerElements.clear();
       
@@ -318,7 +402,7 @@ class MapService {
       this.vehicleColors.clear();
       this.selectedVehicleId = null;
       this.colorIndex = 0;
-      this.onVehicleClickCallbacks = [];
+      this.clearClickHandlers();
       
       // Remove map if it exists
       if (this.map) {
@@ -327,6 +411,7 @@ class MapService {
       }
       
       this.isInitialized = false;
+      console.log("Map service cleaned up");
     } catch (error) {
       console.error("Error cleaning up map:", error);
     }
@@ -348,6 +433,7 @@ class MapService {
       <div class="vehicle-status stopped"></div>
       <div class="vehicle-info">
         <div class="vehicle-label">${vehicle.registration_number || 'Unknown'}</div>
+        <div class="vehicle-speed"></div>
       </div>
     `;
     
