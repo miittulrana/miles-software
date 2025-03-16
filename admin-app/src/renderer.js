@@ -4,6 +4,8 @@ import { createRoot } from 'react-dom/client';
 import App from './components/App';
 import { supabase } from './supabaseClient';
 
+<userStyle>Normal</userStyle>
+
 // Global error handler for Supabase realtime errors
 const handleSupabaseError = (error) => {
   console.error('Supabase error:', error);

@@ -23,6 +23,10 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
       }
     ]
   },
@@ -35,5 +39,5 @@ module.exports = {
     }
   },
   devtool: 'source-map',
-  target: 'web' // Use 'web' instead of 'electron-renderer' to avoid require
+  target: 'web'
 };

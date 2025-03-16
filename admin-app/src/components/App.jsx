@@ -6,10 +6,12 @@ import { supabase, validateSession, executeQuery } from '../supabaseClient';
 import VehicleManagement from './VehicleManagement';
 import DriverManagement from './DriverManagement';
 import VehicleTracking from './VehicleTracking';
-import Dashboard from './Dashboard';
 import IssueReporting from './IssueReporting';
 import ApiKeys from './ApiKeys';
 import Login from './Login';
+
+// Import logo
+import logo from '../assets/logo.png';
 
 const App = () => {
   const [currentView, setCurrentView] = useState('dashboard');
@@ -174,7 +176,6 @@ const App = () => {
 
   // Menu items for the sidebar
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: 'bi-speedometer2' },
     { id: 'vehicles', label: 'Vehicle Management', icon: 'bi-truck' },
     { id: 'drivers', label: 'Driver Management', icon: 'bi-person' },
     { id: 'tracking', label: 'Vehicle Tracking', icon: 'bi-geo-alt' },
@@ -201,7 +202,16 @@ const App = () => {
       content = <ApiKeys networkStatus={networkStatus} />;
       break;
     default:
-      content = <Dashboard networkStatus={networkStatus} />;
+      // Logo instead of Dashboard
+      content = (
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '100%' }}>
+          <img 
+            src={logo} 
+            alt="Miles Express Logo" 
+            style={{ width: '40%', maxWidth: '500px', objectFit: 'contain' }} 
+          />
+        </div>
+      );
   }
 
   return (
