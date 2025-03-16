@@ -4,16 +4,26 @@ import { supabase } from '../../supabaseClient';
 
 const VehicleLogs = ({ onBack }) => {
   const [logs, setLogs] = useState([]);
-  const [vehicles, setVehicles] = useState([]);
+  const [vehicles, setVehicles] = useState({});
+  const [drivers, setDrivers] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedVehicle, setSelectedVehicle] = useState('all');
   const [filterDateFrom, setFilterDateFrom] = useState('');
   const [filterDateTo, setFilterDateTo] = useState('');
-  const [filterType, setFilterType] = useState('temporary');
+  const [filterType, setFilterType] = useState('all');
+  const [vehicleOptions, setVehicleOptions] = useState([]);
 
   useEffect(() => {
+    // Load all vehicles for dropdown
     fetchVehicles();
+    
+    // Load users for reference
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    // Fetch logs whenever filters change
     fetchLogs();
   }, [selectedVehicle, filterDateFrom, filterDateTo, filterType]);
 
@@ -26,10 +36,38 @@ const VehicleLogs = ({ onBack }) => {
       
       if (error) throw error;
       
-      setVehicles(data || []);
+      // Create a lookup object for vehicles
+      const vehicleLookup = {};
+      data.forEach(vehicle => {
+        vehicleLookup[vehicle.id] = vehicle;
+      });
+      
+      setVehicles(vehicleLookup);
+      setVehicleOptions(data || []);
     } catch (err) {
       console.error('Error fetching vehicles:', err);
-      setError('Failed to load vehicles. Please try again.');
+      // Don't set error here to avoid blocking the UI
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('id, full_name, email');
+      
+      if (error) throw error;
+      
+      // Create a lookup object for users
+      const userLookup = {};
+      data.forEach(user => {
+        userLookup[user.id] = user;
+      });
+      
+      setDrivers(userLookup);
+    } catch (err) {
+      console.error('Error fetching users:', err);
+      // Don't set error here to avoid blocking the UI
     }
   };
 
@@ -38,31 +76,17 @@ const VehicleLogs = ({ onBack }) => {
       setLoading(true);
       setError(null);
       
-      // Base query
+      // Build a simple query without joins
       let query = supabase
         .from('vehicle_assignments')
-        .select(`
-          id,
-          vehicle_id,
-          driver_id,
-          start_time,
-          end_time,
-          is_temporary,
-          status,
-          created_by,
-          created_at,
-          vehicles(id, registration_number, make, model),
-          users!vehicle_assignments_driver_id_fkey(id, full_name, email),
-          admin:users!vehicle_assignments_created_by_fkey(id, email)
-        `)
+        .select('*')
         .order('start_time', { ascending: false });
       
-      // Apply vehicle filter
+      // Apply filters
       if (selectedVehicle !== 'all') {
         query = query.eq('vehicle_id', selectedVehicle);
       }
       
-      // Apply date filters
       if (filterDateFrom) {
         query = query.gte('start_time', filterDateFrom);
       }
@@ -71,7 +95,6 @@ const VehicleLogs = ({ onBack }) => {
         query = query.lte('start_time', filterDateTo);
       }
       
-      // Apply assignment type filter
       if (filterType !== 'all') {
         if (filterType === 'temporary') {
           query = query.eq('is_temporary', true);
@@ -80,7 +103,6 @@ const VehicleLogs = ({ onBack }) => {
         }
       }
       
-      // Execute query
       const { data, error } = await query;
       
       if (error) throw error;
@@ -88,7 +110,7 @@ const VehicleLogs = ({ onBack }) => {
       setLogs(data || []);
     } catch (err) {
       console.error('Error fetching logs:', err);
-      setError('Failed to load vehicle logs. Please try again.');
+      setError(`Failed to load vehicle logs: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -114,11 +136,12 @@ const VehicleLogs = ({ onBack }) => {
     setSelectedVehicle('all');
     setFilterDateFrom('');
     setFilterDateTo('');
-    setFilterType('temporary');
+    setFilterType('all');
   };
 
   // Helper function to format date
   const formatDate = (dateStr) => {
+    if (!dateStr) return 'N/A';
     const date = new Date(dateStr);
     return date.toLocaleDateString(undefined, { 
       year: 'numeric',
@@ -129,6 +152,7 @@ const VehicleLogs = ({ onBack }) => {
 
   // Helper function to calculate duration in days
   const calculateDuration = (startDate, endDate) => {
+    if (!startDate) return 'N/A';
     if (!endDate) return 'Ongoing';
     
     const start = new Date(startDate);
@@ -137,6 +161,59 @@ const VehicleLogs = ({ onBack }) => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
     return `${diffDays} day${diffDays !== 1 ? 's' : ''}`;
+  };
+
+  // Helper to get vehicle display name
+  const getVehicleDisplay = (vehicleId) => {
+    const vehicle = vehicles[vehicleId];
+    if (vehicle) {
+      return `${vehicle.registration_number} (${vehicle.make} ${vehicle.model})`;
+    }
+    return `Vehicle ID: ${vehicleId}`;
+  };
+
+  // Helper to get driver display name
+  const getDriverDisplay = (driverId) => {
+    const driver = drivers[driverId];
+    if (driver) {
+      return driver.full_name;
+    }
+    return `Driver ID: ${driverId}`;
+  };
+
+  // Export to CSV function
+  const exportToCSV = () => {
+    if (logs.length === 0) return;
+    
+    // Prepare CSV content
+    const headers = ['Vehicle', 'Driver', 'Start Date', 'End Date', 'Duration', 'Type', 'Status'];
+    
+    const rows = logs.map(log => [
+      getVehicleDisplay(log.vehicle_id),
+      getDriverDisplay(log.driver_id),
+      formatDate(log.start_time),
+      log.end_time ? formatDate(log.end_time) : 'Ongoing',
+      calculateDuration(log.start_time, log.end_time),
+      log.is_temporary ? 'Temporary' : 'Permanent',
+      log.status.charAt(0).toUpperCase() + log.status.slice(1)
+    ]);
+    
+    // Combine headers and rows
+    const csvContent = 
+      headers.join(',') + 
+      '\n' + 
+      rows.map(row => row.map(cell => `"${cell ? cell.replace(/"/g, '""') : ''}"`).join(',')).join('\n');
+    
+    // Create download link
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `vehicle-logs-${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -165,9 +242,25 @@ const VehicleLogs = ({ onBack }) => {
           marginBottom: '15px', 
           backgroundColor: '#f8d7da', 
           color: '#721c24',
-          borderRadius: '4px'
+          borderRadius: '4px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
         }}>
-          {error}
+          <span>{error}</span>
+          <button 
+            onClick={fetchLogs}
+            style={{
+              backgroundColor: '#721c24',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              padding: '4px 8px',
+              cursor: 'pointer'
+            }}
+          >
+            Retry
+          </button>
         </div>
       )}
       
@@ -190,7 +283,7 @@ const VehicleLogs = ({ onBack }) => {
               style={{ padding: '8px 12px', borderRadius: '4px', border: '1px solid #ced4da', minWidth: '200px' }}
             >
               <option value="all">All Vehicles</option>
-              {vehicles.map(vehicle => (
+              {vehicleOptions.map(vehicle => (
                 <option key={vehicle.id} value={vehicle.id}>
                   {vehicle.registration_number} ({vehicle.make} {vehicle.model})
                 </option>
@@ -295,16 +388,17 @@ const VehicleLogs = ({ onBack }) => {
                 <th style={{ padding: '12px 15px', textAlign: 'left' }}>Duration</th>
                 <th style={{ padding: '12px 15px', textAlign: 'left' }}>Type</th>
                 <th style={{ padding: '12px 15px', textAlign: 'left' }}>Status</th>
-                <th style={{ padding: '12px 15px', textAlign: 'left' }}>Assigned By</th>
               </tr>
             </thead>
             <tbody>
               {logs.map(log => (
                 <tr key={log.id} style={{ borderBottom: '1px solid #dee2e6' }}>
                   <td style={{ padding: '12px 15px' }}>
-                    {log.vehicles?.registration_number} ({log.vehicles?.make} {log.vehicles?.model})
+                    {getVehicleDisplay(log.vehicle_id)}
                   </td>
-                  <td style={{ padding: '12px 15px' }}>{log.users?.full_name}</td>
+                  <td style={{ padding: '12px 15px' }}>
+                    {getDriverDisplay(log.driver_id)}
+                  </td>
                   <td style={{ padding: '12px 15px' }}>{formatDate(log.start_time)}</td>
                   <td style={{ padding: '12px 15px' }}>{log.end_time ? formatDate(log.end_time) : 'Ongoing'}</td>
                   <td style={{ padding: '12px 15px' }}>{calculateDuration(log.start_time, log.end_time)}</td>
@@ -334,7 +428,6 @@ const VehicleLogs = ({ onBack }) => {
                       {log.status.charAt(0).toUpperCase() + log.status.slice(1)}
                     </span>
                   </td>
-                  <td style={{ padding: '12px 15px' }}>{log.admin?.email}</td>
                 </tr>
               ))}
             </tbody>
@@ -342,9 +435,10 @@ const VehicleLogs = ({ onBack }) => {
         </div>
       )}
       
-      {/* Export Functionality Placeholder */}
+      {/* Export Functionality */}
       <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>
         <button
+          onClick={exportToCSV}
           style={{
             backgroundColor: '#28a745',
             color: 'white',
@@ -354,7 +448,8 @@ const VehicleLogs = ({ onBack }) => {
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
-            gap: '5px'
+            gap: '5px',
+            opacity: logs.length === 0 ? 0.6 : 1
           }}
           disabled={logs.length === 0}
           title="Export logs to CSV"

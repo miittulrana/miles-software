@@ -33,44 +33,35 @@ const BlockedVehicles = ({ onBack }) => {
       setLoading(true);
       setError(null);
       
-      // Fetch vehicles - SIMPLE QUERY
+      // Fetch vehicles
       const { data: vehiclesData, error: vehiclesError } = await supabase
         .from('vehicles')
         .select('id, registration_number, make, model')
         .order('registration_number', { ascending: true });
       
-      if (vehiclesError) {
-        console.error('Vehicles error:', vehiclesError);
-        throw new Error('Failed to load vehicles');
-      }
+      if (vehiclesError) throw new Error('Failed to load vehicles');
       
-      // Fetch blocked periods - SIMPLE QUERY, NO JOINS
+      // Fetch blocked periods
       const { data: blockedData, error: blockedError } = await supabase
         .from('vehicle_blocked_periods')
-        .select('id, vehicle_id, start_date, end_date, reason, created_by, created_at')
+        .select('*')
         .order('start_date', { ascending: true });
       
-      if (blockedError) {
-        console.error('Blocked periods error:', blockedError);
-        throw new Error('Failed to load blocked periods');
-      }
+      if (blockedError) throw new Error('Failed to load blocked periods');
       
-      // Manually combine data instead of using Supabase joins
-      const enhancedData = [];
-      
-      for (const block of blockedData) {
+      // Combine data
+      const enhancedData = blockedData.map(block => {
         const matchingVehicle = vehiclesData.find(v => v.id === block.vehicle_id);
         
-        enhancedData.push({
+        return {
           ...block,
-          // Add vehicle info in the format the component expects
           vehicles: matchingVehicle ? {
             registration_number: matchingVehicle.registration_number,
             make: matchingVehicle.make,
             model: matchingVehicle.model
           } : null
-        });
-      }
+        };
+      });
       
       setVehicles(vehiclesData || []);
       setBlockedPeriods(enhancedData || []);
@@ -86,7 +77,7 @@ const BlockedVehicles = ({ onBack }) => {
     try {
       setError(null);
       
-      // Form validation
+      // Validate form
       if (!blockData.vehicle_id || !blockData.start_date || !blockData.end_date || !blockData.reason) {
         setError('Please fill in all required fields.');
         return;
@@ -101,19 +92,32 @@ const BlockedVehicles = ({ onBack }) => {
         return;
       }
       
-      // Insert block - SIMPLE INSERT, NO RELATIONSHIP
+      // Get the current user's ID for the created_by field
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      
+      if (userError) {
+        console.error('User error:', userError);
+        throw new Error('Failed to get current user');
+      }
+      
+      if (!userData || !userData.user || !userData.user.id) {
+        throw new Error('User not authenticated');
+      }
+      
+      // Insert block with created_by field
       const { error } = await supabase
         .from('vehicle_blocked_periods')
         .insert({
           vehicle_id: blockData.vehicle_id,
           start_date: blockData.start_date,
           end_date: blockData.end_date,
-          reason: blockData.reason
+          reason: blockData.reason,
+          created_by: userData.user.id  // Add the user ID from auth
         });
       
       if (error) {
-        console.error('Block insert error:', error);
-        throw new Error('Failed to add block');
+        console.error('Block insert error details:', error);
+        throw new Error(`Failed to add block: ${error.message || error.details}`);
       }
       
       setShowAddModal(false);
@@ -148,20 +152,36 @@ const BlockedVehicles = ({ onBack }) => {
         return;
       }
       
-      // Update block - SIMPLE UPDATE
+      // Get the current user's ID for the updated_by field if you have one
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      
+      if (userError) {
+        console.error('User error:', userError);
+        throw new Error('Failed to get current user');
+      }
+      
+      // Prepare update data
+      const updateData = {
+        vehicle_id: blockData.vehicle_id,
+        start_date: blockData.start_date,
+        end_date: blockData.end_date,
+        reason: blockData.reason
+      };
+      
+      // Add updated_by if you have this field
+      if (userData && userData.user && userData.user.id) {
+        updateData.updated_by = userData.user.id;
+      }
+      
+      // Update block
       const { error } = await supabase
         .from('vehicle_blocked_periods')
-        .update({
-          vehicle_id: blockData.vehicle_id,
-          start_date: blockData.start_date,
-          end_date: blockData.end_date,
-          reason: blockData.reason
-        })
+        .update(updateData)
         .eq('id', currentBlockId);
       
       if (error) {
-        console.error('Block update error:', error);
-        throw new Error('Failed to update block');
+        console.error('Block update error details:', error);
+        throw new Error(`Failed to update block: ${error.message || error.details}`);
       }
       
       setShowEditModal(false);
@@ -181,15 +201,15 @@ const BlockedVehicles = ({ onBack }) => {
     try {
       setError(null);
       
-      // Delete block - SIMPLE DELETE
+      // Delete block
       const { error } = await supabase
         .from('vehicle_blocked_periods')
         .delete()
         .eq('id', currentBlockId);
       
       if (error) {
-        console.error('Block delete error:', error);
-        throw new Error('Failed to delete block');
+        console.error('Block delete error details:', error);
+        throw new Error(`Failed to delete block: ${error.message || error.details}`);
       }
       
       setShowDeleteModal(false);
@@ -208,8 +228,8 @@ const BlockedVehicles = ({ onBack }) => {
     setCurrentBlockId(block.id);
     setBlockData({
       vehicle_id: block.vehicle_id,
-      start_date: block.start_date.split('T')[0], // Format date for input field
-      end_date: block.end_date.split('T')[0], // Format date for input field
+      start_date: block.start_date.split('T')[0],
+      end_date: block.end_date.split('T')[0],
       reason: block.reason
     });
     setShowEditModal(true);
@@ -642,12 +662,24 @@ const BlockedVehicles = ({ onBack }) => {
         }
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          {error && (
+            <div style={{ 
+              padding: '10px', 
+              backgroundColor: '#f8d7da', 
+              color: '#721c24',
+              borderRadius: '4px'
+            }}>
+              {error}
+            </div>
+          )}
+          
           <div>
             <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Vehicle*</label>
             <select
               value={blockData.vehicle_id}
               onChange={(e) => setBlockData({ ...blockData, vehicle_id: e.target.value })}
               style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
+              autoFocus
               required
             >
               <option value="">Select a vehicle</option>
@@ -677,7 +709,7 @@ const BlockedVehicles = ({ onBack }) => {
               onChange={(e) => setBlockData({ ...blockData, end_date: e.target.value })}
               style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
               required
-              min={blockData.start_date} // Prevent end date before start date
+              min={blockData.start_date || new Date().toISOString().split('T')[0]} // Prevent end date before start date
             />
           </div>
           <div>
@@ -731,12 +763,24 @@ const BlockedVehicles = ({ onBack }) => {
         }
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          {error && (
+            <div style={{ 
+              padding: '10px', 
+              backgroundColor: '#f8d7da', 
+              color: '#721c24',
+              borderRadius: '4px'
+            }}>
+              {error}
+            </div>
+          )}
+          
           <div>
             <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Vehicle*</label>
             <select
               value={blockData.vehicle_id}
               onChange={(e) => setBlockData({ ...blockData, vehicle_id: e.target.value })}
               style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
+              autoFocus
               required
             >
               <option value="">Select a vehicle</option>

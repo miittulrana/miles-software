@@ -53318,15 +53318,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Col.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Card.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Table.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Badge.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Spinner.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Col.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Card.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Table.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Badge.js");
 /* harmony import */ var _supabaseClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../supabaseClient */ "./src/supabaseClient.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -53335,6 +53346,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+// admin-app/src/components/Dashboard.jsx
 
 
 
@@ -53356,185 +53368,244 @@ var Dashboard = function Dashboard() {
     _useState6 = _slicedToArray(_useState5, 2),
     loading = _useState6[0],
     setLoading = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    error = _useState8[0],
+    setError = _useState8[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    var fetchData = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var _yield$supabase$from$, vehicles, vehiclesError, _yield$supabase$from$2, driversCount, driversError, _yield$supabase$from$3, pendingCount, pendingError, _yield$supabase$from$4, issues, issuesError;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              setLoading(true);
-
-              // Get vehicles stats
-              _context.next = 4;
-              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('*');
-            case 4:
-              _yield$supabase$from$ = _context.sent;
-              vehicles = _yield$supabase$from$.data;
-              vehiclesError = _yield$supabase$from$.error;
-              if (!vehiclesError) {
-                _context.next = 9;
-                break;
-              }
-              throw vehiclesError;
-            case 9:
-              _context.next = 11;
-              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('*', {
-                count: 'exact',
-                head: true
-              }).eq('role', 'driver');
-            case 11:
-              _yield$supabase$from$2 = _context.sent;
-              driversCount = _yield$supabase$from$2.count;
-              driversError = _yield$supabase$from$2.error;
-              if (!driversError) {
-                _context.next = 16;
-                break;
-              }
-              throw driversError;
-            case 16:
-              _context.next = 18;
-              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('*', {
-                count: 'exact',
-                head: true
-              }).eq('status', 'pending');
-            case 18:
-              _yield$supabase$from$3 = _context.sent;
-              pendingCount = _yield$supabase$from$3.count;
-              pendingError = _yield$supabase$from$3.error;
-              if (!pendingError) {
-                _context.next = 23;
-                break;
-              }
-              throw pendingError;
-            case 23:
-              _context.next = 25;
-              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_issues').select("\n            id,\n            description,\n            priority,\n            status,\n            created_at,\n            vehicles (registration_number),\n            users (full_name)\n          ").order('created_at', {
-                ascending: false
-              }).limit(5);
-            case 25:
-              _yield$supabase$from$4 = _context.sent;
-              issues = _yield$supabase$from$4.data;
-              issuesError = _yield$supabase$from$4.error;
-              if (!issuesError) {
-                _context.next = 30;
-                break;
-              }
-              throw issuesError;
-            case 30:
-              // Update stats
-              setStats({
-                totalVehicles: vehicles.length,
-                activeVehicles: vehicles.filter(function (v) {
-                  return v.status === 'available' || v.status === 'assigned';
-                }).length,
-                totalDrivers: driversCount,
-                pendingRequests: pendingCount
-              });
-              setRecentIssues(issues || []);
-              _context.next = 37;
-              break;
-            case 34:
-              _context.prev = 34;
-              _context.t0 = _context["catch"](0);
-              console.error('Error loading dashboard data:', _context.t0);
-            case 37:
-              _context.prev = 37;
-              setLoading(false);
-              return _context.finish(37);
-            case 40:
-            case "end":
-              return _context.stop();
-          }
-        }, _callee, null, [[0, 34, 37, 40]]);
-      }));
-      return function fetchData() {
-        return _ref.apply(this, arguments);
-      };
-    }();
     fetchData();
-
-    // Subscribe to realtime issues
-    var issueSubscription = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('public:vehicle_issues').on('postgres_changes', {
-      event: '*',
-      schema: 'public',
-      table: 'vehicle_issues'
-    }, function () {
-      fetchData(); // Reload data when issues change
-    }).subscribe();
-    return function () {
-      issueSubscription.unsubscribe();
-    };
   }, []);
+  var fetchData = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var _yield$supabase$from$, vehicles, vehiclesError, _yield$supabase$from$2, driversCount, driversError, _yield$supabase$from$3, pendingCount, pendingError, _yield$supabase$from$4, issues, issuesError, enhancedIssues, vehicleIds, _yield$supabase$from$5, issueVehicles, issueVehiclesError, userIds, _yield$supabase$from$6, issueUsers, issueUsersError;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            setLoading(true);
+            setError(null);
+
+            // Get vehicles stats - SIMPLE QUERY
+            _context.next = 5;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('id, status');
+          case 5:
+            _yield$supabase$from$ = _context.sent;
+            vehicles = _yield$supabase$from$.data;
+            vehiclesError = _yield$supabase$from$.error;
+            if (!vehiclesError) {
+              _context.next = 11;
+              break;
+            }
+            console.error("Vehicles error:", vehiclesError);
+            throw new Error('Failed to load vehicles');
+          case 11:
+            _context.next = 13;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('id', {
+              count: 'exact',
+              head: true
+            }).eq('role', 'driver');
+          case 13:
+            _yield$supabase$from$2 = _context.sent;
+            driversCount = _yield$supabase$from$2.count;
+            driversError = _yield$supabase$from$2.error;
+            if (!driversError) {
+              _context.next = 19;
+              break;
+            }
+            console.error("Drivers error:", driversError);
+            throw new Error('Failed to count drivers');
+          case 19:
+            _context.next = 21;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('id', {
+              count: 'exact',
+              head: true
+            }).eq('status', 'pending');
+          case 21:
+            _yield$supabase$from$3 = _context.sent;
+            pendingCount = _yield$supabase$from$3.count;
+            pendingError = _yield$supabase$from$3.error;
+            if (!pendingError) {
+              _context.next = 27;
+              break;
+            }
+            console.error("Pending assignments error:", pendingError);
+            throw new Error('Failed to count pending assignments');
+          case 27:
+            _context.next = 29;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_issues').select('id, description, priority, status, created_at, vehicle_id, reported_by').order('created_at', {
+              ascending: false
+            }).limit(5);
+          case 29:
+            _yield$supabase$from$4 = _context.sent;
+            issues = _yield$supabase$from$4.data;
+            issuesError = _yield$supabase$from$4.error;
+            if (!issuesError) {
+              _context.next = 35;
+              break;
+            }
+            console.error("Issues error:", issuesError);
+            throw new Error('Failed to load recent issues');
+          case 35:
+            // Get additional data for issues separately if needed
+            enhancedIssues = [];
+            if (!(issues && issues.length > 0)) {
+              _context.next = 52;
+              break;
+            }
+            // Get all unique vehicle IDs from issues
+            vehicleIds = _toConsumableArray(new Set(issues.map(function (issue) {
+              return issue.vehicle_id;
+            }))); // Fetch vehicle details
+            _context.next = 40;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('id, registration_number, make, model')["in"]('id', vehicleIds);
+          case 40:
+            _yield$supabase$from$5 = _context.sent;
+            issueVehicles = _yield$supabase$from$5.data;
+            issueVehiclesError = _yield$supabase$from$5.error;
+            if (issueVehiclesError) {
+              console.warn("Issue vehicles error:", issueVehiclesError);
+              // Continue without vehicle details
+            }
+
+            // Get all unique user IDs from issues
+            userIds = _toConsumableArray(new Set(issues.map(function (issue) {
+              return issue.reported_by;
+            }))); // Fetch user details
+            _context.next = 47;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('id, full_name')["in"]('id', userIds);
+          case 47:
+            _yield$supabase$from$6 = _context.sent;
+            issueUsers = _yield$supabase$from$6.data;
+            issueUsersError = _yield$supabase$from$6.error;
+            if (issueUsersError) {
+              console.warn("Issue users error:", issueUsersError);
+              // Continue without user details
+            }
+
+            // Combine data
+            enhancedIssues = issues.map(function (issue) {
+              var vehicle = issueVehicles === null || issueVehicles === void 0 ? void 0 : issueVehicles.find(function (v) {
+                return v.id === issue.vehicle_id;
+              });
+              var user = issueUsers === null || issueUsers === void 0 ? void 0 : issueUsers.find(function (u) {
+                return u.id === issue.reported_by;
+              });
+              return _objectSpread(_objectSpread({}, issue), {}, {
+                vehicles: vehicle || null,
+                users: user || null
+              });
+            });
+          case 52:
+            // Update stats
+            setStats({
+              totalVehicles: (vehicles === null || vehicles === void 0 ? void 0 : vehicles.length) || 0,
+              activeVehicles: (vehicles === null || vehicles === void 0 ? void 0 : vehicles.filter(function (v) {
+                return v.status === 'available' || v.status === 'assigned';
+              }).length) || 0,
+              totalDrivers: driversCount || 0,
+              pendingRequests: pendingCount || 0
+            });
+            setRecentIssues(enhancedIssues || []);
+            _context.next = 60;
+            break;
+          case 56:
+            _context.prev = 56;
+            _context.t0 = _context["catch"](0);
+            console.error('Error loading dashboard data:', _context.t0);
+            setError('Failed to load dashboard data. Please refresh the page.');
+          case 60:
+            _context.prev = 60;
+            setLoading(false);
+            return _context.finish(60);
+          case 63:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[0, 56, 60, 63]]);
+    }));
+    return function fetchData() {
+      return _ref.apply(this, arguments);
+    };
+  }();
   if (loading) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: "text-center my-5"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      className: "spinner-border",
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      animation: "border",
       role: "status"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
       className: "visually-hidden"
     }, "Loading...")));
   }
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
+  if (error) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      variant: "danger",
+      className: "my-3"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Heading, null, "Error Loading Dashboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "d-flex justify-content-end"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      onClick: fetchData,
+      className: "btn btn-outline-danger"
+    }, "Retry"))));
+  }
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     className: "mb-4"
-  }, "Dashboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, "Dashboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
     className: "g-4 mb-4"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
     md: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
     className: "h-100 bg-primary text-white"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Body, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Body, {
     className: "d-flex flex-column align-items-center justify-content-center p-4"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "display-4 mb-2"
   }, stats.totalVehicles), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "text-center"
-  }, "Total Vehicles")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, "Total Vehicles")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
     md: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
     className: "h-100 bg-success text-white"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Body, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Body, {
     className: "d-flex flex-column align-items-center justify-content-center p-4"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "display-4 mb-2"
   }, stats.activeVehicles), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "text-center"
-  }, "Active Vehicles")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, "Active Vehicles")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
     md: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
     className: "h-100 bg-info text-white"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Body, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Body, {
     className: "d-flex flex-column align-items-center justify-content-center p-4"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "display-4 mb-2"
   }, stats.totalDrivers), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "text-center"
-  }, "Total Drivers")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, "Total Drivers")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
     md: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
     className: "h-100 bg-warning text-white"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Body, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Body, {
     className: "d-flex flex-column align-items-center justify-content-center p-4"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "display-4 mb-2"
   }, stats.pendingRequests), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "text-center"
-  }, "Pending Requests"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Header, {
+  }, "Pending Requests"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Header, {
     as: "h5"
-  }, "Recent Issue Reports"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Body, null, recentIssues.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  }, "Recent Issue Reports"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Body, null, recentIssues.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "text-center text-muted my-4"
-  }, "No issues reported") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }, "No issues reported") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], {
     responsive: true,
     hover: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Vehicle"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Reported By"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Issue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Priority"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Date"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, recentIssues.map(function (issue) {
     var _issue$vehicles, _issue$users;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
       key: issue.id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, ((_issue$vehicles = issue.vehicles) === null || _issue$vehicles === void 0 ? void 0 : _issue$vehicles.registration_number) || "Unknown"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, ((_issue$users = issue.users) === null || _issue$users === void 0 ? void 0 : _issue$users.full_name) || "Unknown"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, issue.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, ((_issue$vehicles = issue.vehicles) === null || _issue$vehicles === void 0 ? void 0 : _issue$vehicles.registration_number) || "Vehicle ID: ".concat(issue.vehicle_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, ((_issue$users = issue.users) === null || _issue$users === void 0 ? void 0 : _issue$users.full_name) || "User ID: ".concat(issue.reported_by)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, issue.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
       bg: issue.priority === 'low' ? 'info' : issue.priority === 'medium' ? 'warning' : issue.priority === 'high' ? 'danger' : 'dark'
-    }, issue.priority)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    }, issue.priority)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
       bg: issue.status === 'reported' ? 'secondary' : issue.status === 'acknowledged' ? 'primary' : issue.status === 'in_progress' ? 'warning' : 'success'
     }, issue.status)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, new Date(issue.created_at).toLocaleDateString()));
   }))))));
@@ -56695,13 +56766,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Spinner.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Card.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Table.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Badge.js");
 /* harmony import */ var _supabaseClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../supabaseClient */ "./src/supabaseClient.js");
+/* harmony import */ var _VehicleModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./VehicleModal */ "./src/components/vehicles/VehicleModal.jsx");
+/* harmony import */ var _DocumentModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DocumentModal */ "./src/components/vehicles/DocumentModal.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
@@ -56714,483 +56789,155 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 // admin-app/src/components/vehicles/AvailableVehicles.jsx
 
 
+
+ // Import the separate modal component
+ // This would be another separate component
+
 var AvailableVehicles = function AvailableVehicles(_ref) {
   var onBack = _ref.onBack;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     vehicles = _useState2[0],
     setVehicles = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState4 = _slicedToArray(_useState3, 2),
-    drivers = _useState4[0],
-    setDrivers = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    loading = _useState4[0],
+    setLoading = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState6 = _slicedToArray(_useState5, 2),
-    loading = _useState6[0],
-    setLoading = _useState6[1];
+    error = _useState6[0],
+    setError = _useState6[1];
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState8 = _slicedToArray(_useState7, 2),
-    error = _useState8[0],
-    setError = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    successMessage = _useState8[0],
+    setSuccessMessage = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState10 = _slicedToArray(_useState9, 2),
-    successMessage = _useState10[0],
-    setSuccessMessage = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState12 = _slicedToArray(_useState11, 2),
-    networkStatus = _useState12[0],
-    setNetworkStatus = _useState12[1];
+    networkStatus = _useState10[0],
+    setNetworkStatus = _useState10[1];
 
   // Modal states
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    showAddModal = _useState12[0],
+    setShowAddModal = _useState12[1];
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    showAddModal = _useState14[0],
-    setShowAddModal = _useState14[1];
+    showEditModal = _useState14[0],
+    setShowEditModal = _useState14[1];
   var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState16 = _slicedToArray(_useState15, 2),
-    showEditModal = _useState16[0],
-    setShowEditModal = _useState16[1];
+    showDeleteModal = _useState16[0],
+    setShowDeleteModal = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    showDeleteModal = _useState18[0],
-    setShowDeleteModal = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    showDocumentModal = _useState18[0],
+    setShowDocumentModal = _useState18[1];
+
+  // Current vehicle for edit/delete operations
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState20 = _slicedToArray(_useState19, 2),
-    showDocumentModal = _useState20[0],
-    setShowDocumentModal = _useState20[1];
+    currentVehicle = _useState20[0],
+    setCurrentVehicle = _useState20[1];
 
-  // Form data
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-      registration_number: '',
-      make: '',
-      model: '',
-      year: new Date().getFullYear(),
-      status: 'available',
-      notes: '',
-      assigned_driver_id: null
-    }),
-    _useState22 = _slicedToArray(_useState21, 2),
-    vehicleData = _useState22[0],
-    setVehicleData = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState24 = _slicedToArray(_useState23, 2),
-    documents = _useState24[0],
-    setDocuments = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState26 = _slicedToArray(_useState25, 2),
-    currentVehicleId = _useState26[0],
-    setCurrentVehicleId = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState28 = _slicedToArray(_useState27, 2),
-    documentFile = _useState28[0],
-    setDocumentFile = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState30 = _slicedToArray(_useState29, 2),
-    documentName = _useState30[0],
-    setDocumentName = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('registration'),
-    _useState32 = _slicedToArray(_useState31, 2),
-    documentType = _useState32[0],
-    setDocumentType = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState34 = _slicedToArray(_useState33, 2),
-    uploadLoading = _useState34[0],
-    setUploadLoading = _useState34[1];
-
-  // Fetch vehicles and drivers on component mount
+  // Fetch vehicles on component mount
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     fetchVehicles();
-    fetchDrivers();
-
-    // Set up real-time subscription for vehicles with error handling
-    var subscription;
-    try {
-      subscription = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('public:vehicles').on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'vehicles'
-      }, function (payload) {
-        console.log('Vehicle change detected:', payload);
-        fetchVehicles();
-      }).subscribe(function (status) {
-        console.log('Supabase realtime status:', status);
-        if (status === 'CHANNEL_ERROR') {
-          console.error('Supabase realtime connection error');
-          setNetworkStatus(false);
-        }
-      });
-    } catch (err) {
-      console.error('Error setting up realtime subscription:', err);
-      setNetworkStatus(false);
-    }
-    return function () {
-      if (subscription) {
-        try {
-          subscription.unsubscribe();
-        } catch (err) {
-          console.error('Error unsubscribing from channel:', err);
-        }
-      }
-    };
   }, []);
   var fetchVehicles = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _yield$supabase$from$, data, _error;
+      var _yield$supabase$from$, data, _error, _err$message, _err$message2, _err$message3;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
             setLoading(true);
             setError(null);
-            console.log("Fetching vehicles from Supabase...");
-            _context.next = 6;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select("\n          *,\n          driver:assigned_driver_id(id, full_name)\n        ").order('created_at', {
+
+            // SQL: SELECT * FROM vehicles ORDER BY created_at DESC
+            _context.next = 5;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select("\n          *,\n          driver:users(id, full_name)\n        ").order('created_at', {
               ascending: false
             });
-          case 6:
+          case 5:
             _yield$supabase$from$ = _context.sent;
             data = _yield$supabase$from$.data;
             _error = _yield$supabase$from$.error;
             if (!_error) {
-              _context.next = 15;
+              _context.next = 10;
               break;
             }
-            console.error('Supabase error:', _error);
-            if (!(_error.message.includes('Failed to fetch') || _error.message.includes('network') || _error.message.includes('connection'))) {
-              _context.next = 14;
-              break;
-            }
-            setNetworkStatus(false);
-            throw new Error('Network connection issue. Please check your internet connection.');
-          case 14:
             throw _error;
-          case 15:
-            // Network is good if we get here
+          case 10:
             setNetworkStatus(true);
-            console.log("Fetched vehicles:", (data === null || data === void 0 ? void 0 : data.length) || 0);
             setVehicles(data || []);
-            _context.next = 24;
+            _context.next = 18;
             break;
-          case 20:
-            _context.prev = 20;
+          case 14:
+            _context.prev = 14;
             _context.t0 = _context["catch"](0);
             console.error('Error fetching vehicles:', _context.t0);
-            if (_context.t0.message.includes('Failed to fetch') || _context.t0.message.includes('network') || _context.t0.message.includes('connection')) {
+            if ((_err$message = _context.t0.message) !== null && _err$message !== void 0 && _err$message.includes('Failed to fetch') || (_err$message2 = _context.t0.message) !== null && _err$message2 !== void 0 && _err$message2.includes('network') || (_err$message3 = _context.t0.message) !== null && _err$message3 !== void 0 && _err$message3.includes('connection')) {
               setNetworkStatus(false);
               setError('Network error. Please check your internet connection and try again.');
             } else {
               setError('Failed to load vehicles. Error: ' + _context.t0.message);
             }
-          case 24:
-            _context.prev = 24;
+          case 18:
+            _context.prev = 18;
             setLoading(false);
-            return _context.finish(24);
-          case 27:
+            return _context.finish(18);
+          case 21:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 20, 24, 27]]);
+      }, _callee, null, [[0, 14, 18, 21]]);
     }));
     return function fetchVehicles() {
       return _ref2.apply(this, arguments);
     };
   }();
-  var fetchDrivers = /*#__PURE__*/function () {
+  var handleVehicleAdded = function handleVehicleAdded() {
+    setSuccessMessage('Vehicle added successfully!');
+    setTimeout(function () {
+      return setSuccessMessage(null);
+    }, 3000);
+    fetchVehicles(); // Refresh the list
+  };
+  var handleVehicleUpdated = function handleVehicleUpdated() {
+    setSuccessMessage('Vehicle updated successfully!');
+    setTimeout(function () {
+      return setSuccessMessage(null);
+    }, 3000);
+    fetchVehicles(); // Refresh the list
+  };
+  var handleDeleteVehicle = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var _yield$supabase$from$2, data, _error2;
+      var _yield$supabase$from$2, _error2, _err$message4, _err$message5;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.prev = 0;
-            console.log("Fetching drivers...");
-            _context2.next = 4;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('id, full_name').eq('role', 'driver');
-          case 4:
-            _yield$supabase$from$2 = _context2.sent;
-            data = _yield$supabase$from$2.data;
-            _error2 = _yield$supabase$from$2.error;
-            if (!_error2) {
-              _context2.next = 10;
-              break;
-            }
-            console.error('Error fetching drivers:', _error2);
-            throw _error2;
-          case 10:
-            console.log("Fetched drivers:", (data === null || data === void 0 ? void 0 : data.length) || 0);
-            setDrivers(data || []);
-            _context2.next = 17;
-            break;
-          case 14:
-            _context2.prev = 14;
-            _context2.t0 = _context2["catch"](0);
-            console.error('Error fetching drivers:', _context2.t0);
-            // Don't show an error message here as it's secondary to the vehicles
-          case 17:
-          case "end":
-            return _context2.stop();
-        }
-      }, _callee2, null, [[0, 14]]);
-    }));
-    return function fetchDrivers() {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-  var fetchVehicleDocuments = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(vehicleId) {
-      var _yield$supabase$from$3, data, _error3;
-      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-        while (1) switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.prev = 0;
-            _context3.next = 3;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').select('*').eq('vehicle_id', vehicleId).order('created_at', {
-              ascending: false
-            });
-          case 3:
-            _yield$supabase$from$3 = _context3.sent;
-            data = _yield$supabase$from$3.data;
-            _error3 = _yield$supabase$from$3.error;
-            if (!_error3) {
-              _context3.next = 8;
-              break;
-            }
-            throw _error3;
-          case 8:
-            setDocuments(data || []);
-            _context3.next = 15;
-            break;
-          case 11:
-            _context3.prev = 11;
-            _context3.t0 = _context3["catch"](0);
-            console.error('Error fetching documents:', _context3.t0);
-            setError('Failed to load documents. Please try again.');
-          case 15:
-          case "end":
-            return _context3.stop();
-        }
-      }, _callee3, null, [[0, 11]]);
-    }));
-    return function fetchVehicleDocuments(_x) {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-  var handleAddVehicle = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-      var vehicleToInsert, _yield$supabase$from$4, data, _error4;
-      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-        while (1) switch (_context4.prev = _context4.next) {
-          case 0:
             if (networkStatus) {
-              _context4.next = 3;
-              break;
-            }
-            setError('Cannot add vehicle while offline. Please check your internet connection.');
-            return _context4.abrupt("return");
-          case 3:
-            _context4.prev = 3;
-            setError(null);
-
-            // Validate basic required fields
-            if (!(!vehicleData.registration_number || !vehicleData.make || !vehicleData.model)) {
-              _context4.next = 8;
-              break;
-            }
-            setError('Please fill in all required fields.');
-            return _context4.abrupt("return");
-          case 8:
-            // Create a complete vehicle object with all necessary fields
-            vehicleToInsert = {
-              registration_number: vehicleData.registration_number,
-              make: vehicleData.make,
-              model: vehicleData.model,
-              year: parseInt(vehicleData.year) || new Date().getFullYear(),
-              status: vehicleData.status || 'available',
-              notes: vehicleData.notes || null
-            }; // Only include driver assignment if status is "assigned"
-            if (!(vehicleData.status === 'assigned')) {
-              _context4.next = 14;
-              break;
-            }
-            if (vehicleData.assigned_driver_id) {
-              _context4.next = 13;
-              break;
-            }
-            setError('Please select a driver when status is assigned.');
-            return _context4.abrupt("return");
-          case 13:
-            vehicleToInsert.assigned_driver_id = vehicleData.assigned_driver_id;
-          case 14:
-            console.log('Inserting vehicle:', vehicleToInsert);
-
-            // Insert vehicle with proper error handling
-            _context4.next = 17;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').insert(vehicleToInsert).select();
-          case 17:
-            _yield$supabase$from$4 = _context4.sent;
-            data = _yield$supabase$from$4.data;
-            _error4 = _yield$supabase$from$4.error;
-            if (!_error4) {
-              _context4.next = 24;
-              break;
-            }
-            console.error('Database error:', _error4);
-            setError("Failed to add vehicle: ".concat(_error4.message));
-            return _context4.abrupt("return");
-          case 24:
-            // Success handling
-            console.log('Vehicle added successfully:', data);
-            setShowAddModal(false);
-            setSuccessMessage('Vehicle added successfully!');
-            setTimeout(function () {
-              return setSuccessMessage(null);
-            }, 3000);
-            resetVehicleForm();
-
-            // Refresh the vehicles list
-            fetchVehicles();
-            _context4.next = 36;
-            break;
-          case 32:
-            _context4.prev = 32;
-            _context4.t0 = _context4["catch"](3);
-            console.error('Error adding vehicle:', _context4.t0);
-            if (_context4.t0.message.includes('Failed to fetch') || _context4.t0.message.includes('network')) {
-              setNetworkStatus(false);
-              setError('Network error. Please check your internet connection and try again.');
-            } else {
-              setError('Failed to add vehicle: ' + _context4.t0.message);
-            }
-          case 36:
-          case "end":
-            return _context4.stop();
-        }
-      }, _callee4, null, [[3, 32]]);
-    }));
-    return function handleAddVehicle() {
-      return _ref5.apply(this, arguments);
-    };
-  }();
-  var handleUpdateVehicle = /*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-      var vehicleToUpdate, _yield$supabase$from$5, updateError;
-      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-        while (1) switch (_context5.prev = _context5.next) {
-          case 0:
-            if (networkStatus) {
-              _context5.next = 3;
-              break;
-            }
-            setError('Cannot update vehicle while offline. Please check your internet connection.');
-            return _context5.abrupt("return");
-          case 3:
-            _context5.prev = 3;
-            setError(null);
-
-            // Validate form
-            if (!(!vehicleData.registration_number || !vehicleData.make || !vehicleData.model)) {
-              _context5.next = 8;
-              break;
-            }
-            setError('Please fill in all required fields.');
-            return _context5.abrupt("return");
-          case 8:
-            // Create update object
-            vehicleToUpdate = {
-              registration_number: vehicleData.registration_number,
-              make: vehicleData.make,
-              model: vehicleData.model,
-              year: parseInt(vehicleData.year) || new Date().getFullYear(),
-              status: vehicleData.status,
-              notes: vehicleData.notes || null
-            }; // Handle driver assignment
-            if (!(vehicleData.status === 'assigned')) {
-              _context5.next = 16;
-              break;
-            }
-            if (vehicleData.assigned_driver_id) {
-              _context5.next = 13;
-              break;
-            }
-            setError('Please select a driver when status is assigned.');
-            return _context5.abrupt("return");
-          case 13:
-            vehicleToUpdate.assigned_driver_id = vehicleData.assigned_driver_id;
-            _context5.next = 17;
-            break;
-          case 16:
-            // Remove driver assignment if status is not 'assigned'
-            vehicleToUpdate.assigned_driver_id = null;
-          case 17:
-            console.log('Updating vehicle:', vehicleToUpdate, 'ID:', currentVehicleId);
-            _context5.next = 20;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').update(vehicleToUpdate).eq('id', currentVehicleId);
-          case 20:
-            _yield$supabase$from$5 = _context5.sent;
-            updateError = _yield$supabase$from$5.error;
-            if (!updateError) {
-              _context5.next = 25;
-              break;
-            }
-            console.error('Update error details:', updateError);
-            throw updateError;
-          case 25:
-            // Success handling
-            setShowEditModal(false);
-            setSuccessMessage('Vehicle updated successfully!');
-            setTimeout(function () {
-              return setSuccessMessage(null);
-            }, 3000);
-            resetVehicleForm();
-
-            // Force refresh
-            fetchVehicles();
-            _context5.next = 36;
-            break;
-          case 32:
-            _context5.prev = 32;
-            _context5.t0 = _context5["catch"](3);
-            console.error('Error updating vehicle:', _context5.t0);
-            if (_context5.t0.message.includes('Failed to fetch') || _context5.t0.message.includes('network')) {
-              setNetworkStatus(false);
-              setError('Network error. Please check your internet connection and try again.');
-            } else {
-              setError("Failed to update vehicle: ".concat(_context5.t0.message || 'Unknown error'));
-            }
-          case 36:
-          case "end":
-            return _context5.stop();
-        }
-      }, _callee5, null, [[3, 32]]);
-    }));
-    return function handleUpdateVehicle() {
-      return _ref6.apply(this, arguments);
-    };
-  }();
-  var handleDeleteVehicle = /*#__PURE__*/function () {
-    var _ref7 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-      var _yield$supabase$from$6, _error5;
-      return _regeneratorRuntime().wrap(function _callee6$(_context6) {
-        while (1) switch (_context6.prev = _context6.next) {
-          case 0:
-            if (networkStatus) {
-              _context6.next = 3;
+              _context2.next = 3;
               break;
             }
             setError('Cannot delete vehicle while offline. Please check your internet connection.');
-            return _context6.abrupt("return");
+            return _context2.abrupt("return");
           case 3:
-            _context6.prev = 3;
+            _context2.prev = 3;
             setError(null);
-            _context6.next = 7;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles')["delete"]().eq('id', currentVehicleId);
+
+            // SQL: DELETE FROM vehicles WHERE id = $1
+            _context2.next = 7;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles')["delete"]().eq('id', currentVehicle.id);
           case 7:
-            _yield$supabase$from$6 = _context6.sent;
-            _error5 = _yield$supabase$from$6.error;
-            if (!_error5) {
-              _context6.next = 11;
+            _yield$supabase$from$2 = _context2.sent;
+            _error2 = _yield$supabase$from$2.error;
+            if (!_error2) {
+              _context2.next = 11;
               break;
             }
-            throw _error5;
+            throw _error2;
           case 11:
             setShowDeleteModal(false);
             setSuccessMessage('Vehicle deleted successfully!');
@@ -57198,815 +56945,175 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
               return setSuccessMessage(null);
             }, 3000);
 
-            // Force refresh
+            // Refresh the list
             fetchVehicles();
-            _context6.next = 21;
+            _context2.next = 21;
             break;
           case 17:
-            _context6.prev = 17;
-            _context6.t0 = _context6["catch"](3);
-            console.error('Error deleting vehicle:', _context6.t0);
-            if (_context6.t0.message.includes('Failed to fetch') || _context6.t0.message.includes('network')) {
+            _context2.prev = 17;
+            _context2.t0 = _context2["catch"](3);
+            console.error('Error deleting vehicle:', _context2.t0);
+            if ((_err$message4 = _context2.t0.message) !== null && _err$message4 !== void 0 && _err$message4.includes('Failed to fetch') || (_err$message5 = _context2.t0.message) !== null && _err$message5 !== void 0 && _err$message5.includes('network')) {
               setNetworkStatus(false);
               setError('Network error. Please check your internet connection and try again.');
             } else {
-              setError('Failed to delete vehicle: ' + _context6.t0.message);
+              setError('Failed to delete vehicle: ' + _context2.t0.message);
             }
           case 21:
           case "end":
-            return _context6.stop();
+            return _context2.stop();
         }
-      }, _callee6, null, [[3, 17]]);
+      }, _callee2, null, [[3, 17]]);
     }));
     return function handleDeleteVehicle() {
-      return _ref7.apply(this, arguments);
-    };
-  }();
-  var handleUploadDocument = /*#__PURE__*/function () {
-    var _ref8 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
-      var _yield$supabase$from$7, count, countError, fileExt, fileName, filePath, _yield$supabase$stora, uploadError, _yield$supabase$from$8, insertError;
-      return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-        while (1) switch (_context7.prev = _context7.next) {
-          case 0:
-            if (networkStatus) {
-              _context7.next = 3;
-              break;
-            }
-            setError('Cannot upload document while offline. Please check your internet connection.');
-            return _context7.abrupt("return");
-          case 3:
-            if (!(!documentFile || !documentName || !documentType)) {
-              _context7.next = 6;
-              break;
-            }
-            setError('Please fill in all document fields.');
-            return _context7.abrupt("return");
-          case 6:
-            _context7.prev = 6;
-            setUploadLoading(true);
-            setError(null);
-
-            // Check if we already have 4 documents for this vehicle
-            _context7.next = 11;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').select('*', {
-              count: 'exact',
-              head: true
-            }).eq('vehicle_id', currentVehicleId);
-          case 11:
-            _yield$supabase$from$7 = _context7.sent;
-            count = _yield$supabase$from$7.count;
-            countError = _yield$supabase$from$7.error;
-            if (!countError) {
-              _context7.next = 16;
-              break;
-            }
-            throw countError;
-          case 16:
-            if (!(count >= 4)) {
-              _context7.next = 19;
-              break;
-            }
-            setError('Maximum 4 documents allowed per vehicle. Please delete an existing document first.');
-            return _context7.abrupt("return");
-          case 19:
-            // Upload file to storage
-            fileExt = documentFile.name.split('.').pop();
-            fileName = "".concat(Date.now(), ".").concat(fileExt);
-            filePath = "vehicle-documents/".concat(currentVehicleId, "/").concat(fileName);
-            _context7.next = 24;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').upload(filePath, documentFile);
-          case 24:
-            _yield$supabase$stora = _context7.sent;
-            uploadError = _yield$supabase$stora.error;
-            if (!uploadError) {
-              _context7.next = 28;
-              break;
-            }
-            throw uploadError;
-          case 28:
-            _context7.next = 30;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').insert({
-              vehicle_id: currentVehicleId,
-              name: documentName,
-              type: documentType,
-              file_path: filePath,
-              file_type: fileExt
-            });
-          case 30:
-            _yield$supabase$from$8 = _context7.sent;
-            insertError = _yield$supabase$from$8.error;
-            if (!insertError) {
-              _context7.next = 34;
-              break;
-            }
-            throw insertError;
-          case 34:
-            // Refresh document list
-            fetchVehicleDocuments(currentVehicleId);
-
-            // Reset form
-            setDocumentFile(null);
-            setDocumentName('');
-            setDocumentType('registration');
-            setSuccessMessage('Document uploaded successfully!');
-            setTimeout(function () {
-              return setSuccessMessage(null);
-            }, 3000);
-            _context7.next = 46;
-            break;
-          case 42:
-            _context7.prev = 42;
-            _context7.t0 = _context7["catch"](6);
-            console.error('Error uploading document:', _context7.t0);
-            if (_context7.t0.message.includes('Failed to fetch') || _context7.t0.message.includes('network')) {
-              setNetworkStatus(false);
-              setError('Network error. Please check your internet connection and try again.');
-            } else {
-              setError('Failed to upload document: ' + _context7.t0.message);
-            }
-          case 46:
-            _context7.prev = 46;
-            setUploadLoading(false);
-            return _context7.finish(46);
-          case 49:
-          case "end":
-            return _context7.stop();
-        }
-      }, _callee7, null, [[6, 42, 46, 49]]);
-    }));
-    return function handleUploadDocument() {
-      return _ref8.apply(this, arguments);
-    };
-  }();
-  var handleDownloadDocument = /*#__PURE__*/function () {
-    var _ref9 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8(document) {
-      var _yield$supabase$stora2, data, _error6;
-      return _regeneratorRuntime().wrap(function _callee8$(_context8) {
-        while (1) switch (_context8.prev = _context8.next) {
-          case 0:
-            if (networkStatus) {
-              _context8.next = 3;
-              break;
-            }
-            setError('Cannot download document while offline. Please check your internet connection.');
-            return _context8.abrupt("return");
-          case 3:
-            _context8.prev = 3;
-            _context8.next = 6;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').createSignedUrl(document.file_path, 60);
-          case 6:
-            _yield$supabase$stora2 = _context8.sent;
-            data = _yield$supabase$stora2.data;
-            _error6 = _yield$supabase$stora2.error;
-            if (!_error6) {
-              _context8.next = 11;
-              break;
-            }
-            throw _error6;
-          case 11:
-            // Open the URL in a new tab
-            window.open(data.signedUrl, '_blank');
-            _context8.next = 18;
-            break;
-          case 14:
-            _context8.prev = 14;
-            _context8.t0 = _context8["catch"](3);
-            console.error('Error downloading document:', _context8.t0);
-            if (_context8.t0.message.includes('Failed to fetch') || _context8.t0.message.includes('network')) {
-              setNetworkStatus(false);
-              setError('Network error. Please check your internet connection and try again.');
-            } else {
-              setError('Failed to download document: ' + _context8.t0.message);
-            }
-          case 18:
-          case "end":
-            return _context8.stop();
-        }
-      }, _callee8, null, [[3, 14]]);
-    }));
-    return function handleDownloadDocument(_x2) {
-      return _ref9.apply(this, arguments);
-    };
-  }();
-  var handleDeleteDocument = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9(documentId) {
-      var _yield$supabase$from$9, document, fetchError, _yield$supabase$stora3, storageError, _yield$supabase$from$10, deleteError;
-      return _regeneratorRuntime().wrap(function _callee9$(_context9) {
-        while (1) switch (_context9.prev = _context9.next) {
-          case 0:
-            if (networkStatus) {
-              _context9.next = 3;
-              break;
-            }
-            setError('Cannot delete document while offline. Please check your internet connection.');
-            return _context9.abrupt("return");
-          case 3:
-            _context9.prev = 3;
-            _context9.next = 6;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').select('file_path').eq('id', documentId).single();
-          case 6:
-            _yield$supabase$from$9 = _context9.sent;
-            document = _yield$supabase$from$9.data;
-            fetchError = _yield$supabase$from$9.error;
-            if (!fetchError) {
-              _context9.next = 11;
-              break;
-            }
-            throw fetchError;
-          case 11:
-            _context9.next = 13;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').remove([document.file_path]);
-          case 13:
-            _yield$supabase$stora3 = _context9.sent;
-            storageError = _yield$supabase$stora3.error;
-            if (!storageError) {
-              _context9.next = 17;
-              break;
-            }
-            throw storageError;
-          case 17:
-            _context9.next = 19;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents')["delete"]().eq('id', documentId);
-          case 19:
-            _yield$supabase$from$10 = _context9.sent;
-            deleteError = _yield$supabase$from$10.error;
-            if (!deleteError) {
-              _context9.next = 23;
-              break;
-            }
-            throw deleteError;
-          case 23:
-            // Update the documents list
-            setDocuments(documents.filter(function (doc) {
-              return doc.id !== documentId;
-            }));
-            setSuccessMessage('Document deleted successfully!');
-            setTimeout(function () {
-              return setSuccessMessage(null);
-            }, 3000);
-            _context9.next = 32;
-            break;
-          case 28:
-            _context9.prev = 28;
-            _context9.t0 = _context9["catch"](3);
-            console.error('Error deleting document:', _context9.t0);
-            if (_context9.t0.message.includes('Failed to fetch') || _context9.t0.message.includes('network')) {
-              setNetworkStatus(false);
-              setError('Network error. Please check your internet connection and try again.');
-            } else {
-              setError('Failed to delete document: ' + _context9.t0.message);
-            }
-          case 32:
-          case "end":
-            return _context9.stop();
-        }
-      }, _callee9, null, [[3, 28]]);
-    }));
-    return function handleDeleteDocument(_x3) {
-      return _ref10.apply(this, arguments);
+      return _ref3.apply(this, arguments);
     };
   }();
   var openEditModal = function openEditModal(vehicle) {
-    setCurrentVehicleId(vehicle.id);
-    setVehicleData({
-      registration_number: vehicle.registration_number,
-      make: vehicle.make,
-      model: vehicle.model,
-      year: vehicle.year,
-      status: vehicle.status,
-      notes: vehicle.notes || '',
-      assigned_driver_id: vehicle.assigned_driver_id
-    });
+    setCurrentVehicle(vehicle);
     setShowEditModal(true);
   };
   var openDeleteModal = function openDeleteModal(vehicle) {
-    setCurrentVehicleId(vehicle.id);
+    setCurrentVehicle(vehicle);
     setShowDeleteModal(true);
   };
   var openDocumentModal = function openDocumentModal(vehicle) {
-    setCurrentVehicleId(vehicle.id);
-    fetchVehicleDocuments(vehicle.id);
+    setCurrentVehicle(vehicle);
     setShowDocumentModal(true);
-  };
-  var resetVehicleForm = function resetVehicleForm() {
-    setVehicleData({
-      registration_number: '',
-      make: '',
-      model: '',
-      year: new Date().getFullYear(),
-      status: 'available',
-      notes: '',
-      assigned_driver_id: null
-    });
-    setCurrentVehicleId(null);
-  };
-
-  // Handle input change without losing focus
-  var handleInputChange = function handleInputChange(e) {
-    var _e$target = e.target,
-      name = _e$target.name,
-      value = _e$target.value;
-
-    // Use a functional update to prevent focus issues
-    setVehicleData(function (prevData) {
-      var newData = _objectSpread({}, prevData);
-
-      // Special handling for year to ensure it's a number
-      if (name === 'year') {
-        newData[name] = value === '' ? '' : parseInt(value);
-      } else if (name === 'status' && value !== 'assigned') {
-        // If changing from assigned to another status, clear driver
-        newData[name] = value;
-        newData.assigned_driver_id = null;
-      } else {
-        newData[name] = value;
-      }
-      return newData;
-    });
   };
   var retryConnection = function retryConnection() {
     fetchVehicles();
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    fluid: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "d-flex justify-content-between align-items-center mb-4"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "btn btn-link ps-0",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    variant: "link",
+    className: "ps-0",
     onClick: onBack
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
-    className: "bi bi-arrow-left me-1"
-  }), " Back to Vehicle Management"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "btn btn-primary",
+    className: "bi bi-arrow-left me-2"
+  }), "Back to Vehicle Management"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    variant: "primary",
     onClick: function onClick() {
       return setShowAddModal(true);
     },
     disabled: !networkStatus
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
-    className: "bi bi-plus-lg me-1"
-  }), " Add Vehicle")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Vehicle Management"), !networkStatus && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "alert alert-warning mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-plus-lg me-2"
+  }), "Add Vehicle")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
+    className: "mb-4"
+  }, "Vehicle Management"), !networkStatus && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    variant: "warning",
+    className: "d-flex justify-content-between align-items-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
     className: "bi bi-wifi-off me-2"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Network connection issue detected."), " Some features may be unavailable.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "btn btn-sm btn-outline-dark float-end",
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Network connection issue detected."), " Some features may be unavailable."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    size: "sm",
+    variant: "outline-dark",
     onClick: retryConnection
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
     className: "bi bi-arrow-repeat me-1"
-  }), " Retry")), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "alert alert-danger"
-  }, error), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "alert alert-success"
+  }), " Retry")), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    variant: "danger"
+  }, error), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    variant: "success"
   }, successMessage), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "text-center my-5"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "spinner-border",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    animation: "border",
     role: "status"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: "visually-hidden"
-  }, "Loading vehicles..."))) : !networkStatus && vehicles.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "text-center p-5 bg-light rounded"
+  }, "Loading vehicles..."))) : !networkStatus && vehicles.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    variant: "light",
+    className: "text-center p-5"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "display-1 mb-3"
   }, "\uD83C\uDF10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Network Connection Error"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "text-muted"
-  }, "Unable to load vehicles. Please check your internet connection."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "btn btn-outline-primary mt-3",
+  }, "Unable to load vehicles. Please check your internet connection."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    variant: "outline-primary",
     onClick: retryConnection
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
-    className: "bi bi-arrow-repeat me-1"
-  }), " Retry Connection")) : vehicles.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "text-center p-5 bg-light rounded"
+    className: "bi bi-arrow-repeat me-2"
+  }), " Retry Connection")) : vehicles.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    variant: "light",
+    className: "text-center p-5"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "display-1 mb-3"
   }, "\uD83D\uDE9A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "No vehicles found"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "text-muted"
-  }, "Add your first vehicle to get started")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "card"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "table-responsive"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("table", {
-    className: "table table-hover mb-0"
+  }, "Add your first vehicle to get started")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    responsive: true,
+    hover: true,
+    className: "mb-0"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Registration"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Make & Model"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Year"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Driver"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
     className: "text-end"
   }, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, vehicles.map(function (vehicle) {
     var _vehicle$driver;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
       key: vehicle.id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, vehicle.registration_number), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, vehicle.make, " ", vehicle.model), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, vehicle.year), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      className: "badge ".concat(vehicle.status === 'available' ? 'bg-success' : vehicle.status === 'assigned' ? 'bg-primary' : vehicle.status === 'spare' ? 'bg-info' : vehicle.status === 'maintenance' ? 'bg-warning' : 'bg-secondary')
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, vehicle.registration_number), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, vehicle.make, " ", vehicle.model), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, vehicle.year), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      bg: vehicle.status === 'available' ? 'success' : vehicle.status === 'assigned' ? 'primary' : vehicle.status === 'spare' ? 'info' : vehicle.status === 'maintenance' ? 'warning' : 'secondary'
     }, vehicle.status.charAt(0).toUpperCase() + vehicle.status.slice(1))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, ((_vehicle$driver = vehicle.driver) === null || _vehicle$driver === void 0 ? void 0 : _vehicle$driver.full_name) || 'None'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       className: "text-end"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      className: "btn btn-sm btn-outline-secondary me-1",
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      variant: "outline-secondary",
+      size: "sm",
+      className: "me-1",
       onClick: function onClick() {
         return openEditModal(vehicle);
       },
-      title: "Edit Vehicle",
-      disabled: !networkStatus
+      disabled: !networkStatus,
+      title: "Edit Vehicle"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
       className: "bi bi-pencil"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      className: "btn btn-sm btn-outline-info me-1",
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      variant: "outline-info",
+      size: "sm",
+      className: "me-1",
       onClick: function onClick() {
         return openDocumentModal(vehicle);
       },
-      title: "Manage Documents",
-      disabled: !networkStatus
+      disabled: !networkStatus,
+      title: "Manage Documents"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
       className: "bi bi-file-earmark"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      className: "btn btn-sm btn-outline-danger",
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      variant: "outline-danger",
+      size: "sm",
       onClick: function onClick() {
         return openDeleteModal(vehicle);
       },
-      title: "Delete Vehicle",
-      disabled: !networkStatus
+      disabled: !networkStatus,
+      title: "Delete Vehicle"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
       className: "bi bi-trash"
     }))));
-  }))))), showAddModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-wrapper",
-    style: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 1050
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-backdrop show",
-    style: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 1040
-    },
-    onClick: function onClick() {
+  })))), showAddModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_VehicleModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    show: showAddModal,
+    onHide: function onHide() {
       return setShowAddModal(false);
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal show d-block",
-    tabIndex: "-1",
-    style: {
-      zIndex: 1050,
-      position: 'relative',
-      pointerEvents: 'none'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-dialog",
-    style: {
-      pointerEvents: 'auto'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", {
-    className: "modal-title"
-  }, "Add New Vehicle"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "button",
-    className: "btn-close",
-    onClick: function onClick() {
-      return setShowAddModal(false);
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
-    id: "addVehicleForm",
-    onSubmit: function onSubmit(e) {
-      e.preventDefault();
-      handleAddVehicle();
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "registration_number",
-    className: "form-label"
-  }, "Registration Number*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    className: "form-control",
-    id: "registration_number",
-    name: "registration_number",
-    value: vehicleData.registration_number,
-    onChange: handleInputChange,
-    required: true,
-    autoFocus: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "make",
-    className: "form-label"
-  }, "Make*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    className: "form-control",
-    id: "make",
-    name: "make",
-    value: vehicleData.make,
-    onChange: handleInputChange,
-    required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "model",
-    className: "form-label"
-  }, "Model*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    className: "form-control",
-    id: "model",
-    name: "model",
-    value: vehicleData.model,
-    onChange: handleInputChange,
-    required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "year",
-    className: "form-label"
-  }, "Year"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "number",
-    className: "form-control",
-    id: "year",
-    name: "year",
-    value: vehicleData.year,
-    onChange: handleInputChange,
-    min: "1900",
-    max: new Date().getFullYear() + 1
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "status",
-    className: "form-label"
-  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
-    className: "form-select",
-    id: "status",
-    name: "status",
-    value: vehicleData.status,
-    onChange: handleInputChange
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "available"
-  }, "Available"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "assigned"
-  }, "Assigned"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "spare"
-  }, "Spare"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "maintenance"
-  }, "Maintenance"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "inactive"
-  }, "Inactive"))), vehicleData.status === 'assigned' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "assigned_driver_id",
-    className: "form-label"
-  }, "Assign to Driver*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
-    className: "form-select",
-    id: "assigned_driver_id",
-    name: "assigned_driver_id",
-    value: vehicleData.assigned_driver_id || '',
-    onChange: handleInputChange,
-    required: vehicleData.status === 'assigned'
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: ""
-  }, "Select a driver"), drivers.map(function (driver) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-      key: driver.id,
-      value: driver.id
-    }, driver.full_name);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "notes",
-    className: "form-label"
-  }, "Notes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
-    className: "form-control",
-    id: "notes",
-    name: "notes",
-    rows: 3,
-    value: vehicleData.notes,
-    onChange: handleInputChange
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-footer"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "button",
-    className: "btn btn-secondary",
-    onClick: function onClick() {
-      return setShowAddModal(false);
-    }
-  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "submit",
-    form: "addVehicleForm",
-    className: "btn btn-primary"
-  }, "Add Vehicle")))))), showEditModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-wrapper",
-    style: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 1050
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-backdrop show",
-    style: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 1040
     },
-    onClick: function onClick() {
+    isEditing: false,
+    onSuccess: handleVehicleAdded
+  }), showEditModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_VehicleModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    show: showEditModal,
+    onHide: function onHide() {
       return setShowEditModal(false);
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal show d-block",
-    tabIndex: "-1",
-    style: {
-      zIndex: 1050,
-      position: 'relative',
-      pointerEvents: 'none'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-dialog",
-    style: {
-      pointerEvents: 'auto'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", {
-    className: "modal-title"
-  }, "Edit Vehicle"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "button",
-    className: "btn-close",
-    onClick: function onClick() {
-      return setShowEditModal(false);
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
-    id: "editVehicleForm",
-    onSubmit: function onSubmit(e) {
-      e.preventDefault();
-      handleUpdateVehicle();
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "edit_registration_number",
-    className: "form-label"
-  }, "Registration Number*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    className: "form-control",
-    id: "edit_registration_number",
-    name: "registration_number",
-    value: vehicleData.registration_number,
-    onChange: handleInputChange,
-    required: true,
-    autoFocus: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "edit_make",
-    className: "form-label"
-  }, "Make*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    className: "form-control",
-    id: "edit_make",
-    name: "make",
-    value: vehicleData.make,
-    onChange: handleInputChange,
-    required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "edit_model",
-    className: "form-label"
-  }, "Model*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    className: "form-control",
-    id: "edit_model",
-    name: "model",
-    value: vehicleData.model,
-    onChange: handleInputChange,
-    required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "edit_year",
-    className: "form-label"
-  }, "Year"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "number",
-    className: "form-control",
-    id: "edit_year",
-    name: "year",
-    value: vehicleData.year,
-    onChange: handleInputChange,
-    min: "1900",
-    max: new Date().getFullYear() + 1
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "edit_status",
-    className: "form-label"
-  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
-    className: "form-select",
-    id: "edit_status",
-    name: "status",
-    value: vehicleData.status,
-    onChange: handleInputChange
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "available"
-  }, "Available"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "assigned"
-  }, "Assigned"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "spare"
-  }, "Spare"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "maintenance"
-  }, "Maintenance"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "inactive"
-  }, "Inactive"))), vehicleData.status === 'assigned' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "edit_assigned_driver_id",
-    className: "form-label"
-  }, "Assign to Driver*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
-    className: "form-select",
-    id: "edit_assigned_driver_id",
-    name: "assigned_driver_id",
-    value: vehicleData.assigned_driver_id || '',
-    onChange: handleInputChange,
-    required: vehicleData.status === 'assigned'
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: ""
-  }, "Select a driver"), drivers.map(function (driver) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-      key: driver.id,
-      value: driver.id
-    }, driver.full_name);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "edit_notes",
-    className: "form-label"
-  }, "Notes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
-    className: "form-control",
-    id: "edit_notes",
-    name: "notes",
-    rows: 3,
-    value: vehicleData.notes,
-    onChange: handleInputChange
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-footer"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "button",
-    className: "btn btn-secondary",
-    onClick: function onClick() {
-      return setShowEditModal(false);
-    }
-  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "submit",
-    form: "editVehicleForm",
-    className: "btn btn-primary"
-  }, "Update Vehicle")))))), showDeleteModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-wrapper",
-    style: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 1050
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-backdrop show",
-    style: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 1040
     },
-    onClick: function onClick() {
-      return setShowDeleteModal(false);
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal show d-block",
-    tabIndex: "-1",
+    isEditing: true,
+    initialData: currentVehicle,
+    onSuccess: handleVehicleUpdated
+  }), showDeleteModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modal fade show d-block",
     style: {
-      zIndex: 1050,
-      position: 'relative',
-      pointerEvents: 'none'
+      backgroundColor: 'rgba(0,0,0,0.5)'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-dialog",
-    style: {
-      pointerEvents: 'auto'
-    }
+    className: "modal-dialog modal-dialog-centered"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "modal-content"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -58025,172 +57132,22 @@ var AvailableVehicles = function AvailableVehicles(_ref) {
     className: "text-danger"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Warning:"), " All associated documents and records will also be deleted.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "modal-footer"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "button",
-    className: "btn btn-secondary",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    variant: "secondary",
     onClick: function onClick() {
       return setShowDeleteModal(false);
     }
-  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "button",
-    className: "btn btn-danger",
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    variant: "danger",
     onClick: handleDeleteVehicle
-  }, "Delete Vehicle")))))), showDocumentModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-wrapper",
-    style: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 1050
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-backdrop show",
-    style: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 1040
-    },
-    onClick: function onClick() {
+  }, "Delete Vehicle"))))), showDocumentModal && currentVehicle && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DocumentModal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    show: showDocumentModal,
+    onHide: function onHide() {
       return setShowDocumentModal(false);
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal show d-block",
-    tabIndex: "-1",
-    style: {
-      zIndex: 1050,
-      position: 'relative',
-      pointerEvents: 'none'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-dialog modal-lg",
-    style: {
-      pointerEvents: 'auto'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", {
-    className: "modal-title"
-  }, "Vehicle Documents"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "button",
-    className: "btn-close",
-    onClick: function onClick() {
-      return setShowDocumentModal(false);
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", null, "Upload New Document"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
-    id: "uploadDocumentForm",
-    onSubmit: function onSubmit(e) {
-      e.preventDefault();
-      handleUploadDocument();
     },
-    className: "mb-4"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "document_name",
-    className: "form-label"
-  }, "Document Name*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    className: "form-control",
-    id: "document_name",
-    value: documentName,
-    onChange: function onChange(e) {
-      return setDocumentName(e.target.value);
-    },
-    required: true,
-    placeholder: "e.g., Insurance Policy 2023, Vehicle Registration"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "document_type",
-    className: "form-label"
-  }, "Document Type*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
-    className: "form-select",
-    id: "document_type",
-    value: documentType,
-    onChange: function onChange(e) {
-      return setDocumentType(e.target.value);
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "registration"
-  }, "Registration"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "insurance"
-  }, "Insurance"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "maintenance"
-  }, "Maintenance Record"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "inspection"
-  }, "Inspection Certificate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "other"
-  }, "Other"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "document_file",
-    className: "form-label"
-  }, "File*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "file",
-    className: "form-control",
-    id: "document_file",
-    onChange: function onChange(e) {
-      return setDocumentFile(e.target.files[0]);
-    },
-    accept: ".pdf,.jpg,.jpeg,.png,.doc,.docx"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "form-text"
-  }, "Supported formats: PDF, JPG, PNG, DOC, DOCX (max 5MB)")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "submit",
-    className: "btn btn-primary",
-    disabled: uploadLoading || !documentFile || !documentName || !documentType
-  }, uploadLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    className: "spinner-border spinner-border-sm me-1",
-    role: "status",
-    "aria-hidden": "true"
-  }), "Uploading...") : 'Upload Document')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", null, "Existing Documents"), documents.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "text-muted"
-  }, "No documents found for this vehicle.") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "table-responsive"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("table", {
-    className: "table table-bordered"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Date Uploaded"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, documents.map(function (doc) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
-      key: doc.id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, doc.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      className: "badge bg-info"
-    }, doc.type.charAt(0).toUpperCase() + doc.type.slice(1))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, new Date(doc.created_at).toLocaleDateString()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      className: "btn btn-sm btn-outline-primary me-1",
-      onClick: function onClick() {
-        return handleDownloadDocument(doc);
-      },
-      title: "Download Document"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
-      className: "bi bi-download"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-      className: "btn btn-sm btn-outline-danger",
-      onClick: function onClick() {
-        return handleDeleteDocument(doc.id);
-      },
-      title: "Delete Document"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
-      className: "bi bi-trash"
-    }))));
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "text-danger fw-bold mt-2"
-  }, "Maximum 4 documents allowed per vehicle.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "modal-footer"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "button",
-    className: "btn btn-secondary",
-    onClick: function onClick() {
-      return setShowDocumentModal(false);
-    }
-  }, "Close")))))));
+    vehicleId: currentVehicle.id,
+    vehicleName: "".concat(currentVehicle.registration_number, " (").concat(currentVehicle.make, " ").concat(currentVehicle.model, ")")
+  }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AvailableVehicles);
 
@@ -58217,7 +57174,6 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -58285,112 +57241,74 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }, []);
   var fetchData = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _yield$supabase$from$, vehiclesData, vehiclesError, _yield$supabase$from$2, blockedData, blockedError, enhancedData, _iterator, _step, _loop;
-      return _regeneratorRuntime().wrap(function _callee$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
+      var _yield$supabase$from$, vehiclesData, vehiclesError, _yield$supabase$from$2, blockedData, blockedError, enhancedData;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
           case 0:
-            _context2.prev = 0;
+            _context.prev = 0;
             setLoading(true);
             setError(null);
 
-            // Fetch vehicles - SIMPLE QUERY
-            _context2.next = 5;
+            // Fetch vehicles
+            _context.next = 5;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('id, registration_number, make, model').order('registration_number', {
               ascending: true
             });
           case 5:
-            _yield$supabase$from$ = _context2.sent;
+            _yield$supabase$from$ = _context.sent;
             vehiclesData = _yield$supabase$from$.data;
             vehiclesError = _yield$supabase$from$.error;
             if (!vehiclesError) {
-              _context2.next = 11;
+              _context.next = 10;
               break;
             }
-            console.error('Vehicles error:', vehiclesError);
             throw new Error('Failed to load vehicles');
-          case 11:
-            _context2.next = 13;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('id, vehicle_id, start_date, end_date, reason, created_by, created_at').order('start_date', {
+          case 10:
+            _context.next = 12;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('*').order('start_date', {
               ascending: true
             });
-          case 13:
-            _yield$supabase$from$2 = _context2.sent;
+          case 12:
+            _yield$supabase$from$2 = _context.sent;
             blockedData = _yield$supabase$from$2.data;
             blockedError = _yield$supabase$from$2.error;
             if (!blockedError) {
-              _context2.next = 19;
+              _context.next = 17;
               break;
             }
-            console.error('Blocked periods error:', blockedError);
             throw new Error('Failed to load blocked periods');
-          case 19:
-            // Manually combine data instead of using Supabase joins
-            enhancedData = [];
-            _iterator = _createForOfIteratorHelper(blockedData);
-            _context2.prev = 21;
-            _loop = /*#__PURE__*/_regeneratorRuntime().mark(function _loop() {
-              var block, matchingVehicle;
-              return _regeneratorRuntime().wrap(function _loop$(_context) {
-                while (1) switch (_context.prev = _context.next) {
-                  case 0:
-                    block = _step.value;
-                    matchingVehicle = vehiclesData.find(function (v) {
-                      return v.id === block.vehicle_id;
-                    });
-                    enhancedData.push(_objectSpread(_objectSpread({}, block), {}, {
-                      // Add vehicle info in the format the component expects
-                      vehicles: matchingVehicle ? {
-                        registration_number: matchingVehicle.registration_number,
-                        make: matchingVehicle.make,
-                        model: matchingVehicle.model
-                      } : null
-                    }));
-                  case 3:
-                  case "end":
-                    return _context.stop();
-                }
-              }, _loop);
+          case 17:
+            // Combine data
+            enhancedData = blockedData.map(function (block) {
+              var matchingVehicle = vehiclesData.find(function (v) {
+                return v.id === block.vehicle_id;
+              });
+              return _objectSpread(_objectSpread({}, block), {}, {
+                vehicles: matchingVehicle ? {
+                  registration_number: matchingVehicle.registration_number,
+                  make: matchingVehicle.make,
+                  model: matchingVehicle.model
+                } : null
+              });
             });
-            _iterator.s();
-          case 24:
-            if ((_step = _iterator.n()).done) {
-              _context2.next = 28;
-              break;
-            }
-            return _context2.delegateYield(_loop(), "t0", 26);
-          case 26:
-            _context2.next = 24;
-            break;
-          case 28:
-            _context2.next = 33;
-            break;
-          case 30:
-            _context2.prev = 30;
-            _context2.t1 = _context2["catch"](21);
-            _iterator.e(_context2.t1);
-          case 33:
-            _context2.prev = 33;
-            _iterator.f();
-            return _context2.finish(33);
-          case 36:
             setVehicles(vehiclesData || []);
             setBlockedPeriods(enhancedData || []);
-            _context2.next = 44;
+            _context.next = 26;
             break;
-          case 40:
-            _context2.prev = 40;
-            _context2.t2 = _context2["catch"](0);
-            console.error('Error fetching data:', _context2.t2);
+          case 22:
+            _context.prev = 22;
+            _context.t0 = _context["catch"](0);
+            console.error('Error fetching data:', _context.t0);
             setError('Failed to load blocked vehicles. Please try again.');
-          case 44:
-            _context2.prev = 44;
+          case 26:
+            _context.prev = 26;
             setLoading(false);
-            return _context2.finish(44);
-          case 47:
+            return _context.finish(26);
+          case 29:
           case "end":
-            return _context2.stop();
+            return _context.stop();
         }
-      }, _callee, null, [[0, 40, 44, 47], [21, 30, 33, 36]]);
+      }, _callee, null, [[0, 22, 26, 29]]);
     }));
     return function fetchData() {
       return _ref2.apply(this, arguments);
@@ -58398,14 +57316,104 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }();
   var handleAddBlock = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var startDate, endDate, _yield$supabase$from$3, _error;
-      return _regeneratorRuntime().wrap(function _callee2$(_context3) {
+      var startDate, endDate, _yield$supabase$auth$, userData, userError, _yield$supabase$from$3, _error;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            setError(null);
+
+            // Validate form
+            if (!(!blockData.vehicle_id || !blockData.start_date || !blockData.end_date || !blockData.reason)) {
+              _context2.next = 5;
+              break;
+            }
+            setError('Please fill in all required fields.');
+            return _context2.abrupt("return");
+          case 5:
+            // Validate dates
+            startDate = new Date(blockData.start_date);
+            endDate = new Date(blockData.end_date);
+            if (!(startDate > endDate)) {
+              _context2.next = 10;
+              break;
+            }
+            setError('End date must be after start date.');
+            return _context2.abrupt("return");
+          case 10:
+            _context2.next = 12;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.getUser();
+          case 12:
+            _yield$supabase$auth$ = _context2.sent;
+            userData = _yield$supabase$auth$.data;
+            userError = _yield$supabase$auth$.error;
+            if (!userError) {
+              _context2.next = 18;
+              break;
+            }
+            console.error('User error:', userError);
+            throw new Error('Failed to get current user');
+          case 18:
+            if (!(!userData || !userData.user || !userData.user.id)) {
+              _context2.next = 20;
+              break;
+            }
+            throw new Error('User not authenticated');
+          case 20:
+            _context2.next = 22;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').insert({
+              vehicle_id: blockData.vehicle_id,
+              start_date: blockData.start_date,
+              end_date: blockData.end_date,
+              reason: blockData.reason,
+              created_by: userData.user.id // Add the user ID from auth
+            });
+          case 22:
+            _yield$supabase$from$3 = _context2.sent;
+            _error = _yield$supabase$from$3.error;
+            if (!_error) {
+              _context2.next = 27;
+              break;
+            }
+            console.error('Block insert error details:', _error);
+            throw new Error("Failed to add block: ".concat(_error.message || _error.details));
+          case 27:
+            setShowAddModal(false);
+            resetForm();
+            setSuccessMessage('Vehicle blocked successfully!');
+            setTimeout(function () {
+              return setSuccessMessage(null);
+            }, 3000);
+
+            // Refresh data
+            fetchData();
+            _context2.next = 38;
+            break;
+          case 34:
+            _context2.prev = 34;
+            _context2.t0 = _context2["catch"](0);
+            console.error('Error blocking vehicle:', _context2.t0);
+            setError(_context2.t0.message || 'Failed to block vehicle. Please try again.');
+          case 38:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[0, 34]]);
+    }));
+    return function handleAddBlock() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  var handleUpdateBlock = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      var startDate, endDate, _yield$supabase$auth$2, userData, userError, updateData, _yield$supabase$from$4, _error2;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
             setError(null);
 
-            // Form validation
+            // Validate form
             if (!(!blockData.vehicle_id || !blockData.start_date || !blockData.end_date || !blockData.reason)) {
               _context3.next = 5;
               break;
@@ -58424,92 +57432,42 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
             return _context3.abrupt("return");
           case 10:
             _context3.next = 12;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').insert({
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.auth.getUser();
+          case 12:
+            _yield$supabase$auth$2 = _context3.sent;
+            userData = _yield$supabase$auth$2.data;
+            userError = _yield$supabase$auth$2.error;
+            if (!userError) {
+              _context3.next = 18;
+              break;
+            }
+            console.error('User error:', userError);
+            throw new Error('Failed to get current user');
+          case 18:
+            // Prepare update data
+            updateData = {
               vehicle_id: blockData.vehicle_id,
               start_date: blockData.start_date,
               end_date: blockData.end_date,
               reason: blockData.reason
-            });
-          case 12:
-            _yield$supabase$from$3 = _context3.sent;
-            _error = _yield$supabase$from$3.error;
-            if (!_error) {
-              _context3.next = 17;
-              break;
+            }; // Add updated_by if you have this field
+            if (userData && userData.user && userData.user.id) {
+              updateData.updated_by = userData.user.id;
             }
-            console.error('Block insert error:', _error);
-            throw new Error('Failed to add block');
-          case 17:
-            setShowAddModal(false);
-            resetForm();
-            setSuccessMessage('Vehicle blocked successfully!');
-            setTimeout(function () {
-              return setSuccessMessage(null);
-            }, 3000);
 
-            // Refresh data
-            fetchData();
-            _context3.next = 28;
-            break;
-          case 24:
-            _context3.prev = 24;
-            _context3.t0 = _context3["catch"](0);
-            console.error('Error blocking vehicle:', _context3.t0);
-            setError(_context3.t0.message || 'Failed to block vehicle. Please try again.');
-          case 28:
-          case "end":
-            return _context3.stop();
-        }
-      }, _callee2, null, [[0, 24]]);
-    }));
-    return function handleAddBlock() {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-  var handleUpdateBlock = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      var startDate, endDate, _yield$supabase$from$4, _error2;
-      return _regeneratorRuntime().wrap(function _callee3$(_context4) {
-        while (1) switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.prev = 0;
-            setError(null);
-
-            // Validate form
-            if (!(!blockData.vehicle_id || !blockData.start_date || !blockData.end_date || !blockData.reason)) {
-              _context4.next = 5;
-              break;
-            }
-            setError('Please fill in all required fields.');
-            return _context4.abrupt("return");
-          case 5:
-            // Validate dates
-            startDate = new Date(blockData.start_date);
-            endDate = new Date(blockData.end_date);
-            if (!(startDate > endDate)) {
-              _context4.next = 10;
-              break;
-            }
-            setError('End date must be after start date.');
-            return _context4.abrupt("return");
-          case 10:
-            _context4.next = 12;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').update({
-              vehicle_id: blockData.vehicle_id,
-              start_date: blockData.start_date,
-              end_date: blockData.end_date,
-              reason: blockData.reason
-            }).eq('id', currentBlockId);
-          case 12:
-            _yield$supabase$from$4 = _context4.sent;
+            // Update block
+            _context3.next = 22;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').update(updateData).eq('id', currentBlockId);
+          case 22:
+            _yield$supabase$from$4 = _context3.sent;
             _error2 = _yield$supabase$from$4.error;
             if (!_error2) {
-              _context4.next = 17;
+              _context3.next = 27;
               break;
             }
-            console.error('Block update error:', _error2);
-            throw new Error('Failed to update block');
-          case 17:
+            console.error('Block update error details:', _error2);
+            throw new Error("Failed to update block: ".concat(_error2.message || _error2.details));
+          case 27:
             setShowEditModal(false);
             resetForm();
             setSuccessMessage('Block updated successfully!');
@@ -58519,18 +57477,18 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
 
             // Refresh data
             fetchData();
-            _context4.next = 28;
+            _context3.next = 38;
             break;
-          case 24:
-            _context4.prev = 24;
-            _context4.t0 = _context4["catch"](0);
-            console.error('Error updating block:', _context4.t0);
-            setError(_context4.t0.message || 'Failed to update block. Please try again.');
-          case 28:
+          case 34:
+            _context3.prev = 34;
+            _context3.t0 = _context3["catch"](0);
+            console.error('Error updating block:', _context3.t0);
+            setError(_context3.t0.message || 'Failed to update block. Please try again.');
+          case 38:
           case "end":
-            return _context4.stop();
+            return _context3.stop();
         }
-      }, _callee3, null, [[0, 24]]);
+      }, _callee3, null, [[0, 34]]);
     }));
     return function handleUpdateBlock() {
       return _ref4.apply(this, arguments);
@@ -58539,24 +57497,24 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   var handleDeleteBlock = /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
       var _yield$supabase$from$5, _error3;
-      return _regeneratorRuntime().wrap(function _callee4$(_context5) {
-        while (1) switch (_context5.prev = _context5.next) {
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) switch (_context4.prev = _context4.next) {
           case 0:
-            _context5.prev = 0;
+            _context4.prev = 0;
             setError(null);
 
-            // Delete block - SIMPLE DELETE
-            _context5.next = 4;
+            // Delete block
+            _context4.next = 4;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods')["delete"]().eq('id', currentBlockId);
           case 4:
-            _yield$supabase$from$5 = _context5.sent;
+            _yield$supabase$from$5 = _context4.sent;
             _error3 = _yield$supabase$from$5.error;
             if (!_error3) {
-              _context5.next = 9;
+              _context4.next = 9;
               break;
             }
-            console.error('Block delete error:', _error3);
-            throw new Error('Failed to delete block');
+            console.error('Block delete error details:', _error3);
+            throw new Error("Failed to delete block: ".concat(_error3.message || _error3.details));
           case 9:
             setShowDeleteModal(false);
             setSuccessMessage('Block removed successfully!');
@@ -58566,16 +57524,16 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
 
             // Refresh data
             fetchData();
-            _context5.next = 19;
+            _context4.next = 19;
             break;
           case 15:
-            _context5.prev = 15;
-            _context5.t0 = _context5["catch"](0);
-            console.error('Error deleting block:', _context5.t0);
-            setError(_context5.t0.message || 'Failed to remove block. Please try again.');
+            _context4.prev = 15;
+            _context4.t0 = _context4["catch"](0);
+            console.error('Error deleting block:', _context4.t0);
+            setError(_context4.t0.message || 'Failed to remove block. Please try again.');
           case 19:
           case "end":
-            return _context5.stop();
+            return _context4.stop();
         }
       }, _callee4, null, [[0, 15]]);
     }));
@@ -58588,9 +57546,7 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
     setBlockData({
       vehicle_id: block.vehicle_id,
       start_date: block.start_date.split('T')[0],
-      // Format date for input field
       end_date: block.end_date.split('T')[0],
-      // Format date for input field
       reason: block.reason
     });
     setShowEditModal(true);
@@ -59143,7 +58099,14 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
       flexDirection: 'column',
       gap: '15px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+  }, error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      padding: '10px',
+      backgroundColor: '#f8d7da',
+      color: '#721c24',
+      borderRadius: '4px'
+    }
+  }, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     style: {
       display: 'block',
       marginBottom: '5px',
@@ -59162,6 +58125,7 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
       borderRadius: '4px',
       border: '1px solid #ced4da'
     },
+    autoFocus: true,
     required: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: ""
@@ -59213,7 +58177,7 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
       border: '1px solid #ced4da'
     },
     required: true,
-    min: blockData.start_date // Prevent end date before start date
+    min: blockData.start_date || new Date().toISOString().split('T')[0] // Prevent end date before start date
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     style: {
       display: 'block',
@@ -59271,7 +58235,14 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
       flexDirection: 'column',
       gap: '15px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+  }, error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      padding: '10px',
+      backgroundColor: '#f8d7da',
+      color: '#721c24',
+      borderRadius: '4px'
+    }
+  }, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     style: {
       display: 'block',
       marginBottom: '5px',
@@ -59290,6 +58261,7 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
       borderRadius: '4px',
       border: '1px solid #ced4da'
     },
+    autoFocus: true,
     required: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: ""
@@ -59395,6 +58367,575 @@ var BlockedVehicles = function BlockedVehicles(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Are you sure you want to remove this block? The vehicle will become available for assignment during this period.")));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BlockedVehicles);
+
+/***/ }),
+
+/***/ "./src/components/vehicles/DocumentModal.jsx":
+/*!***************************************************!*\
+  !*** ./src/components/vehicles/DocumentModal.jsx ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Form.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Spinner.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Table.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Badge.js");
+/* harmony import */ var _supabaseClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../supabaseClient */ "./src/supabaseClient.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+// admin-app/src/components/vehicles/DocumentModal.jsx
+
+
+
+var DocumentModal = function DocumentModal(_ref) {
+  var show = _ref.show,
+    onHide = _ref.onHide,
+    vehicleId = _ref.vehicleId,
+    vehicleName = _ref.vehicleName;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState2 = _slicedToArray(_useState, 2),
+    documents = _useState2[0],
+    setDocuments = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState4 = _slicedToArray(_useState3, 2),
+    loading = _useState4[0],
+    setLoading = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    uploadLoading = _useState6[0],
+    setUploadLoading = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    error = _useState8[0],
+    setError = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState10 = _slicedToArray(_useState9, 2),
+    successMessage = _useState10[0],
+    setSuccessMessage = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    showViewModal = _useState12[0],
+    setShowViewModal = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState14 = _slicedToArray(_useState13, 2),
+    showDeleteModal = _useState14[0],
+    setShowDeleteModal = _useState14[1];
+
+  // Document data
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState16 = _slicedToArray(_useState15, 2),
+    documentFile = _useState16[0],
+    setDocumentFile = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState18 = _slicedToArray(_useState17, 2),
+    documentName = _useState18[0],
+    setDocumentName = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('registration'),
+    _useState20 = _slicedToArray(_useState19, 2),
+    documentType = _useState20[0],
+    setDocumentType = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState22 = _slicedToArray(_useState21, 2),
+    currentDocument = _useState22[0],
+    setCurrentDocument = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState24 = _slicedToArray(_useState23, 2),
+    documentUrl = _useState24[0],
+    setDocumentUrl = _useState24[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (show && vehicleId) {
+      fetchDocuments();
+    }
+  }, [show, vehicleId]);
+  var fetchDocuments = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var _yield$supabase$from$, data, _error;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            setLoading(true);
+            setError(null);
+
+            // SQL: SELECT * FROM vehicle_documents WHERE vehicle_id = $1 ORDER BY created_at DESC
+            _context.next = 5;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').select('*').eq('vehicle_id', vehicleId).order('created_at', {
+              ascending: false
+            });
+          case 5:
+            _yield$supabase$from$ = _context.sent;
+            data = _yield$supabase$from$.data;
+            _error = _yield$supabase$from$.error;
+            if (!_error) {
+              _context.next = 10;
+              break;
+            }
+            throw _error;
+          case 10:
+            setDocuments(data || []);
+            _context.next = 17;
+            break;
+          case 13:
+            _context.prev = 13;
+            _context.t0 = _context["catch"](0);
+            console.error('Error fetching documents:', _context.t0);
+            setError('Failed to load documents. Please try again.');
+          case 17:
+            _context.prev = 17;
+            setLoading(false);
+            return _context.finish(17);
+          case 20:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[0, 13, 17, 20]]);
+    }));
+    return function fetchDocuments() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  var handleUploadDocument = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
+      var _yield$supabase$from$2, count, countError, fileExt, fileName, filePath, _yield$supabase$stora, uploadError, _yield$supabase$from$3, insertError, _err$message;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            e.preventDefault();
+            if (!(!documentFile || !documentName || !documentType)) {
+              _context2.next = 4;
+              break;
+            }
+            setError('Please fill in all document fields.');
+            return _context2.abrupt("return");
+          case 4:
+            _context2.prev = 4;
+            setUploadLoading(true);
+            setError(null);
+
+            // Check if we already have 4 documents for this vehicle
+            _context2.next = 9;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').select('*', {
+              count: 'exact',
+              head: true
+            }).eq('vehicle_id', vehicleId);
+          case 9:
+            _yield$supabase$from$2 = _context2.sent;
+            count = _yield$supabase$from$2.count;
+            countError = _yield$supabase$from$2.error;
+            if (!countError) {
+              _context2.next = 14;
+              break;
+            }
+            throw countError;
+          case 14:
+            if (!(count >= 4)) {
+              _context2.next = 17;
+              break;
+            }
+            setError('Maximum 4 documents allowed per vehicle. Please delete an existing document first.');
+            return _context2.abrupt("return");
+          case 17:
+            // Upload file to storage with explicit public access
+            fileExt = documentFile.name.split('.').pop();
+            fileName = "".concat(Date.now(), ".").concat(fileExt);
+            filePath = "vehicle-documents/".concat(vehicleId, "/").concat(fileName); // Upload with public access option
+            _context2.next = 22;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').upload(filePath, documentFile, {
+              upsert: true,
+              cacheControl: '3600'
+            });
+          case 22:
+            _yield$supabase$stora = _context2.sent;
+            uploadError = _yield$supabase$stora.error;
+            if (!uploadError) {
+              _context2.next = 27;
+              break;
+            }
+            console.error('Storage upload error:', uploadError);
+            throw uploadError;
+          case 27:
+            _context2.next = 29;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').insert({
+              vehicle_id: vehicleId,
+              name: documentName,
+              type: documentType,
+              file_path: filePath,
+              file_type: fileExt
+            });
+          case 29:
+            _yield$supabase$from$3 = _context2.sent;
+            insertError = _yield$supabase$from$3.error;
+            if (!insertError) {
+              _context2.next = 36;
+              break;
+            }
+            console.error('Document insert error:', insertError);
+
+            // If insert failed, try to clean up the uploaded file
+            _context2.next = 35;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').remove([filePath]);
+          case 35:
+            throw insertError;
+          case 36:
+            // Reset form
+            setDocumentFile(null);
+            setDocumentName('');
+            setDocumentType('registration');
+
+            // Show success message
+            setSuccessMessage('Document uploaded successfully!');
+            setTimeout(function () {
+              return setSuccessMessage(null);
+            }, 3000);
+
+            // Refresh documents
+            fetchDocuments();
+
+            // Reset the file input
+            document.getElementById('documentFile').value = '';
+            _context2.next = 49;
+            break;
+          case 45:
+            _context2.prev = 45;
+            _context2.t0 = _context2["catch"](4);
+            console.error('Error uploading document:', _context2.t0);
+            if ((_err$message = _context2.t0.message) !== null && _err$message !== void 0 && _err$message.includes('security policy')) {
+              setError('Permission denied: You do not have access to upload documents. Please contact your administrator.');
+            } else {
+              setError('Failed to upload document: ' + _context2.t0.message);
+            }
+          case 49:
+            _context2.prev = 49;
+            setUploadLoading(false);
+            return _context2.finish(49);
+          case 52:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[4, 45, 49, 52]]);
+    }));
+    return function handleUploadDocument(_x) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  var handleViewDocument = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(document) {
+      var _yield$supabase$stora2, data, _error2;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            setCurrentDocument(document);
+            setShowViewModal(true);
+
+            // Get signed URL for document
+            _context3.next = 5;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').createSignedUrl(document.file_path, 60);
+          case 5:
+            _yield$supabase$stora2 = _context3.sent;
+            data = _yield$supabase$stora2.data;
+            _error2 = _yield$supabase$stora2.error;
+            if (!_error2) {
+              _context3.next = 10;
+              break;
+            }
+            throw _error2;
+          case 10:
+            setDocumentUrl(data.signedUrl);
+            _context3.next = 18;
+            break;
+          case 13:
+            _context3.prev = 13;
+            _context3.t0 = _context3["catch"](0);
+            console.error('Error getting document URL:', _context3.t0);
+            setError('Failed to retrieve document. Please try again.');
+            setShowViewModal(false);
+          case 18:
+          case "end":
+            return _context3.stop();
+        }
+      }, _callee3, null, [[0, 13]]);
+    }));
+    return function handleViewDocument(_x2) {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+  var handleDeleteClick = function handleDeleteClick(document) {
+    setCurrentDocument(document);
+    setShowDeleteModal(true);
+  };
+  var handleDeleteDocument = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+      var _yield$supabase$stora3, storageError, _yield$supabase$from$4, deleteError;
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            _context4.next = 3;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').remove([currentDocument.file_path]);
+          case 3:
+            _yield$supabase$stora3 = _context4.sent;
+            storageError = _yield$supabase$stora3.error;
+            if (!storageError) {
+              _context4.next = 7;
+              break;
+            }
+            throw storageError;
+          case 7:
+            _context4.next = 9;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents')["delete"]().eq('id', currentDocument.id);
+          case 9:
+            _yield$supabase$from$4 = _context4.sent;
+            deleteError = _yield$supabase$from$4.error;
+            if (!deleteError) {
+              _context4.next = 13;
+              break;
+            }
+            throw deleteError;
+          case 13:
+            setShowDeleteModal(false);
+            setSuccessMessage('Document deleted successfully!');
+            setTimeout(function () {
+              return setSuccessMessage(null);
+            }, 3000);
+
+            // Refresh documents
+            fetchDocuments();
+            _context4.next = 23;
+            break;
+          case 19:
+            _context4.prev = 19;
+            _context4.t0 = _context4["catch"](0);
+            console.error('Error deleting document:', _context4.t0);
+            setError('Failed to delete document: ' + _context4.t0.message);
+          case 23:
+          case "end":
+            return _context4.stop();
+        }
+      }, _callee4, null, [[0, 19]]);
+    }));
+    return function handleDeleteDocument() {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+
+  // Helper function to format date
+  var formatDate = function formatDate(dateStr) {
+    if (!dateStr) return '';
+    var date = new Date(dateStr);
+    return date.toLocaleDateString();
+  };
+
+  // Helper to get document type label
+  var getDocumentTypeLabel = function getDocumentTypeLabel(type) {
+    var typeMap = {
+      'registration': 'Registration',
+      'insurance': 'Insurance',
+      'maintenance': 'Maintenance Record',
+      'inspection': 'Inspection Certificate',
+      'other': 'Other'
+    };
+    return typeMap[type] || type.charAt(0).toUpperCase() + type.slice(1);
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    show: show,
+    onHide: onHide,
+    size: "lg"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Header, {
+    closeButton: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Title, null, "Vehicle Documents - ", vehicleName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Body, null, error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    variant: "danger"
+  }, error), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    variant: "success"
+  }, successMessage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", null, "Upload New Document"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onSubmit: handleUploadDocument,
+    className: "mb-4"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Group, {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Label, null, "Document Name*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Control, {
+    type: "text",
+    value: documentName,
+    onChange: function onChange(e) {
+      return setDocumentName(e.target.value);
+    },
+    placeholder: "e.g., Insurance Policy 2025, Vehicle Registration",
+    required: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Group, {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Label, null, "Document Type*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Select, {
+    value: documentType,
+    onChange: function onChange(e) {
+      return setDocumentType(e.target.value);
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "registration"
+  }, "Registration"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "insurance"
+  }, "Insurance"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "maintenance"
+  }, "Maintenance Record"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "inspection"
+  }, "Inspection Certificate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "other"
+  }, "Other"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Group, {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Label, null, "File*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Control, {
+    type: "file",
+    id: "documentFile",
+    onChange: function onChange(e) {
+      return setDocumentFile(e.target.files[0]);
+    },
+    accept: ".pdf,.jpg,.jpeg,.png,.doc,.docx",
+    required: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Text, {
+    className: "text-muted"
+  }, "Supported formats: PDF, JPG, PNG, DOC, DOCX (max 5MB)")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    variant: "warning"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-exclamation-triangle me-2"
+  }), "Maximum 4 documents allowed per vehicle."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    type: "submit",
+    variant: "primary",
+    disabled: uploadLoading || !documentFile || !documentName
+  }, uploadLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    as: "span",
+    size: "sm",
+    animation: "border",
+    className: "me-2"
+  }), "Uploading...") : 'Upload Document')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", null, "Existing Documents"), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "text-center my-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    animation: "border",
+    role: "status"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "visually-hidden"
+  }, "Loading..."))) : documents.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    variant: "info"
+  }, "No documents found for this vehicle.") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    responsive: true,
+    bordered: true,
+    hover: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Date Uploaded"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, documents.map(function (doc) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
+      key: doc.id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, doc.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      bg: "info"
+    }, getDocumentTypeLabel(doc.type))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, formatDate(doc.created_at)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      variant: "outline-primary",
+      size: "sm",
+      className: "me-1",
+      onClick: function onClick() {
+        return handleViewDocument(doc);
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-eye"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      variant: "outline-danger",
+      size: "sm",
+      onClick: function onClick() {
+        return handleDeleteClick(doc);
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-trash"
+    }))));
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    variant: "secondary",
+    onClick: onHide
+  }, "Close"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    show: showViewModal,
+    onHide: function onHide() {
+      return setShowViewModal(false);
+    },
+    size: "lg",
+    centered: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Header, {
+    closeButton: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Title, null, (currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.name) || 'Document')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Body, null, !documentUrl ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "text-center my-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    animation: "border",
+    role: "status"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "visually-hidden"
+  }, "Loading document..."))) : (currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.file_type) === 'pdf' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "ratio ratio-16x9"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("iframe", {
+    src: documentUrl,
+    title: currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.name,
+    allowFullScreen: true
+  })) : ['jpg', 'jpeg', 'png', 'gif'].includes(currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.file_type.toLowerCase()) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "text-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: documentUrl,
+    alt: currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.name,
+    className: "img-fluid",
+    style: {
+      maxHeight: '60vh'
+    }
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    variant: "info"
+  }, "This file type cannot be previewed in the browser.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "mt-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    href: documentUrl,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    variant: "primary"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-download me-2"
+  }), "Download Document")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    variant: "secondary",
+    onClick: function onClick() {
+      return setShowViewModal(false);
+    }
+  }, "Close"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    variant: "primary",
+    href: documentUrl,
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-download me-2"
+  }), "Download"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    show: showDeleteModal,
+    onHide: function onHide() {
+      return setShowDeleteModal(false);
+    },
+    centered: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Header, {
+    closeButton: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Title, null, "Delete Document")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Body, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Are you sure you want to delete ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.name), "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    variant: "warning"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-exclamation-triangle me-2"
+  }), "This action cannot be undone.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    variant: "secondary",
+    onClick: function onClick() {
+      return setShowDeleteModal(false);
+    }
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    variant: "danger",
+    onClick: handleDeleteDocument
+  }, "Delete Document"))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DocumentModal);
 
 /***/ }),
 
@@ -61387,41 +60928,56 @@ var VehicleLogs = function VehicleLogs(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     logs = _useState2[0],
     setLogs = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState4 = _slicedToArray(_useState3, 2),
     vehicles = _useState4[0],
     setVehicles = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState6 = _slicedToArray(_useState5, 2),
-    loading = _useState6[0],
-    setLoading = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    drivers = _useState6[0],
+    setDrivers = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState8 = _slicedToArray(_useState7, 2),
-    error = _useState8[0],
-    setError = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('all'),
+    loading = _useState8[0],
+    setLoading = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState10 = _slicedToArray(_useState9, 2),
-    selectedVehicle = _useState10[0],
-    setSelectedVehicle = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    error = _useState10[0],
+    setError = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('all'),
     _useState12 = _slicedToArray(_useState11, 2),
-    filterDateFrom = _useState12[0],
-    setFilterDateFrom = _useState12[1];
+    selectedVehicle = _useState12[0],
+    setSelectedVehicle = _useState12[1];
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState14 = _slicedToArray(_useState13, 2),
-    filterDateTo = _useState14[0],
-    setFilterDateTo = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('temporary'),
+    filterDateFrom = _useState14[0],
+    setFilterDateFrom = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState16 = _slicedToArray(_useState15, 2),
-    filterType = _useState16[0],
-    setFilterType = _useState16[1];
+    filterDateTo = _useState16[0],
+    setFilterDateTo = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('all'),
+    _useState18 = _slicedToArray(_useState17, 2),
+    filterType = _useState18[0],
+    setFilterType = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState20 = _slicedToArray(_useState19, 2),
+    vehicleOptions = _useState20[0],
+    setVehicleOptions = _useState20[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    // Load all vehicles for dropdown
     fetchVehicles();
+
+    // Load users for reference
+    fetchUsers();
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    // Fetch logs whenever filters change
     fetchLogs();
   }, [selectedVehicle, filterDateFrom, filterDateTo, filterType]);
   var fetchVehicles = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _yield$supabase$from$, data, _error;
+      var _yield$supabase$from$, data, _error, vehicleLookup;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -61440,51 +60996,95 @@ var VehicleLogs = function VehicleLogs(_ref) {
             }
             throw _error;
           case 8:
-            setVehicles(data || []);
-            _context.next = 15;
+            // Create a lookup object for vehicles
+            vehicleLookup = {};
+            data.forEach(function (vehicle) {
+              vehicleLookup[vehicle.id] = vehicle;
+            });
+            setVehicles(vehicleLookup);
+            setVehicleOptions(data || []);
+            _context.next = 17;
             break;
-          case 11:
-            _context.prev = 11;
+          case 14:
+            _context.prev = 14;
             _context.t0 = _context["catch"](0);
             console.error('Error fetching vehicles:', _context.t0);
-            setError('Failed to load vehicles. Please try again.');
-          case 15:
+            // Don't set error here to avoid blocking the UI
+          case 17:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 11]]);
+      }, _callee, null, [[0, 14]]);
     }));
     return function fetchVehicles() {
       return _ref2.apply(this, arguments);
     };
   }();
-  var fetchLogs = /*#__PURE__*/function () {
+  var fetchUsers = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var query, _yield$query, data, _error2;
+      var _yield$supabase$from$2, data, _error2, userLookup;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
+            _context2.next = 3;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('id, full_name, email');
+          case 3:
+            _yield$supabase$from$2 = _context2.sent;
+            data = _yield$supabase$from$2.data;
+            _error2 = _yield$supabase$from$2.error;
+            if (!_error2) {
+              _context2.next = 8;
+              break;
+            }
+            throw _error2;
+          case 8:
+            // Create a lookup object for users
+            userLookup = {};
+            data.forEach(function (user) {
+              userLookup[user.id] = user;
+            });
+            setDrivers(userLookup);
+            _context2.next = 16;
+            break;
+          case 13:
+            _context2.prev = 13;
+            _context2.t0 = _context2["catch"](0);
+            console.error('Error fetching users:', _context2.t0);
+            // Don't set error here to avoid blocking the UI
+          case 16:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[0, 13]]);
+    }));
+    return function fetchUsers() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  var fetchLogs = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      var query, _yield$query, data, _error3;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
             setLoading(true);
             setError(null);
 
-            // Base query
-            query = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select("\n          id,\n          vehicle_id,\n          driver_id,\n          start_time,\n          end_time,\n          is_temporary,\n          status,\n          created_by,\n          created_at,\n          vehicles(id, registration_number, make, model),\n          users!vehicle_assignments_driver_id_fkey(id, full_name, email),\n          admin:users!vehicle_assignments_created_by_fkey(id, email)\n        ").order('start_time', {
+            // Build a simple query without joins
+            query = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('*').order('start_time', {
               ascending: false
-            }); // Apply vehicle filter
+            }); // Apply filters
             if (selectedVehicle !== 'all') {
               query = query.eq('vehicle_id', selectedVehicle);
             }
-
-            // Apply date filters
             if (filterDateFrom) {
               query = query.gte('start_time', filterDateFrom);
             }
             if (filterDateTo) {
               query = query.lte('start_time', filterDateTo);
             }
-
-            // Apply assignment type filter
             if (filterType !== 'all') {
               if (filterType === 'temporary') {
                 query = query.eq('is_temporary', true);
@@ -61492,40 +61092,38 @@ var VehicleLogs = function VehicleLogs(_ref) {
                 query = query.eq('is_temporary', false);
               }
             }
-
-            // Execute query
-            _context2.next = 10;
+            _context3.next = 10;
             return query;
           case 10:
-            _yield$query = _context2.sent;
+            _yield$query = _context3.sent;
             data = _yield$query.data;
-            _error2 = _yield$query.error;
-            if (!_error2) {
-              _context2.next = 15;
+            _error3 = _yield$query.error;
+            if (!_error3) {
+              _context3.next = 15;
               break;
             }
-            throw _error2;
+            throw _error3;
           case 15:
             setLogs(data || []);
-            _context2.next = 22;
+            _context3.next = 22;
             break;
           case 18:
-            _context2.prev = 18;
-            _context2.t0 = _context2["catch"](0);
-            console.error('Error fetching logs:', _context2.t0);
-            setError('Failed to load vehicle logs. Please try again.');
+            _context3.prev = 18;
+            _context3.t0 = _context3["catch"](0);
+            console.error('Error fetching logs:', _context3.t0);
+            setError("Failed to load vehicle logs: ".concat(_context3.t0.message));
           case 22:
-            _context2.prev = 22;
+            _context3.prev = 22;
             setLoading(false);
-            return _context2.finish(22);
+            return _context3.finish(22);
           case 25:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
-      }, _callee2, null, [[0, 18, 22, 25]]);
+      }, _callee3, null, [[0, 18, 22, 25]]);
     }));
     return function fetchLogs() {
-      return _ref3.apply(this, arguments);
+      return _ref4.apply(this, arguments);
     };
   }();
   var handleVehicleSelect = function handleVehicleSelect(e) {
@@ -61544,11 +61142,12 @@ var VehicleLogs = function VehicleLogs(_ref) {
     setSelectedVehicle('all');
     setFilterDateFrom('');
     setFilterDateTo('');
-    setFilterType('temporary');
+    setFilterType('all');
   };
 
   // Helper function to format date
   var formatDate = function formatDate(dateStr) {
+    if (!dateStr) return 'N/A';
     var date = new Date(dateStr);
     return date.toLocaleDateString(undefined, {
       year: 'numeric',
@@ -61559,12 +61158,62 @@ var VehicleLogs = function VehicleLogs(_ref) {
 
   // Helper function to calculate duration in days
   var calculateDuration = function calculateDuration(startDate, endDate) {
+    if (!startDate) return 'N/A';
     if (!endDate) return 'Ongoing';
     var start = new Date(startDate);
     var end = new Date(endDate);
     var diffTime = Math.abs(end - start);
     var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return "".concat(diffDays, " day").concat(diffDays !== 1 ? 's' : '');
+  };
+
+  // Helper to get vehicle display name
+  var getVehicleDisplay = function getVehicleDisplay(vehicleId) {
+    var vehicle = vehicles[vehicleId];
+    if (vehicle) {
+      return "".concat(vehicle.registration_number, " (").concat(vehicle.make, " ").concat(vehicle.model, ")");
+    }
+    return "Vehicle ID: ".concat(vehicleId);
+  };
+
+  // Helper to get driver display name
+  var getDriverDisplay = function getDriverDisplay(driverId) {
+    var driver = drivers[driverId];
+    if (driver) {
+      return driver.full_name;
+    }
+    return "Driver ID: ".concat(driverId);
+  };
+
+  // Export to CSV function
+  var exportToCSV = function exportToCSV() {
+    if (logs.length === 0) return;
+
+    // Prepare CSV content
+    var headers = ['Vehicle', 'Driver', 'Start Date', 'End Date', 'Duration', 'Type', 'Status'];
+    var rows = logs.map(function (log) {
+      return [getVehicleDisplay(log.vehicle_id), getDriverDisplay(log.driver_id), formatDate(log.start_time), log.end_time ? formatDate(log.end_time) : 'Ongoing', calculateDuration(log.start_time, log.end_time), log.is_temporary ? 'Temporary' : 'Permanent', log.status.charAt(0).toUpperCase() + log.status.slice(1)];
+    });
+
+    // Combine headers and rows
+    var csvContent = headers.join(',') + '\n' + rows.map(function (row) {
+      return row.map(function (cell) {
+        return "\"".concat(cell ? cell.replace(/"/g, '""') : '', "\"");
+      }).join(',');
+    }).join('\n');
+
+    // Create download link
+    var blob = new Blob([csvContent], {
+      type: 'text/csv;charset=utf-8;'
+    });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', "vehicle-logs-".concat(new Date().toISOString().split('T')[0], ".csv"));
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
@@ -61589,9 +61238,22 @@ var VehicleLogs = function VehicleLogs(_ref) {
       marginBottom: '15px',
       backgroundColor: '#f8d7da',
       color: '#721c24',
-      borderRadius: '4px'
+      borderRadius: '4px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
     }
-  }, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: fetchLogs,
+    style: {
+      backgroundColor: '#721c24',
+      color: 'white',
+      border: 'none',
+      borderRadius: '4px',
+      padding: '4px 8px',
+      cursor: 'pointer'
+    }
+  }, "Retry")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       backgroundColor: 'white',
       borderRadius: '5px',
@@ -61628,7 +61290,7 @@ var VehicleLogs = function VehicleLogs(_ref) {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "all"
-  }, "All Vehicles"), vehicles.map(function (vehicle) {
+  }, "All Vehicles"), vehicleOptions.map(function (vehicle) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
       key: vehicle.id,
       value: vehicle.id
@@ -61773,13 +61435,7 @@ var VehicleLogs = function VehicleLogs(_ref) {
       padding: '12px 15px',
       textAlign: 'left'
     }
-  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", {
-    style: {
-      padding: '12px 15px',
-      textAlign: 'left'
-    }
-  }, "Assigned By"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, logs.map(function (log) {
-    var _log$vehicles, _log$vehicles2, _log$vehicles3, _log$users, _log$admin;
+  }, "Status"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, logs.map(function (log) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
       key: log.id,
       style: {
@@ -61789,11 +61445,11 @@ var VehicleLogs = function VehicleLogs(_ref) {
       style: {
         padding: '12px 15px'
       }
-    }, (_log$vehicles = log.vehicles) === null || _log$vehicles === void 0 ? void 0 : _log$vehicles.registration_number, " (", (_log$vehicles2 = log.vehicles) === null || _log$vehicles2 === void 0 ? void 0 : _log$vehicles2.make, " ", (_log$vehicles3 = log.vehicles) === null || _log$vehicles3 === void 0 ? void 0 : _log$vehicles3.model, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
+    }, getVehicleDisplay(log.vehicle_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px'
       }
-    }, (_log$users = log.users) === null || _log$users === void 0 ? void 0 : _log$users.full_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
+    }, getDriverDisplay(log.driver_id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px'
       }
@@ -61829,11 +61485,7 @@ var VehicleLogs = function VehicleLogs(_ref) {
         borderRadius: '12px',
         fontSize: '0.85rem'
       }
-    }, log.status.charAt(0).toUpperCase() + log.status.slice(1))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
-      style: {
-        padding: '12px 15px'
-      }
-    }, (_log$admin = log.admin) === null || _log$admin === void 0 ? void 0 : _log$admin.email));
+    }, log.status.charAt(0).toUpperCase() + log.status.slice(1))));
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       marginTop: '20px',
@@ -61841,6 +61493,7 @@ var VehicleLogs = function VehicleLogs(_ref) {
       justifyContent: 'flex-end'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: exportToCSV,
     style: {
       backgroundColor: '#28a745',
       color: 'white',
@@ -61850,7 +61503,8 @@ var VehicleLogs = function VehicleLogs(_ref) {
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
-      gap: '5px'
+      gap: '5px',
+      opacity: logs.length === 0 ? 0.6 : 1
     },
     disabled: logs.length === 0,
     title: "Export logs to CSV"
@@ -61860,6 +61514,341 @@ var VehicleLogs = function VehicleLogs(_ref) {
   }, "\uD83D\uDCCA"), " Export Logs")));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VehicleLogs);
+
+/***/ }),
+
+/***/ "./src/components/vehicles/VehicleModal.jsx":
+/*!**************************************************!*\
+  !*** ./src/components/vehicles/VehicleModal.jsx ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Form.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Col.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Spinner.js");
+/* harmony import */ var _supabaseClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../supabaseClient */ "./src/supabaseClient.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+
+var VehicleModal = function VehicleModal(_ref) {
+  var show = _ref.show,
+    onHide = _ref.onHide,
+    _ref$isEditing = _ref.isEditing,
+    isEditing = _ref$isEditing === void 0 ? false : _ref$isEditing,
+    _ref$initialData = _ref.initialData,
+    initialData = _ref$initialData === void 0 ? {} : _ref$initialData,
+    onSuccess = _ref.onSuccess;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_objectSpread({
+      registration_number: '',
+      make: '',
+      model: '',
+      year: new Date().getFullYear(),
+      status: 'available',
+      notes: '',
+      assigned_driver_id: null
+    }, initialData)),
+    _useState2 = _slicedToArray(_useState, 2),
+    vehicleData = _useState2[0],
+    setVehicleData = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState4 = _slicedToArray(_useState3, 2),
+    drivers = _useState4[0],
+    setDrivers = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    loading = _useState6[0],
+    setLoading = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    error = _useState8[0],
+    setError = _useState8[1];
+
+  // Fetch drivers on component mount
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var fetchDrivers = /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var _yield$supabase$from$, data, _error;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('id, full_name').eq('role', 'driver').order('full_name', {
+                ascending: true
+              });
+            case 3:
+              _yield$supabase$from$ = _context.sent;
+              data = _yield$supabase$from$.data;
+              _error = _yield$supabase$from$.error;
+              if (!_error) {
+                _context.next = 8;
+                break;
+              }
+              throw _error;
+            case 8:
+              setDrivers(data || []);
+              _context.next = 15;
+              break;
+            case 11:
+              _context.prev = 11;
+              _context.t0 = _context["catch"](0);
+              console.error('Error fetching drivers:', _context.t0);
+              setError('Failed to load drivers. Please try again.');
+            case 15:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 11]]);
+      }));
+      return function fetchDrivers() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+    fetchDrivers();
+  }, []);
+  var handleInputChange = function handleInputChange(e) {
+    var _e$target = e.target,
+      name = _e$target.name,
+      value = _e$target.value;
+    setVehicleData(function (prevData) {
+      var newData = _objectSpread({}, prevData);
+      if (name === 'year') {
+        newData[name] = value === '' ? '' : parseInt(value);
+      } else if (name === 'status' && value !== 'assigned') {
+        newData[name] = value;
+        newData.assigned_driver_id = null;
+      } else {
+        newData[name] = value;
+      }
+      return newData;
+    });
+  };
+  var handleSubmit = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
+      var vehicleToUpsert, result;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            e.preventDefault();
+            _context2.prev = 1;
+            setLoading(true);
+            setError(null);
+
+            // Validate basic required fields
+            if (!(!vehicleData.registration_number || !vehicleData.make || !vehicleData.model)) {
+              _context2.next = 7;
+              break;
+            }
+            setError('Please fill in all required fields.');
+            return _context2.abrupt("return");
+          case 7:
+            if (!(vehicleData.status === 'assigned' && !vehicleData.assigned_driver_id)) {
+              _context2.next = 10;
+              break;
+            }
+            setError('Please select a driver when status is assigned.');
+            return _context2.abrupt("return");
+          case 10:
+            // Create a complete vehicle object with all necessary fields
+            vehicleToUpsert = {
+              registration_number: vehicleData.registration_number,
+              make: vehicleData.make,
+              model: vehicleData.model,
+              year: parseInt(vehicleData.year) || new Date().getFullYear(),
+              status: vehicleData.status || 'available',
+              notes: vehicleData.notes || null
+            }; // Only include driver assignment if status is "assigned"
+            if (vehicleData.status === 'assigned') {
+              vehicleToUpsert.assigned_driver_id = vehicleData.assigned_driver_id;
+            }
+            if (!isEditing) {
+              _context2.next = 18;
+              break;
+            }
+            _context2.next = 15;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').update(vehicleToUpsert).eq('id', initialData.id).select();
+          case 15:
+            result = _context2.sent;
+            _context2.next = 21;
+            break;
+          case 18:
+            _context2.next = 20;
+            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').insert(vehicleToUpsert).select();
+          case 20:
+            result = _context2.sent;
+          case 21:
+            if (!result.error) {
+              _context2.next = 23;
+              break;
+            }
+            throw result.error;
+          case 23:
+            // Call success callback
+            if (onSuccess) {
+              onSuccess();
+            }
+
+            // Close modal
+            onHide();
+            _context2.next = 31;
+            break;
+          case 27:
+            _context2.prev = 27;
+            _context2.t0 = _context2["catch"](1);
+            console.error("Error ".concat(isEditing ? 'updating' : 'adding', " vehicle:"), _context2.t0);
+            setError("Failed to ".concat(isEditing ? 'update' : 'add', " vehicle: ").concat(_context2.t0.message));
+          case 31:
+            _context2.prev = 31;
+            setLoading(false);
+            return _context2.finish(31);
+          case 34:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[1, 27, 31, 34]]);
+    }));
+    return function handleSubmit(_x) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    show: show,
+    onHide: onHide,
+    centered: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Header, {
+    closeButton: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Title, null, isEditing ? 'Edit Vehicle' : 'Add New Vehicle')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Body, null, error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    variant: "danger"
+  }, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    id: "vehicleForm",
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    md: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Group, {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Label, null, "Registration Number*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Control, {
+    type: "text",
+    name: "registration_number",
+    value: vehicleData.registration_number,
+    onChange: handleInputChange,
+    required: true,
+    autoFocus: true
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    md: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Group, {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Label, null, "Year"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Control, {
+    type: "number",
+    name: "year",
+    value: vehicleData.year,
+    onChange: handleInputChange,
+    min: "1900",
+    max: new Date().getFullYear() + 1
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    md: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Group, {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Label, null, "Make*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Control, {
+    type: "text",
+    name: "make",
+    value: vehicleData.make,
+    onChange: handleInputChange,
+    required: true
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    md: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Group, {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Label, null, "Model*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Control, {
+    type: "text",
+    name: "model",
+    value: vehicleData.model,
+    onChange: handleInputChange,
+    required: true
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    md: vehicleData.status === 'assigned' ? 6 : 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Group, {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Label, null, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Select, {
+    name: "status",
+    value: vehicleData.status,
+    onChange: handleInputChange
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "available"
+  }, "Available"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "assigned"
+  }, "Assigned"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "spare"
+  }, "Spare"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "maintenance"
+  }, "Maintenance"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: "inactive"
+  }, "Inactive")))), vehicleData.status === 'assigned' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    md: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Group, {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Label, null, "Assign to Driver*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Select, {
+    name: "assigned_driver_id",
+    value: vehicleData.assigned_driver_id || '',
+    onChange: handleInputChange,
+    required: vehicleData.status === 'assigned'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+    value: ""
+  }, "Select a driver"), drivers.map(function (driver) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+      key: driver.id,
+      value: driver.id
+    }, driver.full_name);
+  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Group, {
+    className: "mb-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Label, null, "Notes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Control, {
+    as: "textarea",
+    name: "notes",
+    rows: 2,
+    value: vehicleData.notes,
+    onChange: handleInputChange,
+    placeholder: "Optional notes about this vehicle"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    variant: "secondary",
+    onClick: onHide
+  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    variant: "primary",
+    type: "submit",
+    form: "vehicleForm",
+    disabled: loading
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    as: "span",
+    animation: "border",
+    size: "sm",
+    className: "me-2"
+  }), isEditing ? 'Updating...' : 'Adding...') : isEditing ? 'Update Vehicle' : 'Add Vehicle')));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VehicleModal);
 
 /***/ }),
 
@@ -61885,13 +61874,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 // admin-app/src/supabaseClient.js
 
 
-// Supabase configuration
+// Supabase configuration 
 var supabaseUrl = 'https://vtuxejdnmpdfisgdgbdd.supabase.co';
-
-// Regular anon key for auth operations
 var supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0dXhlamRubXBkZmlzZ2RnYmRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNzg1MjcsImV4cCI6MjA1NzY1NDUyN30.ebDSQ_KZG8skVPxFfcQVr1loX52DuYooBHRKx95sC8k';
 
-// Create the standard client for authentication
+// Create the standard client 
 var supabase = (0,_supabase_supabase_js__WEBPACK_IMPORTED_MODULE_0__.createClient)(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
@@ -61900,7 +61887,7 @@ var supabase = (0,_supabase_supabase_js__WEBPACK_IMPORTED_MODULE_0__.createClien
   }
 });
 
-// Simple function to execute database queries
+// Basic query function - simplified to maximum
 function executeQuery(_x) {
   return _executeQuery.apply(this, arguments);
 }
@@ -61908,44 +61895,27 @@ function executeQuery(_x) {
 // Helper to get current user 
 function _executeQuery() {
   _executeQuery = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(queryFn) {
-    var _yield$supabase$auth$3, session;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           _context3.prev = 0;
           _context3.next = 3;
-          return supabase.auth.getSession();
-        case 3:
-          _yield$supabase$auth$3 = _context3.sent;
-          session = _yield$supabase$auth$3.data.session;
-          if (session) {
-            _context3.next = 7;
-            break;
-          }
-          return _context3.abrupt("return", {
-            data: null,
-            error: {
-              message: 'Authentication required. Please sign in.'
-            }
-          });
-        case 7:
-          _context3.next = 9;
           return queryFn();
-        case 9:
+        case 3:
           return _context3.abrupt("return", _context3.sent);
-        case 12:
-          _context3.prev = 12;
+        case 6:
+          _context3.prev = 6;
           _context3.t0 = _context3["catch"](0);
           console.error('Query error:', _context3.t0);
           return _context3.abrupt("return", {
             data: null,
             error: _context3.t0
           });
-        case 16:
+        case 10:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[0, 12]]);
+    }, _callee3, null, [[0, 6]]);
   }));
   return _executeQuery.apply(this, arguments);
 }
