@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 
 // Import all components
-import VehicleTracking from './VehicleTracking';
 import VehicleManagement from './VehicleManagement';
 import DriverManagement from './DriverManagement';
-import VehicleAssignments from './VehicleAssignments';
-import IssueReporting from './IssueReporting';
+import VehicleTracking from './VehicleTracking';
+import RequestedVehicle from './RequestedVehicle'; // Changed from VehicleAssignments
+import PendingRequestsBadge from './common/PendingRequestsBadge';
+import VehicleMaintenance from './VehicleMaintenance'; // Renamed from IssueReporting
 import ApiKeys from './ApiKeys';
 import Login from './Login';
 
@@ -178,27 +179,28 @@ const App = () => {
           <li className="nav-item">
             <a 
               href="#" 
-              className={`nav-link ${currentModule === 'assignments' ? 'active' : 'text-white'}`} 
+              className={`nav-link ${currentModule === 'requests' ? 'active' : 'text-white'}`} 
               onClick={(e) => {
                 e.preventDefault();
-                setCurrentModule('assignments');
+                setCurrentModule('requests');
               }}
             >
-              <i className="bi bi-calendar-check me-2"></i>
-              Vehicle Assignments
+              <i className="bi bi-bell me-2"></i>
+              Requested Vehicles
+              <PendingRequestsBadge />
             </a>
           </li>
           <li className="nav-item">
             <a 
               href="#" 
-              className={`nav-link ${currentModule === 'issues' ? 'active' : 'text-white'}`} 
+              className={`nav-link ${currentModule === 'maintenance' ? 'active' : 'text-white'}`} 
               onClick={(e) => {
                 e.preventDefault();
-                setCurrentModule('issues');
+                setCurrentModule('maintenance');
               }}
             >
-              <i className="bi bi-exclamation-triangle me-2"></i>
-              Issue Reporting
+              <i className="bi bi-tools me-2"></i>
+              Vehicle Maintenance
             </a>
           </li>
           <li className="nav-item">
@@ -253,8 +255,8 @@ const App = () => {
         {currentModule === 'tracking' && <VehicleTracking networkStatus={networkStatus} onNotification={addNotification} />}
         {currentModule === 'vehicles' && <VehicleManagement />}
         {currentModule === 'drivers' && <DriverManagement />}
-        {currentModule === 'assignments' && <VehicleAssignments />}
-        {currentModule === 'issues' && <IssueReporting />}
+        {currentModule === 'requests' && <RequestedVehicle />}
+        {currentModule === 'maintenance' && <VehicleMaintenance />}
         {currentModule === 'apikeys' && <ApiKeys />}
       </div>
       
