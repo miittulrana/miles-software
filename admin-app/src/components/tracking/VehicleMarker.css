@@ -1,0 +1,111 @@
+/* admin-app/src/components/tracking/VehicleMarker.css */
+
+.vehicle-marker-container {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    transition: transform 0.2s ease-out;
+    z-index: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  }
+  
+  .vehicle-marker-container:hover {
+    transform: scale(1.1);
+    z-index: 2;
+  }
+  
+  .vehicle-marker-container.selected {
+    transform: scale(1.2);
+    z-index: 3;
+  }
+  
+  .vehicle-marker-container.selected .vehicle-icon {
+    box-shadow: 0 0 0 3px white, 0 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .vehicle-icon {
+    width: 100%;
+    height: 100%;
+    background-color: #3498db;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    transition: all 0.2s ease-out;
+    border: 2px solid white;
+  }
+  
+  .vehicle-direction {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 20px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    transition: transform 0.5s ease-out;
+    pointer-events: none;
+  }
+  
+  .vehicle-status {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  
+  .vehicle-status.moving {
+    background-color: #2ecc71; /* Green when moving */
+    box-shadow: 0 0 5px 1px rgba(46, 204, 113, 0.5);
+  }
+  
+  .vehicle-status.stopped {
+    background-color: #e74c3c; /* Red when stopped */
+  }
+  
+  .vehicle-info {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    pointer-events: none;
+    min-width: 100px;
+  }
+  
+  .vehicle-label {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    white-space: nowrap;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  
+  .vehicle-speed {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    font-size: 10px;
+    padding: 1px 4px;
+    border-radius: 8px;
+    font-weight: normal;
+  }
+  
+  /* Animation for moving vehicles */
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  
+  .vehicle-status.moving {
+    animation: pulse 2s infinite;
+  }

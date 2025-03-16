@@ -3,6 +3,10 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './components/App';
 import { supabase } from './supabaseClient';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import './components/tracking/VehicleMarker.css';
+import './components/tracking/VehicleDetailsPanel.css';
+import './components/VehicleTracking.css';
 
 <userStyle>Normal</userStyle>
 
