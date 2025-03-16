@@ -7,8 +7,8 @@ import socketService from '../services/socketService';
 import VehicleDetailsPanel from './tracking/VehicleDetailsPanel';
 import './VehicleTracking.css';
 
-// Using a public Mapbox token with guaranteed access
-const MAPBOX_TOKEN = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
+// HERE Maps API key
+const HERE_API_KEY = 'TGQS7Az399FFMavDBe37kEgw2jTlb0ZmdVkwhNjy58c';
 
 const VehicleTracking = ({ networkStatus }) => {
   const mapContainerRef = useRef(null);
@@ -18,6 +18,7 @@ const VehicleTracking = ({ networkStatus }) => {
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mapLoading, setMapLoading] = useState(true);
   const [error, setError] = useState(null);
   const [socketConnected, setSocketConnected] = useState(false);
   const [showDetailsPanel, setShowDetailsPanel] = useState(false);
@@ -26,13 +27,28 @@ const VehicleTracking = ({ networkStatus }) => {
   const [notificationCount, setNotificationCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [mapInitialized, setMapInitialized] = useState(false);
-  const [view3DEnabled, setView3DEnabled] = useState(false); // Start with 3D disabled for better performance
-  const [mapStyle, setMapStyle] = useState('streets-v11');
+  const [view3DEnabled, setView3DEnabled] = useState(false);
+  const [mapStyle, setMapStyle] = useState('normal');
   const [vehiclesLoaded, setVehiclesLoaded] = useState(false);
   
-  // Initialize map and socket connection
+  // Load map library when component mounts
   useEffect(() => {
-    initializeTracking();
+    const initMap = async () => {
+      try {
+        setMapLoading(true);
+        
+        // Initialize tracking system
+        await initializeTracking();
+        
+        setMapLoading(false);
+      } catch (error) {
+        console.error("Failed to initialize map:", error);
+        setError("Failed to initialize map: " + error.message);
+        setMapLoading(false);
+      }
+    };
+    
+    initMap();
     
     // Cleanup on unmount
     return () => {
@@ -41,11 +57,9 @@ const VehicleTracking = ({ networkStatus }) => {
     };
   }, []);
   
-  // Update map when active vehicles change - only after vehicles are loaded
+  // Update map when active vehicles change
   useEffect(() => {
     if (!mapInitialized || !activeVehicles.length || !vehiclesLoaded) return;
-    
-    console.log("Updating vehicle markers on map:", activeVehicles.length);
     
     // Update each vehicle marker on the map
     activeVehicles.forEach(vehicle => {
@@ -65,7 +79,7 @@ const VehicleTracking = ({ networkStatus }) => {
         setSelectedVehicle(vehicle);
         setShowDetailsPanel(true);
         
-        // Make sure map selects this vehicle too
+        // Center map on this vehicle
         mapService.selectVehicle(selectedVehicleId);
       }
     } else {
@@ -79,42 +93,24 @@ const VehicleTracking = ({ networkStatus }) => {
     try {
       setLoading(true);
       
-      // Initialize the map with Mapbox
-      if (mapContainerRef.current && !mapInitialized) {
-        console.log("Initializing map with container:", mapContainerRef.current);
-        
-        // Use the full style URL to ensure compatibility
-        const styleUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11?access_token=${MAPBOX_TOKEN}`;
-        
-        mapService.initializeMap(mapContainerRef.current, MAPBOX_TOKEN, {
-          center: [-74.006, 40.7128], // New York City for guaranteed visible data
+      // Initialize the map
+      if (mapContainerRef.current) {
+        // Try to initialize the map
+        const success = await mapService.initializeMap(mapContainerRef.current, HERE_API_KEY, {
+          center: [-74.006, 40.7128], // New York City
           zoom: 10,
-          pitch: 0, // Start with 0 pitch for better performance
-          mapStyle: 'mapbox://styles/mapbox/streets-v11', // Use the shorthand syntax which works better in Electron
-          renderingMode: '2d', // Force 2D rendering mode - critical fix for Electron
-          show3DBuildings: false,
-          trackResize: true, // Ensure map resizes properly
-          fadeDuration: 0, // Disable fade animations which can cause issues
-          attributionControl: false, // We'll add this manually
-          preserveDrawingBuffer: true, // Required for Electron
           onMapLoaded: () => {
-            console.log("Map loaded successfully");
             setMapInitialized(true);
-                    
-            // Force a resize after load to ensure proper rendering
-            setTimeout(() => {
-              if (mapService.map) {
-                mapService.map.resize();
-                console.log("Map resized after initialization");
-                        
-                // Then force a manual re-render
-                if (mapService.map.getCanvas()) {
-                  mapService.map.triggerRepaint();
-                }
-              }
-            }, 500);
+            addNotification('Map loaded successfully', 'success');
+          },
+          onMapError: (err) => {
+            setError(`Map error: ${err.message}`);
           }
         });
+        
+        if (!success) {
+          throw new Error('Map initialization failed');
+        }
         
         // Set up vehicle click handler
         mapService.onVehicleClick((vehicleId) => {
@@ -122,20 +118,19 @@ const VehicleTracking = ({ networkStatus }) => {
         });
       }
       
-      // Load all vehicles first
+      // Load all vehicles
       await fetchVehicles();
       
-      // Then connect to socket server
+      // Connect to socket server
       connectToSocketServer();
       
-      // Then load initial vehicle locations - after vehicles are loaded
+      // Load initial vehicle locations
       if (vehiclesLoaded) {
         await fetchInitialVehicleLocations();
       }
-      
     } catch (err) {
       console.error('Error initializing tracking:', err);
-      setError('Failed to initialize tracking system. Please refresh the page and try again.');
+      setError('Failed to initialize tracking system: ' + err.message);
     } finally {
       setLoading(false);
     }
@@ -162,11 +157,6 @@ const VehicleTracking = ({ networkStatus }) => {
       setError(`Connection error: ${data.error?.message || 'Unknown error'}`);
     });
     
-    // Handle max reconnect attempts reached
-    socketService.addEventListener('max_reconnect_attempts', () => {
-      setError('Failed to connect to tracking server after multiple attempts. Please check your network connection.');
-    });
-    
     // Handle vehicle location updates
     socketService.addEventListener('vehicle_location', (locationData) => {
       if (!locationData || !locationData.vehicle_id) return;
@@ -177,16 +167,14 @@ const VehicleTracking = ({ networkStatus }) => {
       }));
     });
     
-    // Handle vehicle status changes (online/offline)
+    // Handle vehicle status changes
     socketService.addEventListener('vehicle_status_change', (statusData) => {
       if (!statusData || !statusData.vehicleId) return;
       
       // Update active vehicles list
       if (statusData.status === 'online') {
-        // Add to active vehicles if not already there
         setActiveVehicles(prev => {
           if (!prev.find(v => v.id === statusData.vehicleId)) {
-            // Find full vehicle info
             const vehicle = vehicles.find(v => v.id === statusData.vehicleId);
             if (vehicle) {
               addNotification(`Vehicle ${vehicle.registration_number} is now online`, 'info');
@@ -196,11 +184,9 @@ const VehicleTracking = ({ networkStatus }) => {
           return prev;
         });
       } else if (statusData.status === 'offline') {
-        // Remove from active vehicles
         setActiveVehicles(prev => {
           const filtered = prev.filter(v => v.id !== statusData.vehicleId);
           
-          // Find vehicle info for notification
           const vehicle = vehicles.find(v => v.id === statusData.vehicleId);
           if (vehicle) {
             addNotification(`Vehicle ${vehicle.registration_number} is now offline`, 'warning');
@@ -218,8 +204,6 @@ const VehicleTracking = ({ networkStatus }) => {
   // Fetch all vehicles from Supabase
   const fetchVehicles = async () => {
     try {
-      console.log("Fetching vehicles data...");
-      
       // Check network status first
       if (!networkStatus.online) {
         console.log("Network is offline, using cached vehicles if available");
@@ -255,11 +239,10 @@ const VehicleTracking = ({ networkStatus }) => {
       
       // Now that vehicles are loaded, we can fetch locations
       await fetchInitialVehicleLocations();
-      
     } catch (err) {
       console.error('Error fetching vehicles:', err);
       setError(`Failed to load vehicles: ${err.message}`);
-      setVehiclesLoaded(false);  // Mark as not loaded on error
+      setVehiclesLoaded(false);
     }
   };
   
@@ -397,18 +380,8 @@ const VehicleTracking = ({ networkStatus }) => {
     const newState = !view3DEnabled;
     setView3DEnabled(newState);
     
-    if (mapInitialized && mapService.map) {
-      // Update map pitch
-      mapService.map.setPitch(newState ? 45 : 0);
-      
-      // Toggle 3D buildings
-      if (newState) {
-        mapService.add3DBuildings();
-      } else {
-        if (mapService.map.getLayer('3d-buildings')) {
-          mapService.map.removeLayer('3d-buildings');
-        }
-      }
+    if (mapInitialized) {
+      mapService.toggle3DView(newState);
     }
   };
   
@@ -417,88 +390,27 @@ const VehicleTracking = ({ networkStatus }) => {
     const newStyle = e.target.value;
     setMapStyle(newStyle);
     
-    if (mapInitialized && mapService.map) {
-      // Use the full URL format instead of the shorthand
-      const styleUrl = `https://api.mapbox.com/styles/v1/mapbox/${newStyle}?access_token=${MAPBOX_TOKEN}`;
-      mapService.map.setStyle(styleUrl);
-      
-      // Re-add 3D buildings if needed
-      if (view3DEnabled) {
-        mapService.map.once('style.load', () => {
-          mapService.add3DBuildings();
-        });
-      }
+    if (mapInitialized) {
+      mapService.setMapStyle(newStyle);
     }
   };
   
-  // Handles reloading the map with guaranteed visible data
+  // Handles reloading the map
   const handleMapReload = () => {
     try {
-      // First try to just reset the view with guaranteed data
-      if (mapService.map) {
-        // Change to a different style that always shows visible data
-        const newStyle = 'streets-v11';
-        setMapStyle(newStyle);
-        
-        // Use the full URL format
-        const styleUrl = `https://api.mapbox.com/styles/v1/mapbox/${newStyle}?access_token=${MAPBOX_TOKEN}`;
-        
-        // Set style, then wait for it to load
-        mapService.map.setStyle(styleUrl);
-        
-        // Add an event listener for when the style finishes loading
-        mapService.map.once('style.load', () => {
-          // Center on New York which has guaranteed data
-          mapService.map.setCenter([-74.006, 40.7128]);
-          mapService.map.setZoom(10);
-          
-          // Force a resize
-          mapService.map.resize();
-          console.log("Map reloaded with street style and centered on New York");
-          
-          // Notify user
-          addNotification('Map reloaded successfully', 'success');
-        });
+      if (mapService) {
+        // Force map recenter to known location
+        mapService.recenterMap([-74.006, 40.7128], 10);
+        addNotification('Map reloaded successfully', 'success');
       } else {
-        // If map isn't available, do a full reinit
-        mapService.cleanup();
-        setMapInitialized(false);
-        
-        setTimeout(() => {
-          if (mapContainerRef.current) {
-            // Use the full style URL
-            const styleUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11?access_token=${MAPBOX_TOKEN}`;
-            
-            mapService.initializeMap(mapContainerRef.current, MAPBOX_TOKEN, {
-              center: [-74.006, 40.7128], // New York City
-              zoom: 10,
-              pitch: 0,
-              mapStyle: styleUrl,
-              show3DBuildings: false,
-              onMapLoaded: () => {
-                console.log("Map completely reinitialized");
-                setMapInitialized(true);
-                addNotification('Map reinitialized successfully', 'success');
-              }
-            });
-          }
-        }, 500);
+        // If map service isn't available, try to reinitialize
+        initializeTracking().then(() => {
+          addNotification('Map reinitialized successfully', 'success');
+        });
       }
     } catch (err) {
       console.error("Error during map reload:", err);
       setError(`Error reloading map: ${err.message}`);
-    }
-  };
-  
-  // Special debug function to show a known location
-  const showKnownLocation = () => {
-    if (mapService.map) {
-      mapService.map.flyTo({
-        center: [-74.006, 40.7128], // New York City
-        zoom: 12,
-        duration: 2000
-      });
-      addNotification('Flying to New York City (for debugging)', 'info');
     }
   };
   
@@ -545,8 +457,7 @@ const VehicleTracking = ({ networkStatus }) => {
     
     const colors = [
       '#3498db', '#2ecc71', '#e74c3c', '#9b59b6', '#f1c40f', 
-      '#1abc9c', '#e67e22', '#34495e', '#7f8c8d', '#d35400',
-      '#27ae60', '#2980b9', '#8e44ad', '#c0392b', '#16a085'
+      '#1abc9c', '#e67e22', '#34495e', '#7f8c8d', '#d35400'
     ];
     
     return colors[index % colors.length];
@@ -734,12 +645,10 @@ const VehicleTracking = ({ networkStatus }) => {
                 value={mapStyle}
                 onChange={handleMapStyleChange}
               >
-                <option value="streets-v11">Streets</option>
-                <option value="outdoors-v11">Outdoors</option>
-                <option value="light-v10">Light</option>
-                <option value="dark-v10">Dark</option>
-                <option value="satellite-v9">Satellite</option>
-                <option value="satellite-streets-v11">Satellite Streets</option>
+                <option value="normal">Normal</option>
+                <option value="satellite">Satellite</option>
+                <option value="terrain">Terrain</option>
+                <option value="traffic">Traffic</option>
               </select>
               
               <button 
@@ -765,20 +674,11 @@ const VehicleTracking = ({ networkStatus }) => {
               >
                 <i className="bi bi-arrow-clockwise"></i>
               </button>
-              
-              {/* Debug button to show New York */}
-              <button 
-                className="control-button"
-                onClick={showKnownLocation}
-                title="Show New York (Debug)"
-              >
-                <i className="bi bi-globe-americas"></i>
-              </button>
             </div>
           </div>
           
           {/* Map content */}
-          {loading ? (
+          {loading || mapLoading ? (
             <div className="map-loading">
               <Spinner animation="border" role="status" />
               <p>Initializing map...</p>
@@ -788,18 +688,6 @@ const VehicleTracking = ({ networkStatus }) => {
               ref={mapContainerRef} 
               id="map"
               className="map-content"
-              style={{ 
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                width: "100%",
-                height: "100%",
-                visibility: "visible",
-                opacity: 1,
-                zIndex: 1
-              }}
             />
           )}
           

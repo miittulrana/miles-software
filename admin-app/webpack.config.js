@@ -1,17 +1,26 @@
 // admin-app/webpack.config.js
 const path = require('path');
+const webpack = require('webpack');
+require('dotenv').config();
 
 module.exports = {
-  mode: 'development',
   entry: './src/renderer.js',
   output: {
-    path: path.resolve(__dirname, 'src'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'src')
+  },
+  target: 'electron-renderer',
+  resolve: {
+    extensions: ['.js', '.jsx', '.json'],
+    fallback: {
+      process: require.resolve('process/browser'),
+      buffer: require.resolve('buffer/')
+    }
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -25,19 +34,26 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: 'asset/resource'
+      },
+      // Add this rule for HERE Maps UI CSS
+      {
+        test: /mapsjs-ui\.css$/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-    fallback: {
-      "path": false,
-      "fs": false,
-      "crypto": false
-    }
-  },
-  devtool: 'source-map',
-  target: 'web'
+  plugins: [
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    }),
+    // Add environment variables for HERE Maps
+    new webpack.DefinePlugin({
+      'process.env.HERE_API_KEY': JSON.stringify('TGQS7Az399FFMavDBe37kEgw2jTlb0ZmdVkwhNjy58c'),
+      'process.env.HERE_APP_ID': JSON.stringify('024IidL11VF5DhXm6qKd')
+    })
+  ],
+  devtool: 'source-map'
 };
