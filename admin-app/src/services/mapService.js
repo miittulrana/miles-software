@@ -1,11 +1,9 @@
 // admin-app/src/services/mapService.js
-import { loadHereMapsScripts, initializeHerePlatform, createVehicleMarker } from '../utils/hereMapLoader';
+import L from 'leaflet';
 
 class MapService {
   constructor() {
     this.map = null;
-    this.platform = null;
-    this.defaultLayers = null;
     this.markers = new Map(); // vehicle ID -> marker
     this.vehicleColors = new Map(); // vehicle ID -> color
     this.colorPalette = [
@@ -16,77 +14,33 @@ class MapService {
     this.selectedVehicleId = null;
     this.isInitialized = false;
     this.onVehicleClickCallbacks = [];
-    this.objectGroup = null;
-  }
-
-  // Initialize the HERE Maps library
-  async loadMapLibrary() {
-    try {
-      await loadHereMapsScripts();
-      return true;
-    } catch (error) {
-      console.error('Failed to load HERE Maps library:', error);
-      return false;
-    }
+    
+    // Malta center coordinates
+    this.maltaCenter = [35.937496, 14.375416];
   }
 
   // Initialize the map in the provided container
-  async initializeMap(container, apiKey, options = {}) {
+  initializeMap(container, options = {}) {
     if (this.isInitialized) {
       console.log("Map already initialized, cleaning up first");
       this.cleanup();
     }
 
     try {
-      // Make sure libraries are loaded
-      if (!window.H) {
-        const loaded = await this.loadMapLibrary();
-        if (!loaded) {
-          throw new Error('Failed to load HERE Maps library');
-        }
-      }
-
-      // Initialize platform
-      this.platform = initializeHerePlatform(apiKey);
-      if (!this.platform) {
-        throw new Error('Failed to initialize HERE platform');
-      }
-
-      // Obtain default layers
-      this.defaultLayers = this.platform.createDefaultLayers();
-
-      // Create map with default settings
-      this.map = new H.Map(
-        container,
-        this.defaultLayers.vector.normal.map,
-        {
-          zoom: options.zoom || 10,
-          center: options.center 
-            ? { lat: options.center[1], lng: options.center[0] } 
-            : { lat: 40.7128, lng: -74.006 }, // NYC default
-          pixelRatio: window.devicePixelRatio || 1
-        }
-      );
-
-      // Add MapEvents and Behavior for interactivity
-      const mapEvents = new H.mapevents.MapEvents(this.map);
-      const behavior = new H.mapevents.Behavior(mapEvents);
-      
-      // Add UI components
-      const ui = H.ui.UI.createDefault(this.map, this.defaultLayers);
-
-      // Create a group for vehicle markers
-      this.objectGroup = new H.map.Group();
-      this.map.addObject(this.objectGroup);
-
-      // Add map resize listener
-      window.addEventListener('resize', () => {
-        this.map.getViewPort().resize();
+      // Create new Leaflet map instance
+      this.map = L.map(container, {
+        center: options.center || this.maltaCenter,
+        zoom: options.zoom || 10,
       });
 
+      // Add OpenStreetMap tile layer (free, no API key needed)
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(this.map);
+      
       // Setup complete
       this.isInitialized = true;
-      console.log("Map initialized successfully");
+      console.log("Leaflet map initialized successfully");
 
       // Call onMapLoaded callback if provided
       if (options.onMapLoaded) {
@@ -121,35 +75,58 @@ class MapService {
     const vehicleColor = this.vehicleColors.get(vehicleId);
     
     try {
+      const position = [location.latitude, location.longitude];
+      
       // Check if marker already exists
       if (this.markers.has(vehicleId)) {
+        // Update existing marker position
         const marker = this.markers.get(vehicleId);
-        marker.setGeometry(new H.geo.Point(location.latitude, location.longitude));
+        marker.setLatLng(position);
+        
+        // Update popup content with latest info
+        marker.getPopup().setContent(`
+          <div style="text-align: center;">
+            <strong>${vehicle.registration_number || 'Vehicle'}</strong><br>
+            ${vehicle.make || ''} ${vehicle.model || ''}<br>
+            ${location.is_moving ? 'Moving' : 'Stopped'}
+            ${location.speed ? ` at ${Math.round(location.speed)} km/h` : ''}
+          </div>
+        `);
       } else {
-        // Create new marker
-        const marker = createVehicleMarker(
-          location.latitude, 
-          location.longitude, 
-          vehicleColor, 
-          vehicleId
-        );
-        
-        if (!marker) {
-          console.error('Failed to create marker for vehicle:', vehicleId);
-          return;
-        }
-        
-        // Add tap event
-        marker.addEventListener('tap', (evt) => {
-          const data = evt.target.getData();
-          if (data && data.vehicleId) {
-            this.selectVehicle(data.vehicleId);
-            this.onVehicleClickCallbacks.forEach(callback => callback(data.vehicleId));
-          }
+        // Create icon
+        const icon = L.divIcon({
+          className: 'vehicle-marker',
+          html: `<div style="background-color: ${vehicleColor}; width: 100%; height: 100%; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; color: white;">
+                  <i class="bi bi-truck"></i>
+                </div>`,
+          iconSize: [30, 30],
+          iconAnchor: [15, 15]
         });
         
-        // Add to map
-        this.objectGroup.addObject(marker);
+        // Create new marker
+        const marker = L.marker(position, {
+          icon: icon,
+          title: vehicle.registration_number || 'Vehicle'
+        }).addTo(this.map);
+        
+        // Add popup with vehicle info
+        marker.bindPopup(`
+          <div style="text-align: center;">
+            <strong>${vehicle.registration_number || 'Vehicle'}</strong><br>
+            ${vehicle.make || ''} ${vehicle.model || ''}<br>
+            ${location.is_moving ? 'Moving' : 'Stopped'}
+            ${location.speed ? ` at ${Math.round(location.speed)} km/h` : ''}
+          </div>
+        `);
+        
+        // Add click event
+        marker.on('click', () => {
+          // Handle vehicle selection
+          this.selectVehicle(vehicleId);
+          this.onVehicleClickCallbacks.forEach(callback => callback(vehicleId));
+        });
+        
+        // Store marker
         this.markers.set(vehicleId, marker);
       }
     } catch (error) {
@@ -163,7 +140,7 @@ class MapService {
     
     try {
       const marker = this.markers.get(vehicleId);
-      this.objectGroup.removeObject(marker);
+      this.map.removeLayer(marker);
       this.markers.delete(vehicleId);
       
       if (this.selectedVehicleId === vehicleId) {
@@ -186,8 +163,10 @@ class MapService {
         const marker = this.markers.get(vehicleId);
         
         // Center map on vehicle
-        this.map.setCenter(marker.getGeometry());
-        this.map.setZoom(15);
+        this.map.setView(marker.getLatLng(), 15);
+        
+        // Open popup
+        marker.openPopup();
       }
     } catch (error) {
       console.error("Error selecting vehicle:", error);
@@ -201,57 +180,47 @@ class MapService {
     }
   }
 
-  // Set map style
+  // Set map style - in Leaflet we just change the tile layer
   setMapStyle(style) {
-    if (!this.isInitialized || !this.map || !this.defaultLayers) return;
+    if (!this.isInitialized || !this.map) return;
     
     try {
-      let layer;
+      // Remove existing tile layers
+      this.map.eachLayer(layer => {
+        if (layer instanceof L.TileLayer) {
+          this.map.removeLayer(layer);
+        }
+      });
+      
+      // Add new tile layer based on style
+      let tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+      let attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
       
       switch (style) {
         case 'satellite':
-          layer = this.defaultLayers.raster.satellite.map;
+          // Free satellite tiles from ESRI
+          tileUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+          attribution = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
           break;
         case 'terrain':
-          layer = this.defaultLayers.vector.normal.map;
-          break;
-        case 'traffic':
-          layer = this.defaultLayers.vector.normal.traffic;
-          break;
-        case 'normal':
-        default:
-          layer = this.defaultLayers.vector.normal.map;
+          // Terrain view
+          tileUrl = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
+          attribution = 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>';
           break;
       }
       
-      this.map.setBaseLayer(layer);
+      L.tileLayer(tileUrl, { attribution }).addTo(this.map);
     } catch (error) {
       console.error("Error changing map style:", error);
     }
   }
 
-  // Toggle 3D view
-  toggle3DView(enable) {
+  // Force map to recenter on Malta
+  recenterMap(center = null, zoom = 10) {
     if (!this.isInitialized || !this.map) return;
     
     try {
-      const viewModel = this.map.getViewModel();
-      viewModel.setLookAtData({
-        tilt: enable ? 45 : 0
-      });
-    } catch (error) {
-      console.error("Error toggling 3D view:", error);
-    }
-  }
-
-  // Force map to recenter
-  recenterMap(center = [-74.006, 40.7128], zoom = 10) {
-    if (!this.isInitialized || !this.map) return;
-    
-    try {
-      this.map.setCenter({lat: center[1], lng: center[0]});
-      this.map.setZoom(zoom);
-      this.map.getViewPort().resize();
+      this.map.setView(center || this.maltaCenter, zoom);
     } catch (error) {
       console.error("Error recentering map:", error);
     }
@@ -260,8 +229,12 @@ class MapService {
   // Clean up the map service
   cleanup() {
     try {
-      if (this.objectGroup) {
-        this.objectGroup.removeAll();
+      if (this.map) {
+        this.markers.forEach(marker => {
+          this.map.removeLayer(marker);
+        });
+        
+        this.map.remove();
       }
       
       this.markers.clear();
@@ -270,11 +243,7 @@ class MapService {
       this.colorIndex = 0;
       this.onVehicleClickCallbacks = [];
       
-      if (this.map) {
-        this.map.dispose();
-        this.map = null;
-      }
-      
+      this.map = null;
       this.isInitialized = false;
       console.log("Map service cleaned up");
     } catch (error) {

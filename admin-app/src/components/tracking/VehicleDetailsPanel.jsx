@@ -66,12 +66,6 @@ const VehicleDetailsPanel = ({
     }
   };
   
-  // Get address from coordinates (placeholder for geocoding service)
-  const getAddressFromCoordinates = () => {
-    // In production, replace with actual reverse geocoding
-    return 'Loading address...';
-  };
-  
   return (
     <div className="vehicle-details-panel">
       <div className="details-header">
@@ -162,11 +156,6 @@ const VehicleDetailsPanel = ({
                 </div>
               </div>
               
-              <div className="detail-label">Address</div>
-              <div className="detail-value address-value">
-                {getAddressFromCoordinates(locationData.latitude, locationData.longitude)}
-              </div>
-              
               {locationData.battery_level !== undefined && (
                 <>
                   <div className="detail-label">Battery</div>
@@ -196,9 +185,6 @@ const VehicleDetailsPanel = ({
           </button>
           <button className="action-button secondary">
             <i className="bi bi-chat"></i> Message
-          </button>
-          <button className="action-button secondary">
-            <i className="bi bi-file-earmark-text"></i> View Documents
           </button>
         </div>
       </div>

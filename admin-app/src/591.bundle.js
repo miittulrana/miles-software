@@ -1,2 +1,2 @@
-"use strict";(global.webpackChunkmiles_express_admin=global.webpackChunkmiles_express_admin||[]).push([[591],{1591:e=>{e.exports=function(){throw new Error("ws does not work in the browser. Browser clients must use the native WebSocket object")}}}]);
+"use strict";(self.webpackChunkmiles_express_admin=self.webpackChunkmiles_express_admin||[]).push([[591],{591:e=>{e.exports=function(){throw new Error("ws does not work in the browser. Browser clients must use the native WebSocket object")}}}]);
 //# sourceMappingURL=591.bundle.js.map

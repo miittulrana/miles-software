@@ -1,24 +1,22 @@
 // admin-app/src/components/App.jsx
 import React, { useState, useEffect } from 'react';
-import { supabase, validateSession, executeQuery } from '../supabaseClient';
+import { supabase } from '../supabaseClient';
 
-// Import components
+// Import all components
+import VehicleTracking from './VehicleTracking';
 import VehicleManagement from './VehicleManagement';
 import DriverManagement from './DriverManagement';
-import VehicleTracking from './VehicleTracking';
+import VehicleAssignments from './VehicleAssignments';
 import IssueReporting from './IssueReporting';
 import ApiKeys from './ApiKeys';
 import Login from './Login';
 
-// Import logo
-import logo from '../assets/logo.png';
-
 const App = () => {
-  const [currentView, setCurrentView] = useState('dashboard');
+  const [currentModule, setCurrentModule] = useState('tracking');
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [authError, setAuthError] = useState(null);
   const [networkStatus, setNetworkStatus] = useState({ online: true, lastChecked: Date.now() });
+  const [notifications, setNotifications] = useState([]);
 
   // Check authentication on mount
   useEffect(() => {
@@ -37,45 +35,13 @@ const App = () => {
         }
         
         if (sessionData && sessionData.session) {
-          // Verify this user is an admin 
-          const { data: userData, error: userError } = await executeQuery(() => 
-            supabase
-              .from('users')
-              .select('role')
-              .eq('email', sessionData.session.user.email)
-              .maybeSingle()
-          );
-          
-          // If error querying, assume not admin
-          if (userError) {
-            console.error('User data fetch error:', userError);
-            await supabase.auth.signOut();
-            setSession(null);
-          } else if (!userData || userData.role !== 'admin') {
-            // Not an admin
-            console.error('Not authorized as admin');
-            await supabase.auth.signOut();
-            setSession(null);
-          } else {
-            // Valid admin session
-            console.log('Valid admin session');
-            setSession(sessionData.session);
-            setAuthError(null);
-          }
+          console.log('Valid session detected');
+          setSession(sessionData.session);
         } else {
           setSession(null);
         }
       } catch (err) {
         console.error('Session error:', err);
-        
-        // Check if this is a connection error
-        if (err.message && (
-            err.message.includes('Failed to fetch') || 
-            err.message.includes('Network') ||
-            err.message.includes('connection'))) {
-          setNetworkStatus({ ...networkStatus, online: false });
-        }
-        
         setSession(null);
       } finally {
         setLoading(false);
@@ -83,6 +49,10 @@ const App = () => {
     };
     
     checkSession();
+    
+    // For development, uncomment to bypass login
+    // setSession({ user: { email: 'dev@example.com' } });
+    // setLoading(false);
     
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -97,65 +67,45 @@ const App = () => {
       }
     );
     
-    // Also check for online/offline status
-    window.addEventListener('online', handleOnlineStatus);
-    window.addEventListener('offline', handleOfflineStatus);
-
-    // Set up a session validation interval
-    const sessionInterval = setInterval(() => {
-      validateSession().then(valid => {
-        if (!valid && session) {
-          console.log('Session is no longer valid, signing out');
-          supabase.auth.signOut().then(() => setSession(null));
+    // Check network status periodically
+    const networkInterval = setInterval(() => {
+      const online = navigator.onLine;
+      setNetworkStatus(prev => {
+        if (prev.online !== online) {
+          addNotification(online ? 'Network connection restored' : 'Network connection lost', 
+                          online ? 'success' : 'error');
         }
+        return { online, lastChecked: Date.now() };
       });
-    }, 60000); // Check every minute
-
+    }, 10000);
+    
     return () => {
       subscription.unsubscribe();
-      window.removeEventListener('online', handleOnlineStatus);
-      window.removeEventListener('offline', handleOfflineStatus);
-      clearInterval(sessionInterval);
-    }
+      clearInterval(networkInterval);
+    };
   }, []);
-  
-  // Check network connection
-  const checkNetworkConnection = async () => {
-    try {
-      // Simple check - try to fetch from Supabase
-      const { error } = await executeQuery(() => 
-        supabase.from('vehicles').select('count', { count: 'exact', head: true })
-      );
-      
-      const isOnline = !error;
-      
-      setNetworkStatus({ online: isOnline, lastChecked: Date.now() });
-      return isOnline;
-    } catch (error) {
-      console.error('Network check failed:', error);
-      setNetworkStatus({ online: false, lastChecked: Date.now() });
-      return false;
-    }
-  };
-  
-  const handleOnlineStatus = () => {
-    console.log('Browser reports online status');
-    checkNetworkConnection();
-  };
-  
-  const handleOfflineStatus = () => {
-    console.log('Browser reports offline status');
-    setNetworkStatus({ online: false, lastChecked: Date.now() });
-  };
 
   // Handle sign out
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
       setSession(null);
+      addNotification('You have been signed out successfully', 'info');
     } catch (error) {
       console.error('Sign out error:', error);
+      addNotification('Sign out failed: ' + error.message, 'error');
     }
+  };
+
+  // Add a notification
+  const addNotification = (message, type = 'info') => {
+    const notification = {
+      id: Date.now(),
+      message,
+      type,
+      time: new Date()
+    };
+    setNotifications(prev => [notification, ...prev].slice(0, 10));
   };
 
   // Show loading screen
@@ -169,110 +119,162 @@ const App = () => {
     );
   }
 
-  // Show login screen if not authenticated
+  // Uncomment to enable login
   if (!session) {
-    return <Login networkStatus={networkStatus} onNetworkCheck={checkNetworkConnection} />;
+    return <Login networkStatus={networkStatus} onSuccess={(msg) => addNotification(msg, 'success')} />;
   }
 
-  // Menu items for the sidebar
-  const menuItems = [
-    { id: 'vehicles', label: 'Vehicle Management', icon: 'bi-truck' },
-    { id: 'drivers', label: 'Driver Management', icon: 'bi-person' },
-    { id: 'tracking', label: 'Vehicle Tracking', icon: 'bi-geo-alt' },
-    { id: 'issues', label: 'Issue Reporting', icon: 'bi-exclamation-triangle' },
-    { id: 'api', label: 'API Keys', icon: 'bi-key' },
-  ];
-  
-  // Main content component based on current view
-  let content;
-  switch (currentView) {
-    case 'vehicles':
-      content = <VehicleManagement networkStatus={networkStatus} />;
-      break;
-    case 'drivers':
-      content = <DriverManagement networkStatus={networkStatus} />;
-      break;
-    case 'tracking':
-      content = <VehicleTracking networkStatus={networkStatus} />;
-      break;
-    case 'issues':
-      content = <IssueReporting networkStatus={networkStatus} />;
-      break;
-    case 'api':
-      content = <ApiKeys networkStatus={networkStatus} />;
-      break;
-    default:
-      // Logo instead of Dashboard
-      content = (
-        <div className="d-flex justify-content-center align-items-center" style={{ height: '100%' }}>
-          <img 
-            src={logo} 
-            alt="Miles Express Logo" 
-            style={{ width: '40%', maxWidth: '500px', objectFit: 'contain' }} 
-          />
-        </div>
-      );
-  }
-
+  // Render the main application
   return (
     <div className="d-flex h-100">
       {/* Sidebar */}
       <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style={{ width: '280px' }}>
-        <a href="#" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" 
-           onClick={(e) => { e.preventDefault(); setCurrentView('dashboard'); }}>
+        <a href="#" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
           <i className="bi bi-truck-flatbed me-2 fs-4"></i>
           <span className="fs-4">Miles Express</span>
         </a>
         <hr />
         
-        {!networkStatus.online && (
-          <div className="alert alert-warning py-2 mb-3">
-            <i className="bi bi-wifi-off me-2"></i>
-            <small>Offline Mode</small>
-            <button 
-              className="btn btn-sm btn-outline-dark float-end py-0 px-1" 
-              onClick={checkNetworkConnection}
-              title="Check connection"
+        <ul className="nav nav-pills flex-column mb-auto">
+          <li className="nav-item">
+            <a 
+              href="#" 
+              className={`nav-link ${currentModule === 'tracking' ? 'active' : 'text-white'}`} 
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentModule('tracking');
+              }}
             >
-              <i className="bi bi-arrow-repeat"></i>
-            </button>
+              <i className="bi bi-geo-alt me-2"></i>
+              Vehicle Tracking
+            </a>
+          </li>
+          <li className="nav-item">
+            <a 
+              href="#" 
+              className={`nav-link ${currentModule === 'vehicles' ? 'active' : 'text-white'}`} 
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentModule('vehicles');
+              }}
+            >
+              <i className="bi bi-truck me-2"></i>
+              Vehicle Management
+            </a>
+          </li>
+          <li className="nav-item">
+            <a 
+              href="#" 
+              className={`nav-link ${currentModule === 'drivers' ? 'active' : 'text-white'}`} 
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentModule('drivers');
+              }}
+            >
+              <i className="bi bi-person me-2"></i>
+              Driver Management
+            </a>
+          </li>
+          <li className="nav-item">
+            <a 
+              href="#" 
+              className={`nav-link ${currentModule === 'assignments' ? 'active' : 'text-white'}`} 
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentModule('assignments');
+              }}
+            >
+              <i className="bi bi-calendar-check me-2"></i>
+              Vehicle Assignments
+            </a>
+          </li>
+          <li className="nav-item">
+            <a 
+              href="#" 
+              className={`nav-link ${currentModule === 'issues' ? 'active' : 'text-white'}`} 
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentModule('issues');
+              }}
+            >
+              <i className="bi bi-exclamation-triangle me-2"></i>
+              Issue Reporting
+            </a>
+          </li>
+          <li className="nav-item">
+            <a 
+              href="#" 
+              className={`nav-link ${currentModule === 'apikeys' ? 'active' : 'text-white'}`} 
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentModule('apikeys');
+              }}
+            >
+              <i className="bi bi-key me-2"></i>
+              API Keys
+            </a>
+          </li>
+        </ul>
+        
+        <hr />
+        {/* Network Status Indicator */}
+        <div className="d-flex align-items-center mb-2">
+          <div 
+            style={{ 
+              width: '10px', 
+              height: '10px', 
+              borderRadius: '50%', 
+              backgroundColor: networkStatus.online ? '#2ecc71' : '#e74c3c',
+              marginRight: '8px'
+            }}
+          ></div>
+          <span className="text-muted small">
+            {networkStatus.online ? 'Online' : 'Offline'}
+          </span>
+        </div>
+
+        {/* User dropdown */}
+        {session && (
+          <div className="dropdown">
+            <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" 
+               id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+              <i className="bi bi-person-circle me-2"></i>
+              <strong>{session?.user?.email || 'User'}</strong>
+            </a>
+            <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+              <li><a className="dropdown-item" href="#" onClick={handleSignOut}>Sign out</a></li>
+            </ul>
           </div>
         )}
-        
-        <ul className="nav nav-pills flex-column mb-auto">
-          {menuItems.map((item) => (
-            <li key={item.id} className="nav-item">
-              <a
-                href="#"
-                className={`nav-link ${currentView === item.id ? 'active' : 'text-white'}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setCurrentView(item.id);
-                }}
-              >
-                <i className={`bi ${item.icon} me-2`}></i>
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <hr />
-        <div className="dropdown">
-          <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" 
-             id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <i className="bi bi-person-circle me-2"></i>
-            <strong>{session?.user?.email || 'User'}</strong>
-          </a>
-          <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-            <li><a className="dropdown-item" href="#" onClick={handleSignOut}>Sign out</a></li>
-          </ul>
-        </div>
       </div>
       
       {/* Main content */}
       <div className="flex-grow-1 overflow-auto bg-light">
-        {content}
+        {currentModule === 'tracking' && <VehicleTracking networkStatus={networkStatus} onNotification={addNotification} />}
+        {currentModule === 'vehicles' && <VehicleManagement />}
+        {currentModule === 'drivers' && <DriverManagement />}
+        {currentModule === 'assignments' && <VehicleAssignments />}
+        {currentModule === 'issues' && <IssueReporting />}
+        {currentModule === 'apikeys' && <ApiKeys />}
       </div>
+      
+      {/* Notification Area (optional) */}
+      {notifications.length > 0 && (
+        <div className="position-fixed bottom-0 end-0 p-3" style={{ zIndex: 1050 }}>
+          {notifications.map(notification => (
+            <div key={notification.id} className={`toast show mb-2 bg-${notification.type === 'error' ? 'danger' : notification.type}`} role="alert" aria-live="assertive" aria-atomic="true">
+              <div className="toast-header">
+                <strong className="me-auto">{notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}</strong>
+                <small>{notification.time.toLocaleTimeString()}</small>
+                <button type="button" className="btn-close" aria-label="Close" onClick={() => setNotifications(prev => prev.filter(n => n.id !== notification.id))}></button>
+              </div>
+              <div className="toast-body text-white">
+                {notification.message}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

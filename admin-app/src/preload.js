@@ -1,8 +1,10 @@
 // admin-app/src/preload.js
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge } = require('electron');
 
-// Explicitly set the global object for the renderer
-contextBridge.exposeInMainWorld('global', window);
+// Simple API to indicate we're in Electron
+contextBridge.exposeInMainWorld('electronAPI', {
+  isElectron: true
+});
 
 // Log that preload script loaded
 console.log('Preload script loaded successfully');

@@ -9,12 +9,15 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'src')
   },
-  target: 'electron-renderer',
+  target: 'web',
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     fallback: {
-      process: require.resolve('process/browser'),
-      buffer: require.resolve('buffer/')
+      "buffer": require.resolve("buffer/"),
+      "process": require.resolve("process/browser"),
+      "stream": require.resolve("stream-browserify"),
+      "util": require.resolve("util/"),
+      "crypto": require.resolve("crypto-browserify")
     }
   },
   module: {
@@ -36,11 +39,6 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
         type: 'asset/resource'
-      },
-      // Add this rule for HERE Maps UI CSS
-      {
-        test: /mapsjs-ui\.css$/,
-        use: ['style-loader', 'css-loader']
       }
     ]
   },
@@ -49,10 +47,14 @@ module.exports = {
       process: 'process/browser',
       Buffer: ['buffer', 'Buffer']
     }),
-    // Add environment variables for HERE Maps
+    // This is critical for React Bootstrap
+    new webpack.ProvidePlugin({
+      React: 'react'
+    }),
+    // Add window global for browser compatibility
     new webpack.DefinePlugin({
-      'process.env.HERE_API_KEY': JSON.stringify('TGQS7Az399FFMavDBe37kEgw2jTlb0ZmdVkwhNjy58c'),
-      'process.env.HERE_APP_ID': JSON.stringify('024IidL11VF5DhXm6qKd')
+      'global': 'window',
+      'window.process': 'process'
     })
   ],
   devtool: 'source-map'

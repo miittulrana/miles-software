@@ -5,10 +5,8 @@ import { supabase } from '../supabaseClient';
 import mapService from '../services/mapService';
 import socketService from '../services/socketService';
 import VehicleDetailsPanel from './tracking/VehicleDetailsPanel';
+import 'leaflet/dist/leaflet.css';
 import './VehicleTracking.css';
-
-// HERE Maps API key
-const HERE_API_KEY = 'TGQS7Az399FFMavDBe37kEgw2jTlb0ZmdVkwhNjy58c';
 
 const VehicleTracking = ({ networkStatus }) => {
   const mapContainerRef = useRef(null);
@@ -23,32 +21,15 @@ const VehicleTracking = ({ networkStatus }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [showDetailsPanel, setShowDetailsPanel] = useState(false);
   const [filterValue, setFilterValue] = useState('');
-  const [animationsModeEnabled, setAnimationsModeEnabled] = useState(true);
   const [notificationCount, setNotificationCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [mapInitialized, setMapInitialized] = useState(false);
-  const [view3DEnabled, setView3DEnabled] = useState(false);
   const [mapStyle, setMapStyle] = useState('normal');
   const [vehiclesLoaded, setVehiclesLoaded] = useState(false);
   
-  // Load map library when component mounts
+  // Load map when component mounts
   useEffect(() => {
-    const initMap = async () => {
-      try {
-        setMapLoading(true);
-        
-        // Initialize tracking system
-        await initializeTracking();
-        
-        setMapLoading(false);
-      } catch (error) {
-        console.error("Failed to initialize map:", error);
-        setError("Failed to initialize map: " + error.message);
-        setMapLoading(false);
-      }
-    };
-    
-    initMap();
+    initializeTracking();
     
     // Cleanup on unmount
     return () => {
@@ -95,9 +76,9 @@ const VehicleTracking = ({ networkStatus }) => {
       
       // Initialize the map
       if (mapContainerRef.current) {
-        // Try to initialize the map
-        const success = await mapService.initializeMap(mapContainerRef.current, HERE_API_KEY, {
-          center: [-74.006, 40.7128], // New York City
+        // Try to initialize the map - much simpler with Leaflet
+        const success = mapService.initializeMap(mapContainerRef.current, {
+          center: [35.937496, 14.375416], // Malta center coordinates
           zoom: 10,
           onMapLoaded: () => {
             setMapInitialized(true);
@@ -128,9 +109,12 @@ const VehicleTracking = ({ networkStatus }) => {
       if (vehiclesLoaded) {
         await fetchInitialVehicleLocations();
       }
+      
+      setMapLoading(false);
     } catch (err) {
       console.error('Error initializing tracking:', err);
       setError('Failed to initialize tracking system: ' + err.message);
+      setMapLoading(false);
     } finally {
       setLoading(false);
     }
@@ -369,21 +353,6 @@ const VehicleTracking = ({ networkStatus }) => {
     setNotifications([]);
     setNotificationCount(0);
   };
-
-  // Toggle vehicle animations
-  const toggleAnimations = () => {
-    setAnimationsModeEnabled(!animationsModeEnabled);
-  };
-  
-  // Toggle 3D view
-  const toggle3DView = () => {
-    const newState = !view3DEnabled;
-    setView3DEnabled(newState);
-    
-    if (mapInitialized) {
-      mapService.toggle3DView(newState);
-    }
-  };
   
   // Change map style
   const handleMapStyleChange = (e) => {
@@ -399,8 +368,8 @@ const VehicleTracking = ({ networkStatus }) => {
   const handleMapReload = () => {
     try {
       if (mapService) {
-        // Force map recenter to known location
-        mapService.recenterMap([-74.006, 40.7128], 10);
+        // Force map recenter to Malta
+        mapService.recenterMap();
         addNotification('Map reloaded successfully', 'success');
       } else {
         // If map service isn't available, try to reinitialize
@@ -583,8 +552,8 @@ const VehicleTracking = ({ networkStatus }) => {
             </div>
           )}
           
-          {/* Notifications section */}
-          <div className="notifications-section">
+{/* Notifications section */}
+<div className="notifications-section">
             <div className="notifications-header">
               <h4>
                 <i className="bi bi-bell"></i>
@@ -648,24 +617,7 @@ const VehicleTracking = ({ networkStatus }) => {
                 <option value="normal">Normal</option>
                 <option value="satellite">Satellite</option>
                 <option value="terrain">Terrain</option>
-                <option value="traffic">Traffic</option>
               </select>
-              
-              <button 
-                className={`control-button ${view3DEnabled ? 'active' : ''}`} 
-                onClick={toggle3DView}
-                title={view3DEnabled ? "Disable 3D View" : "Enable 3D View"}
-              >
-                <i className="bi bi-badge-3d"></i>
-              </button>
-              
-              <button 
-                className={`control-button ${animationsModeEnabled ? 'active' : ''}`} 
-                onClick={toggleAnimations}
-                title={animationsModeEnabled ? "Disable Animations" : "Enable Animations"}
-              >
-                <i className="bi bi-arrow-repeat"></i>
-              </button>
               
               <button 
                 className="control-button"

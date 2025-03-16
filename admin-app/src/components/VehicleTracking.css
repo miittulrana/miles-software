@@ -1,9 +1,10 @@
 /* admin-app/src/components/VehicleTracking.css */
+/* Simplified for Leaflet map focused on Malta */
 
 .vehicle-tracking-container {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Explicit full viewport height */
+    height: 100vh;
     width: 100%;
     position: relative;
   }
@@ -336,7 +337,7 @@
     margin-bottom: 8px;
   }
   
-  /* Map container - UPDATED FOR HERE MAPS */
+  /* Map container - for Leaflet */
   .map-container {
     flex: 1;
     position: relative;
@@ -356,21 +357,6 @@
     width: 100% !important;
     height: 100% !important;
     z-index: 1;
-  }
-  
-  /* HERE Map styling */
-  .H_ui {
-    z-index: 5 !important;
-  }
-  
-  .H_imprint {
-    display: none; /* Hide the HERE watermark if needed */
-  }
-  
-  /* Force HERE Map containers to fill the space */
-  .H_map {
-    width: 100% !important;
-    height: 100% !important;
   }
   
   .map-loading {
@@ -435,21 +421,16 @@
     border-color: #007bff;
   }
   
-  /* Animation for moving vehicles */
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+  /* Leaflet specific styles */
+  .vehicle-marker {
+    background: transparent !important;
+    border: none !important;
   }
   
-  /* Force hardware acceleration for all map-related elements */
-  .map-container, 
-  .map-content, 
-  .H_map {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
-    -webkit-font-smoothing: antialiased;
+  /* Fix Leaflet marker icon issues */
+  .leaflet-div-icon {
+    background: transparent;
+    border: none;
   }
   
   /* Responsive adjustments */

@@ -6,23 +6,6 @@ const path = require('path');
 let mainWindow;
 
 function createWindow() {
-  // Set custom CSP rules
-  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-    callback({
-      responseHeaders: {
-        ...details.responseHeaders,
-        'Content-Security-Policy': [
-          "default-src 'self'; " +
-          "script-src 'self'; " +
-          "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " + 
-          "font-src 'self' https://cdn.jsdelivr.net; " +
-          "connect-src 'self' https://srhjbbtpedfsqmfrizzn.supabase.co wss://srhjbbtpedfsqmfrizzn.supabase.co; " +
-          "img-src 'self' data: blob:;"
-        ]
-      }
-    })
-  });
-
   // Create the browser window with proper preload and security settings
   mainWindow = new BrowserWindow({
     width: 1200,
