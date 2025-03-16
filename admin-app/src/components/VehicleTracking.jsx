@@ -7,10 +7,11 @@ import socketService from '../services/socketService';
 import VehicleDetailsPanel from './tracking/VehicleDetailsPanel';
 import './VehicleTracking.css';
 
-// Mapbox token
-const MAPBOX_TOKEN = 'sk.eyJ1IjoicmFuYWppNSIsImEiOiJjbThhd2hkenUxbW1yMmtzZm1qcHRodXI2In0.A9_ke0F5JrP5OYHd0tAVkg';
+// Updated: Use a public token (pk.) instead of secret key (sk.)
+// Replace this with your own public Mapbox token
+const MAPBOX_TOKEN = 'pk.eyJ1IjoicmFuYWppNSIsImEiOiJjbGZzemJqZWYwMGV0M29wYjFjeHQ5MnR2In0.cM3GwYflKjAIfuZ7MBJMQA';
 
-const VehicleTracking = () => {
+const VehicleTracking = ({ networkStatus }) => {
   const mapContainerRef = useRef(null);
   const [vehicles, setVehicles] = useState([]);
   const [activeVehicles, setActiveVehicles] = useState([]);
@@ -28,6 +29,7 @@ const VehicleTracking = () => {
   const [mapInitialized, setMapInitialized] = useState(false);
   const [view3DEnabled, setView3DEnabled] = useState(true);
   const [mapStyle, setMapStyle] = useState('streets-v11');
+  const [vehiclesLoaded, setVehiclesLoaded] = useState(false);
   
   // Initialize map and socket connection
   useEffect(() => {
@@ -40,9 +42,11 @@ const VehicleTracking = () => {
     };
   }, []);
   
-  // Update map when active vehicles change
+  // Update map when active vehicles change - only after vehicles are loaded
   useEffect(() => {
-    if (!mapInitialized || !activeVehicles.length) return;
+    if (!mapInitialized || !activeVehicles.length || !vehiclesLoaded) return;
+    
+    console.log("Updating vehicle markers on map:", activeVehicles.length);
     
     // Update each vehicle marker on the map
     activeVehicles.forEach(vehicle => {
@@ -51,11 +55,11 @@ const VehicleTracking = () => {
         mapService.updateVehicleMarker(vehicle, location);
       }
     });
-  }, [activeVehicles, vehicleLocations, mapInitialized]);
+  }, [activeVehicles, vehicleLocations, mapInitialized, vehiclesLoaded]);
   
   // Update selected vehicle info when selection changes
   useEffect(() => {
-    if (selectedVehicleId) {
+    if (selectedVehicleId && vehicles.length > 0) {
       // Find the vehicle info
       const vehicle = vehicles.find(v => v.id === selectedVehicleId);
       if (vehicle) {
@@ -78,6 +82,8 @@ const VehicleTracking = () => {
       
       // Initialize the map with Mapbox
       if (mapContainerRef.current && !mapInitialized) {
+        console.log("Initializing map with container:", mapContainerRef.current);
+        
         mapService.initializeMap(mapContainerRef.current, MAPBOX_TOKEN, {
           center: [14.5, 35.9], // Malta center
           zoom: 11,
@@ -85,6 +91,7 @@ const VehicleTracking = () => {
           mapStyle: `mapbox://styles/mapbox/${mapStyle}`,
           show3DBuildings: view3DEnabled,
           onMapLoaded: () => {
+            console.log("Map loaded successfully");
             setMapInitialized(true);
           }
         });
@@ -95,14 +102,16 @@ const VehicleTracking = () => {
         });
       }
       
-      // Load all vehicles
+      // Load all vehicles first
       await fetchVehicles();
       
-      // Connect to socket server
+      // Then connect to socket server
       connectToSocketServer();
       
-      // Load initial vehicle locations
-      await fetchInitialVehicleLocations();
+      // Then load initial vehicle locations - after vehicles are loaded
+      if (vehiclesLoaded) {
+        await fetchInitialVehicleLocations();
+      }
       
     } catch (err) {
       console.error('Error initializing tracking:', err);
@@ -140,7 +149,7 @@ const VehicleTracking = () => {
     
     // Handle vehicle location updates
     socketService.addEventListener('vehicle_location', (locationData) => {
-      if (!locationData.vehicle_id) return;
+      if (!locationData || !locationData.vehicle_id) return;
       
       setVehicleLocations(prev => ({
         ...prev,
@@ -150,7 +159,7 @@ const VehicleTracking = () => {
     
     // Handle vehicle status changes (online/offline)
     socketService.addEventListener('vehicle_status_change', (statusData) => {
-      if (!statusData.vehicleId) return;
+      if (!statusData || !statusData.vehicleId) return;
       
       // Update active vehicles list
       if (statusData.status === 'online') {
@@ -186,9 +195,17 @@ const VehicleTracking = () => {
     });
   };
   
-  // Fetch all vehicles from Supabase
+  // Fetch all vehicles from Supabase - IMPROVED ERROR HANDLING
   const fetchVehicles = async () => {
     try {
+      console.log("Fetching vehicles data...");
+      
+      // Check network status first
+      if (!networkStatus.online) {
+        console.log("Network is offline, using cached vehicles if available");
+        return;
+      }
+      
       const { data, error } = await supabase
         .from('vehicles')
         .select(`
@@ -202,18 +219,46 @@ const VehicleTracking = () => {
           users:assigned_driver_id(id, full_name, email, phone)
         `);
       
-      if (error) throw error;
+      if (error) {
+        throw new Error(`Database error: ${error.message}`);
+      }
       
-      setVehicles(data || []);
+      if (!data) {
+        console.log("No vehicles data returned from database");
+        setVehicles([]);
+      } else {
+        console.log(`Loaded ${data.length} vehicles from database`);
+        setVehicles(data);
+      }
+      
+      setVehiclesLoaded(true);
+      
+      // Now that vehicles are loaded, we can fetch locations
+      await fetchInitialVehicleLocations();
+      
     } catch (err) {
       console.error('Error fetching vehicles:', err);
-      setError('Failed to load vehicles. Please try again.');
+      setError(`Failed to load vehicles: ${err.message}`);
+      setVehiclesLoaded(false);  // Mark as not loaded on error
     }
   };
   
-  // Fetch initial vehicle locations
+  // Fetch initial vehicle locations - COMPLETELY REWORKED WITH ROBUST ERROR HANDLING
   const fetchInitialVehicleLocations = async () => {
+    if (!vehiclesLoaded || vehicles.length === 0) {
+      console.log("Skipping location fetch - vehicles not loaded yet");
+      return;
+    }
+    
     try {
+      console.log("Fetching initial vehicle locations...");
+      
+      // Check network status first
+      if (!networkStatus.online) {
+        console.log("Network is offline, skipping location fetch");
+        return;
+      }
+      
       // Fetch the most recent location for each vehicle
       const { data, error } = await supabase
         .from('vehicle_locations')
@@ -232,12 +277,26 @@ const VehicleTracking = () => {
         `)
         .order('timestamp', { ascending: false });
       
-      if (error) throw error;
+      if (error) {
+        throw new Error(`Database error: ${error.message}`);
+      }
+      
+      if (!data || data.length === 0) {
+        console.log("No vehicle location data found in database");
+        return;
+      }
+      
+      console.log(`Loaded ${data.length} location records from database`);
       
       // Process to get the latest location for each vehicle
       const latestLocations = {};
       
       data.forEach(location => {
+        if (!location.vehicle_id) {
+          console.warn("Found location record without vehicle_id, skipping", location);
+          return;
+        }
+        
         if (!latestLocations[location.vehicle_id] || 
             new Date(location.timestamp) > new Date(latestLocations[location.vehicle_id].timestamp)) {
           latestLocations[location.vehicle_id] = location;
@@ -258,17 +317,22 @@ const VehicleTracking = () => {
         }
       });
       
+      console.log(`Found ${Object.keys(recentLocations).length} recent vehicle locations`);
+      
       // Update states
       setVehicleLocations(recentLocations);
       
       // Set active vehicles based on recent locations
-      if (activeVehicleIds.length > 0) {
-        const activeVehiclesList = vehicles.filter(v => activeVehicleIds.includes(v.id));
+      if (activeVehicleIds.length > 0 && vehicles.length > 0) {
+        const activeVehiclesList = vehicles.filter(v => v && v.id && activeVehicleIds.includes(v.id));
+        console.log(`Setting ${activeVehiclesList.length} active vehicles`);
         setActiveVehicles(activeVehiclesList);
+      } else {
+        console.log("No active vehicles found with recent locations");
       }
     } catch (err) {
+      // Log error but don't show to user - non-critical feature
       console.error('Error fetching initial vehicle locations:', err);
-      // Don't show error to user, as this is not critical
     }
   };
   
@@ -283,7 +347,7 @@ const VehicleTracking = () => {
     setShowDetailsPanel(false);
     mapService.selectVehicle(null);
   };
-  
+
   // Add a notification
   const addNotification = (message, type = 'info') => {
     const notification = {
@@ -296,13 +360,13 @@ const VehicleTracking = () => {
     setNotifications(prev => [notification, ...prev].slice(0, 10));
     setNotificationCount(prev => prev + 1);
   };
-  
+
   // Clear all notifications
   const clearNotifications = () => {
     setNotifications([]);
     setNotificationCount(0);
   };
-  
+
   // Toggle vehicle animations
   const toggleAnimations = () => {
     setAnimationsModeEnabled(!animationsModeEnabled);
@@ -313,7 +377,7 @@ const VehicleTracking = () => {
     const newState = !view3DEnabled;
     setView3DEnabled(newState);
     
-    if (mapInitialized && map.current) {
+    if (mapInitialized && mapService.map) {
       // Update map pitch
       mapService.map.setPitch(newState ? 45 : 0);
       
@@ -333,7 +397,7 @@ const VehicleTracking = () => {
     const newStyle = e.target.value;
     setMapStyle(newStyle);
     
-    if (mapInitialized) {
+    if (mapInitialized && mapService.map) {
       mapService.map.setStyle(`mapbox://styles/mapbox/${newStyle}`);
       
       // Re-add 3D buildings if needed
@@ -353,32 +417,37 @@ const VehicleTracking = () => {
     
     return vehicles.filter(vehicle => {
       // Check registration number
-      if (vehicle.registration_number.toLowerCase().includes(searchTerm)) return true;
+      if (vehicle.registration_number && vehicle.registration_number.toLowerCase().includes(searchTerm)) return true;
       
       // Check make/model
-      if (`${vehicle.make} ${vehicle.model}`.toLowerCase().includes(searchTerm)) return true;
+      if (vehicle.make && vehicle.model && 
+          `${vehicle.make} ${vehicle.model}`.toLowerCase().includes(searchTerm)) return true;
       
       // Check driver name if assigned
-      if (vehicle.users && vehicle.users.full_name.toLowerCase().includes(searchTerm)) return true;
+      if (vehicle.users && vehicle.users.full_name && 
+          vehicle.users.full_name.toLowerCase().includes(searchTerm)) return true;
       
       return false;
     });
   };
   
-  // Filter for active vehicles only
+  // Filter for active vehicles only - IMPROVED NULL CHECKING
   const getActiveVehicleIds = () => {
-    return activeVehicles.map(v => v.id);
+    return activeVehicles.filter(v => v && v.id).map(v => v.id);
   };
   
   // Determine if vehicle is currently moving
   const isVehicleMoving = (vehicleId) => {
+    if (!vehicleId) return false;
     const location = vehicleLocations[vehicleId];
     return location?.is_moving || false;
   };
   
   // Get vehicle color (for consistency in list and map)
   const getVehicleColor = (vehicleId) => {
-    const index = vehicles.findIndex(v => v.id === vehicleId);
+    if (!vehicleId) return '#777777';
+    
+    const index = vehicles.findIndex(v => v && v.id === vehicleId);
     if (index === -1) return '#777777';
     
     const colors = [
@@ -439,6 +508,8 @@ const VehicleTracking = () => {
           ) : (
             <div className="vehicle-list">
               {getFilteredVehicles().map((vehicle) => {
+                if (!vehicle || !vehicle.id) return null;
+                
                 const isActive = getActiveVehicleIds().includes(vehicle.id);
                 const isMoving = isVehicleMoving(vehicle.id);
                 const vehicleLocation = vehicleLocations[vehicle.id];
@@ -456,10 +527,10 @@ const VehicleTracking = () => {
                     
                     <div className="vehicle-item-details">
                       <div className="vehicle-item-name">
-                        {vehicle.registration_number}
+                        {vehicle.registration_number || 'Unknown'}
                       </div>
                       <div className="vehicle-item-info">
-                        {vehicle.make} {vehicle.model}
+                        {vehicle.make || ''} {vehicle.model || ''}
                       </div>
                       <div className="vehicle-item-driver">
                         {vehicle.users ? vehicle.users.full_name : 'No Driver'}
@@ -598,6 +669,7 @@ const VehicleTracking = () => {
             <div 
               ref={mapContainerRef} 
               className="map-content"
+              style={{ height: "calc(100vh - 60px)" }}  // Explicit height added here
             />
           )}
           

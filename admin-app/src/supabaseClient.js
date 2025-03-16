@@ -36,6 +36,18 @@ export const getCurrentUser = async () => {
   }
 };
 
+// Add this function that was referenced but missing
+export const validateSession = async () => {
+  try {
+    const { data, error } = await supabase.auth.getSession();
+    if (error) return false;
+    return !!data.session; // Return true if session exists, false otherwise
+  } catch (error) {
+    console.error('Error validating session:', error);
+    return false;
+  }
+};
+
 // Helper to check if user is admin
 export const isUserAdmin = async () => {
   try {
