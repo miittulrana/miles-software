@@ -52858,8 +52858,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Dashboard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Dashboard */ "./src/components/Dashboard.jsx");
 /* harmony import */ var _IssueReporting__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./IssueReporting */ "./src/components/IssueReporting.jsx");
 /* harmony import */ var _ApiKeys__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ApiKeys */ "./src/components/ApiKeys.jsx");
-/* harmony import */ var _DocumentManagement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./DocumentManagement */ "./src/components/DocumentManagement.jsx");
-/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Login */ "./src/components/Login.jsx");
+/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Login */ "./src/components/Login.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -52880,7 +52879,6 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 // Import components
-
 
 
 
@@ -53161,7 +53159,7 @@ var App = function App() {
 
   // Show login screen if not authenticated
   if (!session) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Login__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Login__WEBPACK_IMPORTED_MODULE_8__["default"], {
       networkStatus: networkStatus,
       onNetworkCheck: checkNetworkConnection
     });
@@ -53188,10 +53186,6 @@ var App = function App() {
     id: 'issues',
     label: 'Issue Reporting',
     icon: 'bi-exclamation-triangle'
-  }, {
-    id: 'documents',
-    label: 'Documents',
-    icon: 'bi-file-earmark'
   }, {
     id: 'api',
     label: 'API Keys',
@@ -53223,11 +53217,6 @@ var App = function App() {
       break;
     case 'api':
       content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ApiKeys__WEBPACK_IMPORTED_MODULE_7__["default"], {
-        networkStatus: networkStatus
-      });
-      break;
-    case 'documents':
-      content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DocumentManagement__WEBPACK_IMPORTED_MODULE_8__["default"], {
         networkStatus: networkStatus
       });
       break;
@@ -53611,595 +53600,6 @@ var Dashboard = function Dashboard() {
   }))))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Dashboard);
-
-/***/ }),
-
-/***/ "./src/components/DocumentManagement.jsx":
-/*!***********************************************!*\
-  !*** ./src/components/DocumentManagement.jsx ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Alert.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Spinner.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Card.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Table.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Badge.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Form.js");
-/* harmony import */ var _supabaseClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../supabaseClient */ "./src/supabaseClient.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-// admin-app/src/components/DocumentManagement.jsx
-
-
-
-var DocumentManagement = function DocumentManagement() {
-  var _selectedDocument$fil;
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState2 = _slicedToArray(_useState, 2),
-    documents = _useState2[0],
-    setDocuments = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState4 = _slicedToArray(_useState3, 2),
-    vehicles = _useState4[0],
-    setVehicles = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState6 = _slicedToArray(_useState5, 2),
-    drivers = _useState6[0],
-    setDrivers = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState8 = _slicedToArray(_useState7, 2),
-    loading = _useState8[0],
-    setLoading = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState10 = _slicedToArray(_useState9, 2),
-    error = _useState10[0],
-    setError = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState12 = _slicedToArray(_useState11, 2),
-    successMessage = _useState12[0],
-    setSuccessMessage = _useState12[1];
-
-  // Upload state
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState14 = _slicedToArray(_useState13, 2),
-    showUploadModal = _useState14[0],
-    setShowUploadModal = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState16 = _slicedToArray(_useState15, 2),
-    uploadLoading = _useState16[0],
-    setUploadLoading = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('vehicle'),
-    _useState18 = _slicedToArray(_useState17, 2),
-    documentType = _useState18[0],
-    setDocumentType = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState20 = _slicedToArray(_useState19, 2),
-    relatedId = _useState20[0],
-    setRelatedId = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState22 = _slicedToArray(_useState21, 2),
-    docName = _useState22[0],
-    setDocName = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState24 = _slicedToArray(_useState23, 2),
-    docType = _useState24[0],
-    setDocType = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState26 = _slicedToArray(_useState25, 2),
-    docFile = _useState26[0],
-    setDocFile = _useState26[1];
-
-  // View state
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState28 = _slicedToArray(_useState27, 2),
-    showViewModal = _useState28[0],
-    setShowViewModal = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState30 = _slicedToArray(_useState29, 2),
-    selectedDocument = _useState30[0],
-    setSelectedDocument = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState32 = _slicedToArray(_useState31, 2),
-    documentUrl = _useState32[0],
-    setDocumentUrl = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState34 = _slicedToArray(_useState33, 2),
-    viewLoading = _useState34[0],
-    setViewLoading = _useState34[1];
-
-  // Fetch data on component mount
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    var fetchData = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var _yield$supabase$from$, docsData, docsError, _yield$supabase$from$2, vehiclesData, vehiclesError, _yield$supabase$from$3, driversData, driversError;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              setLoading(true);
-              setError(null);
-
-              // Fetch documents
-              _context.next = 5;
-              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('documents').select("\n            id,\n            name,\n            type,\n            file_path,\n            created_at,\n            vehicle_id,\n            driver_id,\n            vehicles (id, registration_number, make, model),\n            users (id, full_name, email)\n          ").order('created_at', {
-                ascending: false
-              });
-            case 5:
-              _yield$supabase$from$ = _context.sent;
-              docsData = _yield$supabase$from$.data;
-              docsError = _yield$supabase$from$.error;
-              if (!docsError) {
-                _context.next = 10;
-                break;
-              }
-              throw docsError;
-            case 10:
-              _context.next = 12;
-              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicles').select('id, registration_number, make, model').order('registration_number', {
-                ascending: true
-              });
-            case 12:
-              _yield$supabase$from$2 = _context.sent;
-              vehiclesData = _yield$supabase$from$2.data;
-              vehiclesError = _yield$supabase$from$2.error;
-              if (!vehiclesError) {
-                _context.next = 17;
-                break;
-              }
-              throw vehiclesError;
-            case 17:
-              _context.next = 19;
-              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('id, full_name, email').eq('role', 'driver').order('full_name', {
-                ascending: true
-              });
-            case 19:
-              _yield$supabase$from$3 = _context.sent;
-              driversData = _yield$supabase$from$3.data;
-              driversError = _yield$supabase$from$3.error;
-              if (!driversError) {
-                _context.next = 24;
-                break;
-              }
-              throw driversError;
-            case 24:
-              setDocuments(docsData || []);
-              setVehicles(vehiclesData || []);
-              setDrivers(driversData || []);
-              _context.next = 33;
-              break;
-            case 29:
-              _context.prev = 29;
-              _context.t0 = _context["catch"](0);
-              console.error('Error fetching data:', _context.t0);
-              setError('Failed to load documents. Please try again.');
-            case 33:
-              _context.prev = 33;
-              setLoading(false);
-              return _context.finish(33);
-            case 36:
-            case "end":
-              return _context.stop();
-          }
-        }, _callee, null, [[0, 29, 33, 36]]);
-      }));
-      return function fetchData() {
-        return _ref.apply(this, arguments);
-      };
-    }();
-    fetchData();
-
-    // Subscribe to document changes
-    var subscription = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.channel('public:documents').on('postgres_changes', {
-      event: '*',
-      schema: 'public',
-      table: 'documents'
-    }, function () {
-      fetchData();
-    }).subscribe();
-    return function () {
-      subscription.unsubscribe();
-    };
-  }, []);
-  var handleUpload = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-      var fileExt, fileName, filePath, _yield$supabase$stora, uploadError, _yield$supabase$from$4, insertError;
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
-          case 0:
-            e.preventDefault();
-            if (docFile) {
-              _context2.next = 4;
-              break;
-            }
-            setError('Please select a file to upload');
-            return _context2.abrupt("return");
-          case 4:
-            _context2.prev = 4;
-            setUploadLoading(true);
-            setError(null);
-
-            // Upload file to storage
-            fileExt = docFile.name.split('.').pop();
-            fileName = "".concat(Date.now(), ".").concat(fileExt);
-            filePath = "documents/".concat(fileName);
-            _context2.next = 12;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').upload(filePath, docFile);
-          case 12:
-            _yield$supabase$stora = _context2.sent;
-            uploadError = _yield$supabase$stora.error;
-            if (!uploadError) {
-              _context2.next = 16;
-              break;
-            }
-            throw uploadError;
-          case 16:
-            _context2.next = 18;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('documents').insert({
-              name: docName,
-              type: docType,
-              file_path: filePath,
-              vehicle_id: documentType === 'vehicle' ? relatedId : null,
-              driver_id: documentType === 'driver' ? relatedId : null
-            });
-          case 18:
-            _yield$supabase$from$4 = _context2.sent;
-            insertError = _yield$supabase$from$4.error;
-            if (!insertError) {
-              _context2.next = 22;
-              break;
-            }
-            throw insertError;
-          case 22:
-            // Reset form and close modal
-            setDocName('');
-            setDocType('');
-            setDocFile(null);
-            setRelatedId('');
-            setShowUploadModal(false);
-
-            // Show success message
-            setSuccessMessage('Document uploaded successfully!');
-            setTimeout(function () {
-              return setSuccessMessage(null);
-            }, 3000);
-            _context2.next = 35;
-            break;
-          case 31:
-            _context2.prev = 31;
-            _context2.t0 = _context2["catch"](4);
-            console.error('Error uploading document:', _context2.t0);
-            setError('Failed to upload document. Please try again.');
-          case 35:
-            _context2.prev = 35;
-            setUploadLoading(false);
-            return _context2.finish(35);
-          case 38:
-          case "end":
-            return _context2.stop();
-        }
-      }, _callee2, null, [[4, 31, 35, 38]]);
-    }));
-    return function handleUpload(_x) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-  var handleViewDocument = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(document) {
-      var _yield$supabase$stora2, data, _error;
-      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-        while (1) switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.prev = 0;
-            setSelectedDocument(document);
-            setViewLoading(true);
-            setShowViewModal(true);
-
-            // Get document URL
-            _context3.next = 6;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').createSignedUrl(document.file_path, 60);
-          case 6:
-            _yield$supabase$stora2 = _context3.sent;
-            data = _yield$supabase$stora2.data;
-            _error = _yield$supabase$stora2.error;
-            if (!_error) {
-              _context3.next = 11;
-              break;
-            }
-            throw _error;
-          case 11:
-            setDocumentUrl(data.signedUrl);
-            _context3.next = 19;
-            break;
-          case 14:
-            _context3.prev = 14;
-            _context3.t0 = _context3["catch"](0);
-            console.error('Error getting document URL:', _context3.t0);
-            setError('Failed to retrieve document. Please try again.');
-            setShowViewModal(false);
-          case 19:
-            _context3.prev = 19;
-            setViewLoading(false);
-            return _context3.finish(19);
-          case 22:
-          case "end":
-            return _context3.stop();
-        }
-      }, _callee3, null, [[0, 14, 19, 22]]);
-    }));
-    return function handleViewDocument(_x2) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-  var handleDeleteDocument = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(id) {
-      var _yield$supabase$from$5, document, fetchError, _yield$supabase$stora3, storageError, _yield$supabase$from$6, deleteError;
-      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-        while (1) switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.prev = 0;
-            _context4.next = 3;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('documents').select('file_path').eq('id', id).single();
-          case 3:
-            _yield$supabase$from$5 = _context4.sent;
-            document = _yield$supabase$from$5.data;
-            fetchError = _yield$supabase$from$5.error;
-            if (!fetchError) {
-              _context4.next = 8;
-              break;
-            }
-            throw fetchError;
-          case 8:
-            _context4.next = 10;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').remove([document.file_path]);
-          case 10:
-            _yield$supabase$stora3 = _context4.sent;
-            storageError = _yield$supabase$stora3.error;
-            if (!storageError) {
-              _context4.next = 14;
-              break;
-            }
-            throw storageError;
-          case 14:
-            _context4.next = 16;
-            return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('documents')["delete"]().eq('id', id);
-          case 16:
-            _yield$supabase$from$6 = _context4.sent;
-            deleteError = _yield$supabase$from$6.error;
-            if (!deleteError) {
-              _context4.next = 20;
-              break;
-            }
-            throw deleteError;
-          case 20:
-            // Show success message
-            setSuccessMessage('Document deleted successfully!');
-            setTimeout(function () {
-              return setSuccessMessage(null);
-            }, 3000);
-            _context4.next = 28;
-            break;
-          case 24:
-            _context4.prev = 24;
-            _context4.t0 = _context4["catch"](0);
-            console.error('Error deleting document:', _context4.t0);
-            setError('Failed to delete document. Please try again.');
-          case 28:
-          case "end":
-            return _context4.stop();
-        }
-      }, _callee4, null, [[0, 24]]);
-    }));
-    return function handleDeleteDocument(_x3) {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "d-flex justify-content-between align-items-center mb-4"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Document Management"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    variant: "primary",
-    onClick: function onClick() {
-      return setShowUploadModal(true);
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
-    className: "bi bi-plus-lg me-1"
-  }), " Upload Document")), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    variant: "danger"
-  }, error), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    variant: "success"
-  }, successMessage), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "text-center my-5"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    animation: "border",
-    role: "status"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    className: "visually-hidden"
-  }, "Loading..."))) : documents.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    variant: "info"
-  }, "No documents found. Upload your first document to get started.") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    responsive: true,
-    hover: true,
-    className: "mb-0"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Related To"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Uploaded"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("th", null, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tbody", null, documents.map(function (doc) {
-    var _doc$vehicles, _doc$vehicles2, _doc$vehicles3, _doc$users;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
-      key: doc.id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, doc.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], {
-      bg: "info"
-    }, doc.type)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, doc.vehicle_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      className: "text-primary"
-    }, "\uD83D\uDE9A ", (_doc$vehicles = doc.vehicles) === null || _doc$vehicles === void 0 ? void 0 : _doc$vehicles.registration_number, " (", (_doc$vehicles2 = doc.vehicles) === null || _doc$vehicles2 === void 0 ? void 0 : _doc$vehicles2.make, " ", (_doc$vehicles3 = doc.vehicles) === null || _doc$vehicles3 === void 0 ? void 0 : _doc$vehicles3.model, ")") : doc.driver_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      className: "text-success"
-    }, "\uD83D\uDC64 ", (_doc$users = doc.users) === null || _doc$users === void 0 ? void 0 : _doc$users.full_name) : 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, new Date(doc.created_at).toLocaleDateString()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      variant: "outline-primary",
-      size: "sm",
-      className: "me-2",
-      onClick: function onClick() {
-        return handleViewDocument(doc);
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
-      className: "bi bi-eye"
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      variant: "outline-danger",
-      size: "sm",
-      onClick: function onClick() {
-        return handleDeleteDocument(doc.id);
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
-      className: "bi bi-trash"
-    }))));
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
-    show: showUploadModal,
-    onHide: function onHide() {
-      return setShowUploadModal(false);
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"].Header, {
-    closeButton: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"].Title, null, "Upload Document")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"].Body, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"], {
-    onSubmit: handleUpload
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Group, {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Label, null, "Document Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Control, {
-    type: "text",
-    value: docName,
-    onChange: function onChange(e) {
-      return setDocName(e.target.value);
-    },
-    required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Group, {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Label, null, "Document Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Control, {
-    type: "text",
-    value: docType,
-    onChange: function onChange(e) {
-      return setDocType(e.target.value);
-    },
-    placeholder: "e.g. Insurance, Logbook, Registration",
-    required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Group, {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Label, null, "Related To"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Select, {
-    value: documentType,
-    onChange: function onChange(e) {
-      return setDocumentType(e.target.value);
-    },
-    className: "mb-2"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "vehicle"
-  }, "Vehicle"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: "driver"
-  }, "Driver")), documentType === 'vehicle' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Select, {
-    value: relatedId,
-    onChange: function onChange(e) {
-      return setRelatedId(e.target.value);
-    },
-    required: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: ""
-  }, "Select Vehicle"), vehicles.map(function (vehicle) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-      key: vehicle.id,
-      value: vehicle.id
-    }, vehicle.registration_number, " (", vehicle.make, " ", vehicle.model, ")");
-  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Select, {
-    value: relatedId,
-    onChange: function onChange(e) {
-      return setRelatedId(e.target.value);
-    },
-    required: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-    value: ""
-  }, "Select Driver"), drivers.map(function (driver) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
-      key: driver.id,
-      value: driver.id
-    }, driver.full_name, " (", driver.email, ")");
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Group, {
-    className: "mb-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Label, null, "File"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Control, {
-    type: "file",
-    onChange: function onChange(e) {
-      return setDocFile(e.target.files[0]);
-    },
-    required: true
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["default"].Text, {
-    className: "text-muted"
-  }, "Supported formats: PDF, JPG, PNG (max 5MB)")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"].Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    variant: "secondary",
-    onClick: function onClick() {
-      return setShowUploadModal(false);
-    }
-  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    variant: "primary",
-    onClick: handleUpload,
-    disabled: uploadLoading
-  }, uploadLoading ? 'Uploading...' : 'Upload Document'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
-    show: showViewModal,
-    onHide: function onHide() {
-      return setShowViewModal(false);
-    },
-    size: "lg"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"].Header, {
-    closeButton: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"].Title, null, selectedDocument === null || selectedDocument === void 0 ? void 0 : selectedDocument.name, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], {
-    bg: "info",
-    className: "ms-2"
-  }, selectedDocument === null || selectedDocument === void 0 ? void 0 : selectedDocument.type))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"].Body, null, viewLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "text-center my-5"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    animation: "border",
-    role: "status"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    className: "visually-hidden"
-  }, "Loading document..."))) : documentUrl ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "text-center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, selectedDocument !== null && selectedDocument !== void 0 && (_selectedDocument$fil = selectedDocument.file_path) !== null && _selectedDocument$fil !== void 0 && _selectedDocument$fil.endsWith('.pdf') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("iframe", {
-    src: documentUrl,
-    width: "100%",
-    height: "500px",
-    title: selectedDocument === null || selectedDocument === void 0 ? void 0 : selectedDocument.name,
-    className: "border-0"
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: documentUrl,
-    alt: selectedDocument === null || selectedDocument === void 0 ? void 0 : selectedDocument.name,
-    style: {
-      maxWidth: '100%',
-      maxHeight: '500px'
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    variant: "primary",
-    href: documentUrl,
-    target: "_blank"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
-    className: "bi bi-download me-1"
-  }), " Download")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    variant: "warning"
-  }, "Failed to load document preview.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"].Footer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    variant: "secondary",
-    onClick: function onClick() {
-      return setShowViewModal(false);
-    }
-  }, "Close"))));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DocumentManagement);
 
 /***/ }),
 
@@ -58972,6 +58372,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 var VehicleCalendar = function VehicleCalendar(_ref) {
+  var _vehicles$find, _vehicles$find2, _vehicles$find3, _vehicles$find4, _vehicles$find5, _vehicles$find6, _vehicles$find7, _vehicles$find8, _vehicles$find9, _vehicles$find10;
   var onBack = _ref.onBack;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
@@ -59009,6 +58410,19 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
     _useState18 = _slicedToArray(_useState17, 2),
     showEventModal = _useState18[0],
     setShowEventModal = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState20 = _slicedToArray(_useState19, 2),
+    users = _useState20[0],
+    setUsers = _useState20[1]; // To store user data for assignments
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('month'),
+    _useState22 = _slicedToArray(_useState21, 2),
+    viewMode = _useState22[0],
+    setViewMode = _useState22[1]; // month or week
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState24 = _slicedToArray(_useState23, 2),
+    showTooltip = _useState24[0],
+    setShowTooltip = _useState24[1]; // For hover tooltips
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     fetchData();
 
@@ -59058,12 +58472,10 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
         }
       }
     };
-  }, [currentDate, selectedVehicle]);
-
-  // admin-app/src/components/vehicles/VehicleCalendar.jsx - fetchData function
+  }, [currentDate, selectedVehicle, viewMode]);
   var fetchData = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var vehiclesResult, startOfMonth, endOfMonth, startDateStr, endDateStr, assignmentsQuery, assignmentsResult, enhancedAssignments, blockedQuery, blockedResult;
+      var vehiclesResult, usersResult, userLookup, startDate, endDate, day, startDateStr, endDateStr, assignmentsQuery, assignmentsResult, enhancedAssignments, blockedQuery, blockedResult, enhancedBlockedPeriods;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -59088,85 +58500,146 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
           case 8:
             setVehicles(vehiclesResult.data || []);
 
-            // 2. Get assignments - simplified to avoid relationship issues
-            // Format dates for filtering
-            startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-            endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0, 23, 59, 59);
-            startDateStr = startOfMonth.toISOString();
-            endDateStr = endOfMonth.toISOString(); // Base assignments query
-            assignmentsQuery = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select('id, vehicle_id, driver_id, start_time, end_time, is_temporary, status').gte('start_time', startDateStr).lte('start_time', endDateStr); // Add vehicle filter if needed
+            // 2. Get users for reference (drivers and admins)
+            _context.next = 11;
+            return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
+              return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('users').select('id, full_name, email, role');
+            });
+          case 11:
+            usersResult = _context.sent;
+            if (!usersResult.error) {
+              _context.next = 14;
+              break;
+            }
+            throw new Error(usersResult.error.message || 'Failed to load users');
+          case 14:
+            // Create a lookup object for users
+            userLookup = {};
+            usersResult.data.forEach(function (user) {
+              userLookup[user.id] = user;
+            });
+            setUsers(userLookup);
+
+            // 3. Get assignments with expanded information
+            // Format dates for filtering based on view mode
+
+            if (viewMode === 'month') {
+              startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+              endDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0, 23, 59, 59);
+            } else if (viewMode === 'week') {
+              // Calculate the first day of the week (Sunday)
+              day = currentDate.getDay();
+              startDate = new Date(currentDate);
+              startDate.setDate(currentDate.getDate() - day);
+              startDate.setHours(0, 0, 0, 0);
+
+              // Calculate the last day of the week (Saturday)
+              endDate = new Date(startDate);
+              endDate.setDate(startDate.getDate() + 6);
+              endDate.setHours(23, 59, 59, 999);
+            }
+            startDateStr = startDate.toISOString();
+            endDateStr = endDate.toISOString(); // Base assignments query - get all assignments that overlap with the date range
+            assignmentsQuery = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_assignments').select("\n          id, \n          vehicle_id, \n          driver_id, \n          start_time, \n          end_time, \n          is_temporary, \n          status, \n          notes,\n          created_by,\n          created_at\n        ").or("start_time.lte.".concat(endDateStr, ",end_time.gte.").concat(startDateStr)); // Add vehicle filter if needed
             if (selectedVehicle !== 'all') {
               assignmentsQuery = assignmentsQuery.eq('vehicle_id', selectedVehicle);
             }
-            _context.next = 17;
+            _context.next = 24;
             return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
               return assignmentsQuery;
             });
-          case 17:
+          case 24:
             assignmentsResult = _context.sent;
             if (!assignmentsResult.error) {
-              _context.next = 20;
+              _context.next = 27;
               break;
             }
             throw new Error(assignmentsResult.error.message || 'Failed to load assignments');
-          case 20:
-            // Handle assignment relationships manually
+          case 27:
+            // Enhance assignments with user information
             enhancedAssignments = assignmentsResult.data.map(function (assignment) {
-              // Add user/driver details
-              // For simplicity, we're skipping driver details for now, but you would fetch users separately
-              // and map them here if needed
-
-              return _objectSpread({}, assignment);
+              // Find the driver and creator
+              var driver = userLookup[assignment.driver_id] || null;
+              var creator = userLookup[assignment.created_by] || null;
+              return _objectSpread(_objectSpread({}, assignment), {}, {
+                driver: driver,
+                creator: creator
+              });
             });
             setAssignments(enhancedAssignments || []);
 
-            // 3. Get blocked periods - simplified to avoid relationship issues
-            blockedQuery = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select('id, vehicle_id, start_date, end_date, reason');
+            // 4. Get blocked periods
+            blockedQuery = _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_blocked_periods').select("\n          id, \n          vehicle_id, \n          start_date, \n          end_date, \n          reason,\n          created_by\n        ").or("start_date.lte.".concat(endDateStr, ",end_date.gte.").concat(startDateStr));
             if (selectedVehicle !== 'all') {
               blockedQuery = blockedQuery.eq('vehicle_id', selectedVehicle);
             }
-            _context.next = 26;
+            _context.next = 33;
             return (0,_supabaseClient__WEBPACK_IMPORTED_MODULE_1__.executeQuery)(function () {
               return blockedQuery;
             });
-          case 26:
+          case 33:
             blockedResult = _context.sent;
             if (!blockedResult.error) {
-              _context.next = 29;
+              _context.next = 36;
               break;
             }
             throw new Error(blockedResult.error.message || 'Failed to load blocked periods');
-          case 29:
-            setBlockedPeriods(blockedResult.data || []);
-            _context.next = 36;
+          case 36:
+            // Enhance blocked periods with creator information
+            enhancedBlockedPeriods = blockedResult.data.map(function (block) {
+              var creator = userLookup[block.created_by] || null;
+              return _objectSpread(_objectSpread({}, block), {}, {
+                creator: creator
+              });
+            });
+            setBlockedPeriods(enhancedBlockedPeriods || []);
+            _context.next = 44;
             break;
-          case 32:
-            _context.prev = 32;
+          case 40:
+            _context.prev = 40;
             _context.t0 = _context["catch"](0);
             console.error('Error fetching calendar data:', _context.t0);
             setError('Failed to load calendar data. Please try again.');
-          case 36:
-            _context.prev = 36;
+          case 44:
+            _context.prev = 44;
             setLoading(false);
-            return _context.finish(36);
-          case 39:
+            return _context.finish(44);
+          case 47:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 32, 36, 39]]);
+      }, _callee, null, [[0, 40, 44, 47]]);
     }));
     return function fetchData() {
       return _ref2.apply(this, arguments);
     };
   }();
   var handlePreviousMonth = function handlePreviousMonth() {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+    if (viewMode === 'month') {
+      setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+    } else if (viewMode === 'week') {
+      var newDate = new Date(currentDate);
+      newDate.setDate(currentDate.getDate() - 7);
+      setCurrentDate(newDate);
+    }
   };
   var handleNextMonth = function handleNextMonth() {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    if (viewMode === 'month') {
+      setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    } else if (viewMode === 'week') {
+      var newDate = new Date(currentDate);
+      newDate.setDate(currentDate.getDate() + 7);
+      setCurrentDate(newDate);
+    }
   };
   var handleVehicleSelect = function handleVehicleSelect(e) {
     setSelectedVehicle(e.target.value);
+  };
+  var handleViewModeChange = function handleViewModeChange(mode) {
+    setViewMode(mode);
+  };
+  var handleJumpToToday = function handleJumpToToday() {
+    setCurrentDate(new Date());
   };
   var showEventDetails = function showEventDetails(event) {
     setSelectedEvent(event);
@@ -59183,24 +58656,38 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
     return new Date(year, month, 1).getDay();
   };
 
-  // Generate calendar days
+  // Generate calendar days based on view mode
   var generateCalendarDays = function generateCalendarDays() {
-    var year = currentDate.getFullYear();
-    var month = currentDate.getMonth();
-    var daysInMonth = getDaysInMonth(year, month);
-    var firstDayOfMonth = getFirstDayOfMonth(year, month);
-    var days = [];
+    if (viewMode === 'month') {
+      var year = currentDate.getFullYear();
+      var month = currentDate.getMonth();
+      var daysInMonth = getDaysInMonth(year, month);
+      var firstDayOfMonth = getFirstDayOfMonth(year, month);
+      var days = [];
 
-    // Add empty cells for days before the 1st of the month
-    for (var i = 0; i < firstDayOfMonth; i++) {
-      days.push(null);
-    }
+      // Add empty cells for days before the 1st of the month
+      for (var i = 0; i < firstDayOfMonth; i++) {
+        days.push(null);
+      }
 
-    // Add days of the month
-    for (var _i = 1; _i <= daysInMonth; _i++) {
-      days.push(_i);
+      // Add days of the month
+      for (var _i = 1; _i <= daysInMonth; _i++) {
+        days.push(_i);
+      }
+      return days;
+    } else if (viewMode === 'week') {
+      var _days = [];
+      var day = currentDate.getDay();
+      var weekStart = new Date(currentDate);
+      weekStart.setDate(currentDate.getDate() - day);
+      for (var _i2 = 0; _i2 < 7; _i2++) {
+        var date = new Date(weekStart);
+        date.setDate(weekStart.getDate() + _i2);
+        _days.push(date);
+      }
+      return _days;
     }
-    return days;
+    return [];
   };
 
   // Check if a vehicle has events on a specific day
@@ -59208,7 +58695,12 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
     if (!day) return [];
     try {
       // Create a date object for the current day
-      var date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+      var date;
+      if (viewMode === 'month') {
+        date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+      } else if (viewMode === 'week') {
+        date = new Date(day); // For week view, day is already a Date object
+      }
       date.setHours(0, 0, 0, 0);
 
       // Format as ISO date string for comparison
@@ -59231,10 +58723,15 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
             endDate = new Date(9999, 11, 31);
           }
           if (date >= startDate && date <= endDate && assignment.status !== 'rejected' && assignment.status !== 'cancelled') {
+            var _assignment$driver;
             events.push({
               type: 'assignment',
               data: assignment,
-              color: assignment.is_temporary ? '#17a2b8' : '#007bff'
+              color: assignment.is_temporary ? '#17a2b8' : '#007bff',
+              priority: 2,
+              // Priority for rendering (higher shows on top)
+              title: "Driver: ".concat(((_assignment$driver = assignment.driver) === null || _assignment$driver === void 0 ? void 0 : _assignment$driver.full_name) || 'Unknown'),
+              status: assignment.status
             });
           }
         }
@@ -59252,10 +58749,18 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
             events.push({
               type: 'blocked',
               data: block,
-              color: '#dc3545'
+              color: '#dc3545',
+              priority: 1,
+              // Priority for rendering (higher shows on top)
+              title: "Blocked: ".concat(block.reason.substring(0, 20)).concat(block.reason.length > 20 ? '...' : '')
             });
           }
         }
+      });
+
+      // Sort events by priority
+      events.sort(function (a, b) {
+        return b.priority - a.priority;
       });
       return events;
     } catch (error) {
@@ -59274,7 +58779,44 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
     });
   };
 
-  // Modal component
+  // Helper function to format time
+  var formatTime = function formatTime(dateStr) {
+    var date = new Date(dateStr);
+    return date.toLocaleTimeString(undefined, {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  // Helper function to format datetime
+  var formatDateTime = function formatDateTime(dateStr) {
+    var date = new Date(dateStr);
+    return date.toLocaleString(undefined, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  // Helper to determine status badge color
+  var getStatusBadgeColor = function getStatusBadgeColor(status) {
+    switch (status) {
+      case 'approved':
+        return '#28a745';
+      case 'pending':
+        return '#ffc107';
+      case 'rejected':
+        return '#dc3545';
+      case 'cancelled':
+        return '#6c757d';
+      default:
+        return '#6c757d';
+    }
+  };
+
+  // Modal component with improved styling
   var Modal = function Modal(_ref3) {
     var show = _ref3.show,
       onClose = _ref3.onClose,
@@ -59292,29 +58834,35 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 1000
+        zIndex: 1000,
+        backdropFilter: 'blur(3px)'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
         backgroundColor: 'white',
-        borderRadius: '5px',
-        width: '400px',
-        maxWidth: '90%',
+        borderRadius: '8px',
+        width: '550px',
+        maxWidth: '95%',
         maxHeight: '90%',
         overflowY: 'auto',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+        boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        padding: '15px',
+        padding: '16px 20px',
         borderBottom: '1px solid #eee',
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#f8f9fa',
+        borderTopLeftRadius: '8px',
+        borderTopRightRadius: '8px'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
       style: {
-        margin: 0
+        margin: 0,
+        fontSize: '1.2rem',
+        fontWeight: '600'
       }
     }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
       onClick: onClose,
@@ -59322,18 +58870,35 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
         background: 'none',
         border: 'none',
         fontSize: '1.5rem',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        color: '#6c757d',
+        width: '30px',
+        height: '30px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        transition: 'background-color 0.2s'
+      },
+      onMouseOver: function onMouseOver(e) {
+        return e.currentTarget.style.backgroundColor = '#e9ecef';
+      },
+      onMouseOut: function onMouseOut(e) {
+        return e.currentTarget.style.backgroundColor = 'transparent';
       }
     }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        padding: '15px'
+        padding: '20px'
       }
     }, children), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        padding: '15px',
+        padding: '15px 20px',
         borderTop: '1px solid #eee',
         display: 'flex',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        backgroundColor: '#f8f9fa',
+        borderBottomLeftRadius: '8px',
+        borderBottomRightRadius: '8px'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
       onClick: onClose,
@@ -59343,16 +58908,76 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
         border: 'none',
         padding: '8px 16px',
         borderRadius: '4px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        fontWeight: '500',
+        transition: 'background-color 0.2s'
+      },
+      onMouseOver: function onMouseOver(e) {
+        return e.currentTarget.style.backgroundColor = '#5a6268';
+      },
+      onMouseOut: function onMouseOut(e) {
+        return e.currentTarget.style.backgroundColor = '#6c757d';
       }
     }, "Close"))));
   };
 
+  // Tooltip component for hover info
+  var Tooltip = function Tooltip(_ref4) {
+    var position = _ref4.position,
+      content = _ref4.content;
+    if (!position) return null;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        position: 'fixed',
+        top: position.y + 10,
+        left: position.x + 10,
+        backgroundColor: 'rgba(33, 37, 41, 0.9)',
+        color: 'white',
+        padding: '8px 12px',
+        borderRadius: '4px',
+        fontSize: '0.85rem',
+        maxWidth: '250px',
+        zIndex: 1200,
+        pointerEvents: 'none',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
+        backdropFilter: 'blur(5px)'
+      }
+    }, content);
+  };
+
   // Get the month and year for the header
-  var monthName = currentDate.toLocaleString('default', {
-    month: 'long'
-  });
-  var year = currentDate.getFullYear();
+  var getHeaderTitle = function getHeaderTitle() {
+    if (viewMode === 'month') {
+      var monthName = currentDate.toLocaleString('default', {
+        month: 'long'
+      });
+      var year = currentDate.getFullYear();
+      return "".concat(monthName, " ").concat(year);
+    } else if (viewMode === 'week') {
+      var day = currentDate.getDay();
+      var weekStart = new Date(currentDate);
+      weekStart.setDate(currentDate.getDate() - day);
+      var weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+
+      // Format: "March 10 - 16, 2025"
+      var startMonth = weekStart.toLocaleString('default', {
+        month: 'short'
+      });
+      var endMonth = weekEnd.toLocaleString('default', {
+        month: 'short'
+      });
+      var startDay = weekStart.getDate();
+      var endDay = weekEnd.getDate();
+      var _year = weekEnd.getFullYear();
+      if (startMonth === endMonth) {
+        return "".concat(startMonth, " ").concat(startDay, " - ").concat(endDay, ", ").concat(_year);
+      } else {
+        return "".concat(startMonth, " ").concat(startDay, " - ").concat(endMonth, " ").concat(endDay, ", ").concat(_year);
+      }
+    }
+    return '';
+  };
 
   // Calendar days
   var calendarDays = generateCalendarDays();
@@ -59364,6 +58989,20 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
   var today = new Date();
   var isCurrentMonth = today.getMonth() === currentDate.getMonth() && today.getFullYear() === currentDate.getFullYear();
   var currentDay = today.getDate();
+
+  // Format a day cell date for week view
+  var formatDayForWeekView = function formatDayForWeekView(date) {
+    var isToday = date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
+    var month = date.toLocaleString('default', {
+      month: 'short'
+    });
+    var day = date.getDate();
+    return {
+      month: month,
+      day: day,
+      isToday: isToday
+    };
+  };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       display: 'flex',
@@ -59379,33 +59018,43 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
       fontSize: '1rem',
       display: 'flex',
       alignItems: 'center',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      color: '#007bff'
     }
-  }, "\u2190 Back to Vehicle Management")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Vehicle Calendar"), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "\u2190 Back to Vehicle Management")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     style: {
-      padding: '10px',
+      marginBottom: '20px'
+    }
+  }, "Vehicle Calendar"), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      padding: '12px 16px',
       marginBottom: '15px',
       backgroundColor: '#f8d7da',
       color: '#721c24',
       borderRadius: '4px',
+      border: '1px solid #f5c6cb',
       display: 'flex',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Error:"), " ", error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: fetchData,
     style: {
       backgroundColor: '#721c24',
       color: 'white',
       border: 'none',
       borderRadius: '4px',
-      padding: '4px 8px',
-      cursor: 'pointer'
+      padding: '4px 10px',
+      cursor: 'pointer',
+      fontSize: '0.875rem'
     }
-  }, "Retry")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-arrow-repeat me-1"
+  }), " Retry")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       backgroundColor: 'white',
-      borderRadius: '5px',
-      boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+      borderRadius: '8px',
+      boxShadow: '0 2px 12px rgba(0,0,0,0.1)',
       padding: '20px',
       marginBottom: '20px'
     }
@@ -59414,48 +59063,157 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: '15px',
+      marginBottom: '20px',
       flexWrap: 'wrap',
+      gap: '15px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
       gap: '10px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: handlePreviousMonth,
     style: {
       backgroundColor: '#f8f9fa',
       border: '1px solid #ced4da',
       borderRadius: '4px',
-      padding: '5px 10px',
-      marginRight: '10px',
-      cursor: 'pointer'
+      padding: '8px 12px',
+      cursor: 'pointer',
+      color: '#495057',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      transition: 'all 0.2s'
+    },
+    onMouseOver: function onMouseOver(e) {
+      e.currentTarget.style.backgroundColor = '#e9ecef';
+      e.currentTarget.style.borderColor = '#adb5bd';
+    },
+    onMouseOut: function onMouseOut(e) {
+      e.currentTarget.style.backgroundColor = '#f8f9fa';
+      e.currentTarget.style.borderColor = '#ced4da';
     }
-  }, "\u2190"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-chevron-left"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     style: {
       fontSize: '1.2rem',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      color: '#212529',
+      minWidth: '180px',
+      textAlign: 'center'
     }
-  }, monthName, " ", year), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, getHeaderTitle()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: handleNextMonth,
     style: {
       backgroundColor: '#f8f9fa',
       border: '1px solid #ced4da',
       borderRadius: '4px',
-      padding: '5px 10px',
-      marginLeft: '10px',
-      cursor: 'pointer'
+      padding: '8px 12px',
+      cursor: 'pointer',
+      color: '#495057',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      transition: 'all 0.2s'
+    },
+    onMouseOver: function onMouseOver(e) {
+      e.currentTarget.style.backgroundColor = '#e9ecef';
+      e.currentTarget.style.borderColor = '#adb5bd';
+    },
+    onMouseOut: function onMouseOut(e) {
+      e.currentTarget.style.backgroundColor = '#f8f9fa';
+      e.currentTarget.style.borderColor = '#ced4da';
     }
-  }, "\u2192")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-chevron-right"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: handleJumpToToday,
+    style: {
+      backgroundColor: '#e9ecef',
+      border: '1px solid #ced4da',
+      borderRadius: '4px',
+      padding: '8px 12px',
+      cursor: 'pointer',
+      marginLeft: '10px',
+      color: '#495057',
+      fontWeight: '500',
+      fontSize: '0.875rem',
+      transition: 'all 0.2s'
+    },
+    onMouseOver: function onMouseOver(e) {
+      e.currentTarget.style.backgroundColor = '#dee2e6';
+      e.currentTarget.style.borderColor = '#adb5bd';
+    },
+    onMouseOut: function onMouseOut(e) {
+      e.currentTarget.style.backgroundColor = '#e9ecef';
+      e.currentTarget.style.borderColor = '#ced4da';
+    }
+  }, "Today"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      border: '1px solid #ced4da',
+      borderRadius: '4px',
+      overflow: 'hidden',
+      marginLeft: '15px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: function onClick() {
+      return handleViewModeChange('month');
+    },
+    style: {
+      backgroundColor: viewMode === 'month' ? '#007bff' : '#f8f9fa',
+      color: viewMode === 'month' ? 'white' : '#495057',
+      border: 'none',
+      padding: '8px 12px',
+      cursor: 'pointer',
+      fontWeight: '500',
+      fontSize: '0.875rem',
+      transition: 'all 0.2s'
+    }
+  }, "Month"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: function onClick() {
+      return handleViewModeChange('week');
+    },
+    style: {
+      backgroundColor: viewMode === 'week' ? '#007bff' : '#f8f9fa',
+      color: viewMode === 'week' ? 'white' : '#495057',
+      border: 'none',
+      padding: '8px 12px',
+      cursor: 'pointer',
+      fontWeight: '500',
+      fontSize: '0.875rem',
+      transition: 'all 0.2s',
+      borderLeft: '1px solid #ced4da'
+    }
+  }, "Week"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "vehicleSelect",
     style: {
-      marginRight: '10px'
+      marginRight: '5px',
+      fontWeight: '500',
+      color: '#495057'
     }
   }, "Vehicle:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
     id: "vehicleSelect",
     value: selectedVehicle,
     onChange: handleVehicleSelect,
     style: {
-      padding: '5px 10px',
+      padding: '8px 12px',
       borderRadius: '4px',
-      border: '1px solid #ced4da'
+      border: '1px solid #ced4da',
+      minWidth: '220px',
+      backgroundColor: '#fff',
+      transition: 'border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out',
+      boxShadow: 'none',
+      color: '#495057'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "all"
@@ -59464,10 +59222,92 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
       key: vehicle.id,
       value: vehicle.id
     }, vehicle.registration_number, " (", vehicle.make, " ", vehicle.model, ")");
-  })))), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      marginBottom: '20px',
+      padding: '12px 16px',
+      backgroundColor: '#f8f9fa',
+      borderRadius: '6px',
+      border: '1px solid #e9ecef'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '15px',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      width: '16px',
+      height: '16px',
+      backgroundColor: '#007bff',
+      borderRadius: '3px',
+      marginRight: '8px',
+      border: '1px solid rgba(0,0,0,0.1)'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      color: '#495057',
+      fontSize: '0.9rem'
+    }
+  }, "Permanent Assignment")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      width: '16px',
+      height: '16px',
+      backgroundColor: '#17a2b8',
+      borderRadius: '3px',
+      marginRight: '8px',
+      border: '1px solid rgba(0,0,0,0.1)'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      color: '#495057',
+      fontSize: '0.9rem'
+    }
+  }, "Temporary Assignment")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      width: '16px',
+      height: '16px',
+      backgroundColor: '#dc3545',
+      borderRadius: '3px',
+      marginRight: '8px',
+      border: '1px solid rgba(0,0,0,0.1)'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      color: '#495057',
+      fontSize: '0.9rem'
+    }
+  }, "Blocked Period")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      marginLeft: 'auto',
+      color: '#6c757d',
+      fontSize: '0.85rem'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-info-circle me-1"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "Click on any colored cell to view details")))), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       textAlign: 'center',
-      padding: '40px 0'
+      padding: '60px 0'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
@@ -59479,108 +59319,171 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
       margin: '0 auto 15px',
       animation: 'spin 1s linear infinite'
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading calendar data..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("style", null, "\n                @keyframes spin {\n                  0% { transform: rotate(0deg); }\n                  100% { transform: rotate(360deg); }\n                }\n              ")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
-      marginBottom: '15px'
+      color: '#6c757d'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      marginBottom: '10px',
-      gap: '10px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      marginRight: '20px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      width: '12px',
-      height: '12px',
-      backgroundColor: '#007bff',
-      borderRadius: '2px',
-      marginRight: '5px'
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "Permanent Assignment")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      marginRight: '20px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      width: '12px',
-      height: '12px',
-      backgroundColor: '#17a2b8',
-      borderRadius: '2px',
-      marginRight: '5px'
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "Temporary Assignment")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      width: '12px',
-      height: '12px',
-      backgroundColor: '#dc3545',
-      borderRadius: '2px',
-      marginRight: '5px'
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "Blocked Period"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    style: {
-      color: '#6c757d',
-      margin: 0,
-      fontSize: '0.9rem'
-    }
-  }, "Click on any colored cell to view details")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      overflowX: 'auto'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "Loading calendar data..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("style", null, "\n                @keyframes spin {\n                  0% { transform: rotate(0deg); }\n                  100% { transform: rotate(360deg); }\n                }\n              ")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: 'repeat(7, minmax(80px, 1fr))',
       position: 'sticky',
       top: 0,
       backgroundColor: '#f8f9fa',
-      zIndex: 1
+      zIndex: 2,
+      borderRadius: '6px 6px 0 0',
+      overflow: 'hidden',
+      border: '1px solid #dee2e6',
+      borderBottom: 'none'
     }
   }, weekdays.map(function (day, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: index,
       style: {
-        padding: '8px',
+        padding: '10px',
         textAlign: 'center',
         fontWeight: 'bold',
-        borderBottom: '2px solid #dee2e6',
-        borderRight: index < 6 ? '1px solid #dee2e6' : 'none'
+        color: index === 0 || index === 6 ? '#dc3545' : '#495057',
+        borderRight: index < 6 ? '1px solid #dee2e6' : 'none',
+        fontSize: '0.95rem'
       }
     }, day);
-  })), selectedVehicle === 'all' ? (/* All vehicles view */
-  vehicles.map(function (vehicle) {
+  })), selectedVehicle === 'all' ?
+  /*#__PURE__*/
+  /* All vehicles view */
+  react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      border: '1px solid #dee2e6',
+      borderTop: 'none',
+      borderRadius: '0 0 6px 6px',
+      backgroundColor: '#fff'
+    }
+  }, vehicles.map(function (vehicle) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: vehicle.id,
       style: {
         marginBottom: '20px',
         borderTop: '1px solid #dee2e6',
-        paddingTop: '10px'
+        paddingTop: '15px',
+        paddingBottom: '15px',
+        paddingLeft: '15px',
+        paddingRight: '15px'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", {
       style: {
-        marginBottom: '10px'
+        marginBottom: '10px',
+        fontSize: '1.1rem',
+        fontWeight: '600',
+        color: '#212529',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
       }
-    }, vehicle.registration_number, " (", vehicle.make, " ", vehicle.model, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-truck",
+      style: {
+        color: '#6c757d'
+      }
+    }), vehicle.registration_number, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        fontWeight: 'normal',
+        fontSize: '0.95rem',
+        color: '#6c757d'
+      }
+    }, "(", vehicle.make, " ", vehicle.model, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        fontSize: '0.75rem',
+        padding: '3px 8px',
+        borderRadius: '12px',
+        color: 'white',
+        backgroundColor: vehicle.status === 'available' ? '#28a745' : vehicle.status === 'assigned' ? '#007bff' : vehicle.status === 'spare' ? '#17a2b8' : vehicle.status === 'maintenance' ? '#ffc107' : '#6c757d',
+        marginLeft: 'auto'
+      }
+    }, vehicle.status.charAt(0).toUpperCase() + vehicle.status.slice(1))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
         display: 'grid',
         gridTemplateColumns: 'repeat(7, minmax(80px, 1fr))',
         gap: '2px'
       }
-    }, calendarDays.map(function (day, index) {
+    }, viewMode === 'week' && calendarDays.map(function (date, index) {
+      var _formatDayForWeekView = formatDayForWeekView(date),
+        month = _formatDayForWeekView.month,
+        day = _formatDayForWeekView.day,
+        isToday = _formatDayForWeekView.isToday;
+      var events = getEventsForDay(vehicle.id, date);
+      var hasEvents = events.length > 0;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        key: index,
+        style: {
+          height: '50px',
+          border: isToday ? '2px solid #007bff' : '1px solid #dee2e6',
+          backgroundColor: isToday ? '#f0f8ff' : 'white',
+          position: 'relative',
+          overflow: 'hidden',
+          borderRadius: '4px'
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        style: {
+          padding: '2px 5px',
+          fontSize: '0.7rem',
+          textAlign: 'right',
+          fontWeight: isToday ? 'bold' : 'normal',
+          color: '#6c757d',
+          backgroundColor: 'rgba(248, 249, 250, 0.7)',
+          borderBottom: '1px solid #e9ecef'
+        }
+      }, day, " ", month), hasEvents && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        style: {
+          position: 'absolute',
+          top: '18px',
+          left: '3px',
+          right: '3px',
+          bottom: '3px',
+          backgroundColor: events[0].color,
+          borderRadius: '3px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          cursor: 'pointer',
+          opacity: 0.9,
+          transition: 'opacity 0.2s',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
+        },
+        onClick: function onClick() {
+          return showEventDetails({
+            vehicle: vehicle,
+            events: events,
+            day: day
+          });
+        },
+        onMouseOver: function onMouseOver(e) {
+          e.currentTarget.style.opacity = 1;
+          setShowTooltip({
+            x: e.clientX,
+            y: e.clientY,
+            content: events[0].title || (events[0].type === 'assignment' ? 'Assignment' : 'Blocked')
+          });
+        },
+        onMouseMove: function onMouseMove(e) {
+          if (showTooltip) {
+            setShowTooltip(_objectSpread(_objectSpread({}, showTooltip), {}, {
+              x: e.clientX,
+              y: e.clientY
+            }));
+          }
+        },
+        onMouseOut: function onMouseOut() {
+          setShowTooltip(null);
+        }
+      }, events.length > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+        style: {
+          color: 'white',
+          fontSize: '0.75rem',
+          fontWeight: 'bold',
+          textShadow: '0px 0px 2px rgba(0,0,0,0.5)'
+        }
+      }, events.length)));
+    }), viewMode === 'month' && calendarDays.map(function (day, index) {
       var events = getEventsForDay(vehicle.id, day);
       var hasEvents = events.length > 0;
 
@@ -59590,32 +59493,38 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
         key: index,
         style: {
           height: '50px',
-          border: isToday ? '2px solid #007bff' : '1px solid #dee2e6',
-          backgroundColor: day ? isToday ? '#f0f8ff' : 'white' : '#f8f9fa',
+          border: day ? isToday ? '2px solid #007bff' : '1px solid #dee2e6' : 'none',
+          backgroundColor: day ? isToday ? '#f0f8ff' : 'white' : 'transparent',
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          borderRadius: day ? '4px' : '0'
         }
       }, day && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
         style: {
           padding: '2px 5px',
-          fontSize: '0.8rem',
+          fontSize: '0.75rem',
           textAlign: 'right',
-          fontWeight: isToday ? 'bold' : 'normal'
+          fontWeight: isToday ? 'bold' : 'normal',
+          color: '#6c757d',
+          backgroundColor: 'rgba(248, 249, 250, 0.7)',
+          borderBottom: '1px solid #e9ecef'
         }
       }, day), hasEvents && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
         style: {
           position: 'absolute',
           top: '18px',
-          left: '2px',
-          right: '2px',
-          bottom: '2px',
+          left: '3px',
+          right: '3px',
+          bottom: '3px',
           backgroundColor: events[0].color,
           borderRadius: '3px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           cursor: 'pointer',
-          opacity: 0.9
+          opacity: 0.9,
+          transition: 'opacity 0.2s',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
         },
         onClick: function onClick() {
           return showEventDetails({
@@ -59623,11 +59532,30 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
             events: events,
             day: day
           });
+        },
+        onMouseOver: function onMouseOver(e) {
+          e.currentTarget.style.opacity = 1;
+          setShowTooltip({
+            x: e.clientX,
+            y: e.clientY,
+            content: events[0].title || (events[0].type === 'assignment' ? 'Assignment' : 'Blocked')
+          });
+        },
+        onMouseMove: function onMouseMove(e) {
+          if (showTooltip) {
+            setShowTooltip(_objectSpread(_objectSpread({}, showTooltip), {}, {
+              x: e.clientX,
+              y: e.clientY
+            }));
+          }
+        },
+        onMouseOut: function onMouseOut() {
+          setShowTooltip(null);
         }
       }, events.length > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
         style: {
           color: 'white',
-          fontSize: '0.8rem',
+          fontSize: '0.75rem',
           fontWeight: 'bold',
           textShadow: '0px 0px 2px rgba(0,0,0,0.5)'
         }
@@ -59638,11 +59566,227 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
   /* Single vehicle view - with more details */
   react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
+      border: '1px solid #dee2e6',
+      borderTop: 'none',
+      borderRadius: '0 0 6px 6px',
+      backgroundColor: '#fff',
+      padding: '15px'
+    }
+  }, vehicles.find(function (v) {
+    return v.id === selectedVehicle;
+  }) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      marginBottom: '20px',
+      padding: '12px 15px',
+      backgroundColor: '#f8f9fa',
+      borderRadius: '6px',
+      border: '1px solid #e9ecef',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '15px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      flex: '1'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-truck",
+    style: {
+      fontSize: '1.2rem',
+      color: '#495057'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
+    style: {
+      margin: 0,
+      fontSize: '1.1rem',
+      fontWeight: '600',
+      color: '#212529'
+    }
+  }, (_vehicles$find = vehicles.find(function (v) {
+    return v.id === selectedVehicle;
+  })) === null || _vehicles$find === void 0 ? void 0 : _vehicles$find.registration_number)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontSize: '0.9rem',
+      color: '#6c757d',
+      marginTop: '4px'
+    }
+  }, (_vehicles$find2 = vehicles.find(function (v) {
+    return v.id === selectedVehicle;
+  })) === null || _vehicles$find2 === void 0 ? void 0 : _vehicles$find2.make, " ", (_vehicles$find3 = vehicles.find(function (v) {
+    return v.id === selectedVehicle;
+  })) === null || _vehicles$find3 === void 0 ? void 0 : _vehicles$find3.model)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '15px',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      fontSize: '0.75rem',
+      textTransform: 'uppercase',
+      color: '#6c757d',
+      display: 'block',
+      marginBottom: '3px'
+    }
+  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      padding: '3px 8px',
+      borderRadius: '12px',
+      color: 'white',
+      fontSize: '0.75rem',
+      backgroundColor: ((_vehicles$find4 = vehicles.find(function (v) {
+        return v.id === selectedVehicle;
+      })) === null || _vehicles$find4 === void 0 ? void 0 : _vehicles$find4.status) === 'available' ? '#28a745' : ((_vehicles$find5 = vehicles.find(function (v) {
+        return v.id === selectedVehicle;
+      })) === null || _vehicles$find5 === void 0 ? void 0 : _vehicles$find5.status) === 'assigned' ? '#007bff' : ((_vehicles$find6 = vehicles.find(function (v) {
+        return v.id === selectedVehicle;
+      })) === null || _vehicles$find6 === void 0 ? void 0 : _vehicles$find6.status) === 'spare' ? '#17a2b8' : ((_vehicles$find7 = vehicles.find(function (v) {
+        return v.id === selectedVehicle;
+      })) === null || _vehicles$find7 === void 0 ? void 0 : _vehicles$find7.status) === 'maintenance' ? '#ffc107' : '#6c757d'
+    }
+  }, ((_vehicles$find8 = vehicles.find(function (v) {
+    return v.id === selectedVehicle;
+  })) === null || _vehicles$find8 === void 0 ? void 0 : _vehicles$find8.status.charAt(0).toUpperCase()) + ((_vehicles$find9 = vehicles.find(function (v) {
+    return v.id === selectedVehicle;
+  })) === null || _vehicles$find9 === void 0 ? void 0 : _vehicles$find9.status.slice(1)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      fontSize: '0.75rem',
+      textTransform: 'uppercase',
+      color: '#6c757d',
+      display: 'block',
+      marginBottom: '3px'
+    }
+  }, "Year"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      fontWeight: '500',
+      color: '#495057'
+    }
+  }, ((_vehicles$find10 = vehicles.find(function (v) {
+    return v.id === selectedVehicle;
+  })) === null || _vehicles$find10 === void 0 ? void 0 : _vehicles$find10.year) || 'N/A')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
       display: 'grid',
       gridTemplateColumns: 'repeat(7, minmax(120px, 1fr))',
       gap: '3px'
     }
-  }, calendarDays.map(function (day, index) {
+  }, viewMode === 'week' && calendarDays.map(function (date, index) {
+    var _formatDayForWeekView2 = formatDayForWeekView(date),
+      month = _formatDayForWeekView2.month,
+      day = _formatDayForWeekView2.day,
+      isToday = _formatDayForWeekView2.isToday;
+    var events = getEventsForDay(selectedVehicle, date);
+    var hasEvents = events.length > 0;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      key: index,
+      style: {
+        minHeight: '180px',
+        border: isToday ? '2px solid #007bff' : '1px solid #dee2e6',
+        backgroundColor: isToday ? '#f0f8ff' : 'white',
+        padding: '5px',
+        position: 'relative',
+        overflow: 'hidden',
+        borderRadius: '4px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        fontSize: '0.9rem',
+        fontWeight: isToday ? 'bold' : 'normal',
+        textAlign: 'right',
+        marginBottom: '8px',
+        padding: '4px',
+        color: '#495057',
+        borderBottom: '1px solid #e9ecef',
+        backgroundColor: 'rgba(248, 249, 250, 0.7)'
+      }
+    }, day, " ", month), hasEvents ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        fontSize: '0.85rem'
+      }
+    }, events.map(function (event, idx) {
+      var _event$data$driver;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        key: idx,
+        style: {
+          padding: '6px 8px',
+          backgroundColor: event.color,
+          color: 'white',
+          borderRadius: '4px',
+          marginBottom: '6px',
+          cursor: 'pointer',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '3px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+          transition: 'transform 0.1s, box-shadow 0.1s'
+        },
+        onClick: function onClick() {
+          return showEventDetails({
+            vehicle: vehicles.find(function (v) {
+              return v.id === selectedVehicle;
+            }),
+            events: [event],
+            day: date
+          });
+        },
+        onMouseOver: function onMouseOver(e) {
+          e.currentTarget.style.transform = 'translateY(-2px)';
+          e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.1)';
+        },
+        onMouseOut: function onMouseOut(e) {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        style: {
+          fontWeight: 'bold',
+          fontSize: '0.8rem',
+          textShadow: '0 1px 2px rgba(0,0,0,0.2)'
+        }
+      }, event.type === 'assignment' ? 'Driver Assigned' : 'Blocked'), event.type === 'assignment' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        style: {
+          fontSize: '0.75rem'
+        }
+      }, ((_event$data$driver = event.data.driver) === null || _event$data$driver === void 0 ? void 0 : _event$data$driver.full_name) || 'Unknown Driver', event.data.status !== 'approved' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+        style: {
+          display: 'inline-block',
+          marginLeft: '4px',
+          fontSize: '0.7rem',
+          padding: '1px 4px',
+          borderRadius: '3px',
+          backgroundColor: 'rgba(0,0,0,0.2)',
+          textTransform: 'uppercase'
+        }
+      }, event.data.status)), event.type === 'blocked' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        style: {
+          fontSize: '0.75rem',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
+        }
+      }, event.data.reason.length > 25 ? "".concat(event.data.reason.substring(0, 25), "...") : event.data.reason));
+    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        height: '110px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: '#adb5bd',
+        fontSize: '0.85rem',
+        fontStyle: 'italic',
+        backgroundColor: 'rgba(248, 249, 250, 0.3)',
+        borderRadius: '4px',
+        border: '1px dashed #dee2e6'
+      }
+    }, "Available"));
+  }), viewMode === 'month' && calendarDays.map(function (day, index) {
     var events = getEventsForDay(selectedVehicle, day);
     var hasEvents = events.length > 0;
 
@@ -59651,38 +59795,46 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: index,
       style: {
-        minHeight: '120px',
-        border: isToday ? '2px solid #007bff' : '1px solid #dee2e6',
-        backgroundColor: day ? isToday ? '#f0f8ff' : 'white' : '#f8f9fa',
-        padding: '5px',
+        minHeight: day ? '150px' : '0',
+        border: day ? isToday ? '2px solid #007bff' : '1px solid #dee2e6' : 'none',
+        backgroundColor: day ? isToday ? '#f0f8ff' : 'white' : 'transparent',
+        padding: day ? '5px' : '0',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        borderRadius: day ? '4px' : '0'
       }
     }, day && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
         fontSize: '0.9rem',
         fontWeight: isToday ? 'bold' : 'normal',
         textAlign: 'right',
-        marginBottom: '5px'
+        marginBottom: '8px',
+        padding: '4px',
+        color: '#495057',
+        borderBottom: '1px solid #e9ecef',
+        backgroundColor: 'rgba(248, 249, 250, 0.7)'
       }
     }, day), hasEvents ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        fontSize: '0.8rem'
+        fontSize: '0.85rem'
       }
     }, events.map(function (event, idx) {
+      var _event$data$driver2;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
         key: idx,
         style: {
-          padding: '4px 6px',
+          padding: '6px 8px',
           backgroundColor: event.color,
           color: 'white',
-          borderRadius: '3px',
-          marginBottom: '4px',
+          borderRadius: '4px',
+          marginBottom: '6px',
           cursor: 'pointer',
-          whiteSpace: 'nowrap',
           overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          textShadow: '0px 0px 2px rgba(0,0,0,0.3)'
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '3px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+          transition: 'transform 0.1s, box-shadow 0.1s'
         },
         onClick: function onClick() {
           return showEventDetails({
@@ -59692,16 +59844,55 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
             events: [event],
             day: day
           });
+        },
+        onMouseOver: function onMouseOver(e) {
+          e.currentTarget.style.transform = 'translateY(-2px)';
+          e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.1)';
+        },
+        onMouseOut: function onMouseOut(e) {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
         }
-      }, event.type === 'assignment' ? "Driver assigned" : "Blocked");
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        style: {
+          fontWeight: 'bold',
+          fontSize: '0.8rem',
+          textShadow: '0 1px 2px rgba(0,0,0,0.2)'
+        }
+      }, event.type === 'assignment' ? 'Driver Assigned' : 'Blocked'), event.type === 'assignment' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        style: {
+          fontSize: '0.75rem'
+        }
+      }, ((_event$data$driver2 = event.data.driver) === null || _event$data$driver2 === void 0 ? void 0 : _event$data$driver2.full_name) || 'Unknown Driver', event.data.status !== 'approved' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+        style: {
+          display: 'inline-block',
+          marginLeft: '4px',
+          fontSize: '0.7rem',
+          padding: '1px 4px',
+          borderRadius: '3px',
+          backgroundColor: 'rgba(0,0,0,0.2)',
+          textTransform: 'uppercase'
+        }
+      }, event.data.status)), event.type === 'blocked' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        style: {
+          fontSize: '0.75rem',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
+        }
+      }, event.data.reason.length > 25 ? "".concat(event.data.reason.substring(0, 25), "...") : event.data.reason));
     })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        height: '70px',
+        height: '80px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         color: '#adb5bd',
-        fontSize: '0.8rem'
+        fontSize: '0.85rem',
+        fontStyle: 'italic',
+        backgroundColor: 'rgba(248, 249, 250, 0.3)',
+        borderRadius: '4px',
+        border: '1px dashed #dee2e6'
       }
     }, "Available")));
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
@@ -59710,56 +59901,340 @@ var VehicleCalendar = function VehicleCalendar(_ref) {
       return setShowEventModal(false);
     },
     title: "Event Details"
-  }, selectedEvent && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Vehicle:"), " ", selectedEvent.vehicle.registration_number), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Date:"), " ", formatDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), selectedEvent.day))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", {
+  }, selectedEvent && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
-      marginTop: '15px',
-      marginBottom: '10px'
+      marginBottom: '20px',
+      padding: '12px 15px',
+      backgroundColor: '#f8f9fa',
+      borderRadius: '6px',
+      border: '1px solid #e9ecef'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-truck",
+    style: {
+      fontSize: '1.1rem',
+      color: '#6c757d'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      fontWeight: '600',
+      color: '#495057'
+    }
+  }, selectedEvent.vehicle.registration_number), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      color: '#6c757d',
+      fontSize: '0.9rem'
+    }
+  }, "(", selectedEvent.vehicle.make, " ", selectedEvent.vehicle.model, ")")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      marginTop: '8px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      color: '#6c757d',
+      fontSize: '0.9rem'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-calendar3"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, viewMode === 'month' ? formatDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), selectedEvent.day)) : formatDate(selectedEvent.day)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", {
+    style: {
+      marginTop: '20px',
+      marginBottom: '15px',
+      fontSize: '1.1rem',
+      color: '#343a40',
+      fontWeight: '600'
     }
   }, "Events"), selectedEvent.events.map(function (event, idx) {
+    var _event$data$driver3, _event$data$driver4, _event$data$creator, _event$data$creator2, _event$data$creator3, _event$data$creator4;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: idx,
       style: {
-        marginBottom: '10px',
-        padding: '10px',
-        backgroundColor: '#f8f9fa',
-        borderLeft: "4px solid ".concat(event.color),
-        borderRadius: '2px'
+        marginBottom: '15px',
+        borderRadius: '6px',
+        overflow: 'hidden',
+        border: '1px solid #dee2e6',
+        boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        margin: '0 0 5px 0',
+        backgroundColor: event.color,
+        color: 'white',
+        padding: '10px 15px',
+        fontWeight: '600',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, event.type === 'assignment' ? "".concat(event.data.is_temporary ? 'Temporary' : 'Permanent', " Assignment") : 'Vehicle Blocked'), event.data.status && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        fontSize: '0.75rem',
+        padding: '3px 8px',
+        borderRadius: '12px',
+        backgroundColor: 'rgba(255,255,255,0.25)',
+        textTransform: 'uppercase',
         fontWeight: 'bold'
       }
-    }, event.type === 'assignment' ? 'Vehicle Assignment' : 'Blocked Period'), event.type === 'assignment' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    }, event.data.status)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        margin: '0 0 5px 0'
+        padding: '15px',
+        backgroundColor: 'white'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Type:"), " ", event.data.is_temporary ? 'Temporary' : 'Permanent'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    }, event.type === 'assignment' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        margin: '0 0 5px 0'
+        marginBottom: '15px',
+        borderBottom: '1px solid #e9ecef',
+        paddingBottom: '15px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "From:"), " ", formatDate(event.data.start_time)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h6", {
       style: {
-        margin: '0 0 5px 0'
+        margin: '0 0 10px 0',
+        fontSize: '0.9rem',
+        color: '#6c757d',
+        textTransform: 'uppercase',
+        letterSpacing: '0.5px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "To:"), " ", event.data.end_time ? formatDate(event.data.end_time) : 'Ongoing'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    }, "Driver Information"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        margin: '0'
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Status:"), " ", event.data.status)), event.type === 'blocked' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-person-circle",
       style: {
-        margin: '0 0 5px 0'
+        fontSize: '1.8rem',
+        color: '#6c757d'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "From:"), " ", formatDate(event.data.start_date)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        margin: '0 0 5px 0'
+        fontWeight: '600',
+        fontSize: '1.1rem'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "To:"), " ", formatDate(event.data.end_date)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    }, ((_event$data$driver3 = event.data.driver) === null || _event$data$driver3 === void 0 ? void 0 : _event$data$driver3.full_name) || 'Unknown Driver'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        margin: '0 0 5px 0'
+        color: '#6c757d',
+        fontSize: '0.9rem'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Reason:"), " ", event.data.reason)));
-  }))));
+    }, ((_event$data$driver4 = event.data.driver) === null || _event$data$driver4 === void 0 ? void 0 : _event$data$driver4.email) || 'No email available')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        marginBottom: '15px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        margin: '8px 0',
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        width: '120px',
+        color: '#6c757d',
+        fontSize: '0.9rem',
+        fontWeight: '500'
+      }
+    }, "Start Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, formatDateTime(event.data.start_time))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        margin: '8px 0',
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        width: '120px',
+        color: '#6c757d',
+        fontSize: '0.9rem',
+        fontWeight: '500'
+      }
+    }, "End Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, event.data.end_time ? formatDateTime(event.data.end_time) : 'Ongoing')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        margin: '8px 0',
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        width: '120px',
+        color: '#6c757d',
+        fontSize: '0.9rem',
+        fontWeight: '500'
+      }
+    }, "Type:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        display: 'inline-block',
+        padding: '2px 8px',
+        borderRadius: '12px',
+        fontSize: '0.8rem',
+        color: 'white',
+        backgroundColor: event.data.is_temporary ? '#17a2b8' : '#007bff'
+      }
+    }, event.data.is_temporary ? 'Temporary' : 'Permanent'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        margin: '8px 0',
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        width: '120px',
+        color: '#6c757d',
+        fontSize: '0.9rem',
+        fontWeight: '500'
+      }
+    }, "Status:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        display: 'inline-block',
+        padding: '2px 8px',
+        borderRadius: '12px',
+        fontSize: '0.8rem',
+        color: 'white',
+        backgroundColor: getStatusBadgeColor(event.data.status)
+      }
+    }, event.data.status.charAt(0).toUpperCase() + event.data.status.slice(1))))), event.data.notes && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        marginTop: '15px',
+        padding: '10px',
+        backgroundColor: '#f8f9fa',
+        borderRadius: '4px',
+        border: '1px solid #e9ecef'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        margin: '0 0 5px 0',
+        fontSize: '0.9rem',
+        color: '#6c757d',
+        fontWeight: '500'
+      }
+    }, "Notes:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        color: '#495057'
+      }
+    }, event.data.notes)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        marginTop: '15px',
+        paddingTop: '15px',
+        borderTop: '1px solid #e9ecef'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h6", {
+      style: {
+        margin: '0 0 10px 0',
+        fontSize: '0.9rem',
+        color: '#6c757d',
+        textTransform: 'uppercase',
+        letterSpacing: '0.5px'
+      }
+    }, "Assignment Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        margin: '8px 0',
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        width: '120px',
+        color: '#6c757d',
+        fontSize: '0.9rem',
+        fontWeight: '500'
+      }
+    }, "Created By:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, ((_event$data$creator = event.data.creator) === null || _event$data$creator === void 0 ? void 0 : _event$data$creator.full_name) || 'Unknown', " ", (_event$data$creator2 = event.data.creator) !== null && _event$data$creator2 !== void 0 && _event$data$creator2.email ? "(".concat(event.data.creator.email, ")") : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        margin: '8px 0',
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        width: '120px',
+        color: '#6c757d',
+        fontSize: '0.9rem',
+        fontWeight: '500'
+      }
+    }, "Created On:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, formatDateTime(event.data.created_at))))), event.type === 'blocked' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        marginBottom: '15px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        margin: '8px 0',
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        width: '120px',
+        color: '#6c757d',
+        fontSize: '0.9rem',
+        fontWeight: '500'
+      }
+    }, "Start Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, formatDate(event.data.start_date))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        margin: '8px 0',
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        width: '120px',
+        color: '#6c757d',
+        fontSize: '0.9rem',
+        fontWeight: '500'
+      }
+    }, "End Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, formatDate(event.data.end_date)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        marginTop: '15px',
+        padding: '10px',
+        backgroundColor: '#f8f9fa',
+        borderRadius: '4px',
+        border: '1px solid #e9ecef'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        margin: '0 0 5px 0',
+        fontSize: '0.9rem',
+        color: '#6c757d',
+        fontWeight: '500'
+      }
+    }, "Reason:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        color: '#495057'
+      }
+    }, event.data.reason)), event.data.creator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        marginTop: '15px',
+        paddingTop: '15px',
+        borderTop: '1px solid #e9ecef'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h6", {
+      style: {
+        margin: '0 0 10px 0',
+        fontSize: '0.9rem',
+        color: '#6c757d',
+        textTransform: 'uppercase',
+        letterSpacing: '0.5px'
+      }
+    }, "Block Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        margin: '8px 0',
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        width: '120px',
+        color: '#6c757d',
+        fontSize: '0.9rem',
+        fontWeight: '500'
+      }
+    }, "Created By:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, ((_event$data$creator3 = event.data.creator) === null || _event$data$creator3 === void 0 ? void 0 : _event$data$creator3.full_name) || 'Unknown', " ", (_event$data$creator4 = event.data.creator) !== null && _event$data$creator4 !== void 0 && _event$data$creator4.email ? "(".concat(event.data.creator.email, ")") : ''))))));
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Tooltip, {
+    position: showTooltip,
+    content: showTooltip === null || showTooltip === void 0 ? void 0 : showTooltip.content
+  }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VehicleCalendar);
 
@@ -59793,7 +60268,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 var VehicleDocuments = function VehicleDocuments(_ref) {
-  var _currentDocument$vehi, _currentDocument$vehi2, _currentDocument$vehi3;
+  var _currentDocument$vehi, _currentDocument$vehi2, _currentDocument$vehi3, _currentDocument$vehi4, _currentDocument$vehi5, _currentDocument$vehi6;
   var onBack = _ref.onBack;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
@@ -59869,6 +60344,10 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
     _useState36 = _slicedToArray(_useState35, 2),
     uploadVehicleId = _useState36[0],
     setUploadVehicleId = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState38 = _slicedToArray(_useState37, 2),
+    formErrors = _useState38[0],
+    setFormErrors = _useState38[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     fetchData();
 
@@ -60021,11 +60500,41 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
     setDocumentName('');
     setDocumentType('registration');
     setUploadVehicleId(vehicleId || '');
+    setFormErrors({});
     setShowUploadModal(true);
   };
   var handleOpenDeleteModal = function handleOpenDeleteModal(document) {
     setCurrentDocument(document);
     setShowDeleteModal(true);
+  };
+  var validateUploadForm = function validateUploadForm() {
+    var errors = {};
+    if (!documentName.trim()) {
+      errors.name = 'Document name is required';
+    }
+    if (!documentType) {
+      errors.type = 'Document type is required';
+    }
+    if (!uploadVehicleId) {
+      errors.vehicle = 'Please select a vehicle';
+    }
+    if (!documentFile) {
+      errors.file = 'Please select a file to upload';
+    } else {
+      // Check file size (max 5MB)
+      if (documentFile.size > 5 * 1024 * 1024) {
+        errors.file = 'File size exceeds the 5MB limit';
+      }
+
+      // Check file type
+      var fileExt = documentFile.name.split('.').pop().toLowerCase();
+      var allowedTypes = ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx'];
+      if (!allowedTypes.includes(fileExt)) {
+        errors.file = 'File type not supported. Please use PDF, JPG, PNG, DOC, or DOCX';
+      }
+    }
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
   };
   var handleUploadDocument = /*#__PURE__*/function () {
     var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
@@ -60033,56 +60542,55 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
-            if (!(!documentFile || !documentName || !documentType || !uploadVehicleId)) {
-              _context3.next = 3;
+            if (validateUploadForm()) {
+              _context3.next = 2;
               break;
             }
-            setError('Please fill in all required fields.');
             return _context3.abrupt("return");
-          case 3:
-            _context3.prev = 3;
+          case 2:
+            _context3.prev = 2;
             setUploadLoading(true);
             setError(null);
 
             // Check if we already have 4 documents for this vehicle
-            _context3.next = 8;
+            _context3.next = 7;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').select('*', {
               count: 'exact',
               head: true
             }).eq('vehicle_id', uploadVehicleId);
-          case 8:
+          case 7:
             _yield$supabase$from$2 = _context3.sent;
             count = _yield$supabase$from$2.count;
             countError = _yield$supabase$from$2.error;
             if (!countError) {
-              _context3.next = 13;
+              _context3.next = 12;
               break;
             }
             throw countError;
-          case 13:
+          case 12:
             if (!(count >= 4)) {
-              _context3.next = 16;
+              _context3.next = 15;
               break;
             }
             setError('Maximum 4 documents allowed per vehicle. Please delete an existing document first.');
             return _context3.abrupt("return");
-          case 16:
+          case 15:
             // Upload file to storage
-            fileExt = documentFile.name.split('.').pop();
+            fileExt = documentFile.name.split('.').pop().toLowerCase();
             fileName = "".concat(Date.now(), ".").concat(fileExt);
             filePath = "vehicle-documents/".concat(uploadVehicleId, "/").concat(fileName);
-            _context3.next = 21;
+            _context3.next = 20;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.storage.from('miles-express').upload(filePath, documentFile);
-          case 21:
+          case 20:
             _yield$supabase$stora2 = _context3.sent;
             uploadError = _yield$supabase$stora2.error;
             if (!uploadError) {
-              _context3.next = 25;
+              _context3.next = 24;
               break;
             }
             throw uploadError;
-          case 25:
-            _context3.next = 27;
+          case 24:
+            _context3.next = 26;
             return _supabaseClient__WEBPACK_IMPORTED_MODULE_1__.supabase.from('vehicle_documents').insert({
               vehicle_id: uploadVehicleId,
               name: documentName,
@@ -60090,15 +60598,15 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
               file_path: filePath,
               file_type: fileExt
             });
-          case 27:
+          case 26:
             _yield$supabase$from$3 = _context3.sent;
             insertError = _yield$supabase$from$3.error;
             if (!insertError) {
-              _context3.next = 31;
+              _context3.next = 30;
               break;
             }
             throw insertError;
-          case 31:
+          case 30:
             // Reset form and close modal
             setShowUploadModal(false);
             setDocumentFile(null);
@@ -60109,22 +60617,22 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
             setTimeout(function () {
               return setSuccessMessage(null);
             }, 3000);
-            _context3.next = 44;
+            _context3.next = 43;
             break;
-          case 40:
-            _context3.prev = 40;
-            _context3.t0 = _context3["catch"](3);
+          case 39:
+            _context3.prev = 39;
+            _context3.t0 = _context3["catch"](2);
             console.error('Error uploading document:', _context3.t0);
             setError('Failed to upload document. Please try again.');
-          case 44:
-            _context3.prev = 44;
+          case 43:
+            _context3.prev = 43;
             setUploadLoading(false);
-            return _context3.finish(44);
-          case 47:
+            return _context3.finish(43);
+          case 46:
           case "end":
             return _context3.stop();
         }
-      }, _callee3, null, [[3, 40, 44, 47]]);
+      }, _callee3, null, [[2, 39, 43, 46]]);
     }));
     return function handleUploadDocument() {
       return _ref4.apply(this, arguments);
@@ -60251,14 +60759,41 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
     }
   };
 
+  // Helper function to get document type color
+  var getDocumentTypeColor = function getDocumentTypeColor(type) {
+    switch (type) {
+      case 'registration':
+        return '#007bff';
+      // blue
+      case 'insurance':
+        return '#17a2b8';
+      // teal
+      case 'maintenance':
+        return '#6f42c1';
+      // purple
+      case 'inspection':
+        return '#fd7e14';
+      // orange
+      case 'other':
+        return '#6c757d';
+      // gray
+      default:
+        return '#17a2b8';
+      // default teal
+    }
+  };
+
   // Modal component
   var Modal = function Modal(_ref7) {
     var show = _ref7.show,
       onClose = _ref7.onClose,
       title = _ref7.title,
       children = _ref7.children,
-      footer = _ref7.footer;
+      footer = _ref7.footer,
+      _ref7$size = _ref7.size,
+      size = _ref7$size === void 0 ? 'default' : _ref7$size;
     if (!show) return null;
+    var modalWidth = size === 'large' ? '700px' : '500px';
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
         position: 'fixed',
@@ -60270,29 +60805,35 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 1000
+        zIndex: 1000,
+        backdropFilter: 'blur(3px)'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
         backgroundColor: 'white',
-        borderRadius: '5px',
-        width: '500px',
-        maxWidth: '90%',
+        borderRadius: '8px',
+        width: modalWidth,
+        maxWidth: '95%',
         maxHeight: '90%',
         overflowY: 'auto',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+        boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        padding: '15px',
+        padding: '16px 20px',
         borderBottom: '1px solid #eee',
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#f8f9fa',
+        borderTopLeftRadius: '8px',
+        borderTopRightRadius: '8px'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
       style: {
-        margin: 0
+        margin: 0,
+        fontSize: '1.2rem',
+        fontWeight: '600'
       }
     }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
       onClick: onClose,
@@ -60300,21 +60841,229 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
         background: 'none',
         border: 'none',
         fontSize: '1.5rem',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        color: '#6c757d',
+        width: '30px',
+        height: '30px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        transition: 'background-color 0.2s'
+      },
+      onMouseOver: function onMouseOver(e) {
+        return e.currentTarget.style.backgroundColor = '#e9ecef';
+      },
+      onMouseOut: function onMouseOut(e) {
+        return e.currentTarget.style.backgroundColor = 'transparent';
       }
     }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        padding: '15px'
+        padding: '20px'
       }
     }, children), footer && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
-        padding: '15px',
+        padding: '15px 20px',
         borderTop: '1px solid #eee',
         display: 'flex',
         justifyContent: 'flex-end',
-        gap: '10px'
+        gap: '10px',
+        backgroundColor: '#f8f9fa',
+        borderBottomLeftRadius: '8px',
+        borderBottomRightRadius: '8px'
       }
     }, footer)));
+  };
+
+  // Button component for consistency
+  var Button = function Button(_ref8) {
+    var children = _ref8.children,
+      onClick = _ref8.onClick,
+      _ref8$variant = _ref8.variant,
+      variant = _ref8$variant === void 0 ? 'primary' : _ref8$variant,
+      _ref8$disabled = _ref8.disabled,
+      disabled = _ref8$disabled === void 0 ? false : _ref8$disabled,
+      _ref8$size = _ref8.size,
+      size = _ref8$size === void 0 ? 'default' : _ref8$size,
+      _ref8$icon = _ref8.icon,
+      icon = _ref8$icon === void 0 ? null : _ref8$icon;
+    var getBackgroundColor = function getBackgroundColor() {
+      switch (variant) {
+        case 'primary':
+          return '#007bff';
+        case 'secondary':
+          return '#6c757d';
+        case 'success':
+          return '#28a745';
+        case 'danger':
+          return '#dc3545';
+        case 'outline-primary':
+          return 'transparent';
+        case 'outline-secondary':
+          return 'transparent';
+        case 'outline-success':
+          return 'transparent';
+        case 'outline-danger':
+          return 'transparent';
+        default:
+          return '#007bff';
+      }
+    };
+    var getColor = function getColor() {
+      if (variant.startsWith('outline-')) {
+        switch (variant) {
+          case 'outline-primary':
+            return '#007bff';
+          case 'outline-secondary':
+            return '#6c757d';
+          case 'outline-success':
+            return '#28a745';
+          case 'outline-danger':
+            return '#dc3545';
+          default:
+            return '#007bff';
+        }
+      }
+      return 'white';
+    };
+    var getBorder = function getBorder() {
+      if (variant.startsWith('outline-')) {
+        switch (variant) {
+          case 'outline-primary':
+            return '1px solid #007bff';
+          case 'outline-secondary':
+            return '1px solid #6c757d';
+          case 'outline-success':
+            return '1px solid #28a745';
+          case 'outline-danger':
+            return '1px solid #dc3545';
+          default:
+            return '1px solid #007bff';
+        }
+      }
+      return 'none';
+    };
+    var getPadding = function getPadding() {
+      return size === 'small' ? '4px 8px' : '8px 16px';
+    };
+    var getFontSize = function getFontSize() {
+      return size === 'small' ? '0.875rem' : '1rem';
+    };
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      onClick: onClick,
+      disabled: disabled,
+      style: {
+        backgroundColor: getBackgroundColor(),
+        color: getColor(),
+        border: getBorder(),
+        padding: getPadding(),
+        borderRadius: '4px',
+        fontSize: getFontSize(),
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        opacity: disabled ? 0.65 : 1,
+        display: 'flex',
+        alignItems: 'center',
+        gap: '5px',
+        transition: 'all 0.2s',
+        fontWeight: '500'
+      },
+      onMouseOver: function onMouseOver(e) {
+        if (!disabled) {
+          if (variant.startsWith('outline-')) {
+            e.currentTarget.style.backgroundColor = getColor();
+            e.currentTarget.style.color = 'white';
+          } else {
+            e.currentTarget.style.opacity = 0.9;
+          }
+        }
+      },
+      onMouseOut: function onMouseOut(e) {
+        if (!disabled) {
+          if (variant.startsWith('outline-')) {
+            e.currentTarget.style.backgroundColor = 'transparent';
+            e.currentTarget.style.color = getColor();
+          } else {
+            e.currentTarget.style.opacity = 1;
+          }
+        }
+      }
+    }, icon && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, icon), children);
+  };
+
+  // Alert component for messages
+  var Alert = function Alert(_ref9) {
+    var children = _ref9.children,
+      _ref9$variant = _ref9.variant,
+      variant = _ref9$variant === void 0 ? 'info' : _ref9$variant,
+      _ref9$onDismiss = _ref9.onDismiss,
+      onDismiss = _ref9$onDismiss === void 0 ? null : _ref9$onDismiss;
+    var getBackgroundColor = function getBackgroundColor() {
+      switch (variant) {
+        case 'success':
+          return '#d4edda';
+        case 'danger':
+          return '#f8d7da';
+        case 'warning':
+          return '#fff3cd';
+        case 'info':
+          return '#d1ecf1';
+        default:
+          return '#d1ecf1';
+      }
+    };
+    var getColor = function getColor() {
+      switch (variant) {
+        case 'success':
+          return '#155724';
+        case 'danger':
+          return '#721c24';
+        case 'warning':
+          return '#856404';
+        case 'info':
+          return '#0c5460';
+        default:
+          return '#0c5460';
+      }
+    };
+    var getBorderColor = function getBorderColor() {
+      switch (variant) {
+        case 'success':
+          return '#c3e6cb';
+        case 'danger':
+          return '#f5c6cb';
+        case 'warning':
+          return '#ffeeba';
+        case 'info':
+          return '#bee5eb';
+        default:
+          return '#bee5eb';
+      }
+    };
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        padding: '12px 16px',
+        marginBottom: '15px',
+        backgroundColor: getBackgroundColor(),
+        color: getColor(),
+        borderRadius: '4px',
+        border: "1px solid ".concat(getBorderColor()),
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, children), onDismiss && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      onClick: onDismiss,
+      style: {
+        background: 'none',
+        border: 'none',
+        color: getColor(),
+        fontSize: '1.5rem',
+        cursor: 'pointer',
+        marginLeft: '10px',
+        padding: '0',
+        lineHeight: '1'
+      }
+    }, "\xD7"));
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
@@ -60331,51 +61080,49 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
       fontSize: '1rem',
       display: 'flex',
       alignItems: 'center',
-      cursor: 'pointer'
+      gap: '5px',
+      cursor: 'pointer',
+      color: '#007bff',
+      padding: '0'
     }
-  }, "\u2190 Back to Vehicle Management"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-arrow-left"
+  }), "Back to Vehicle Management"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
     onClick: function onClick() {
       return handleOpenUploadModal();
     },
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-plus-lg"
+    })
+  }, "Upload Document")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     style: {
-      backgroundColor: '#007bff',
-      color: 'white',
-      border: 'none',
-      padding: '8px 16px',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '5px'
+      marginBottom: '20px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "+"), " Upload Document")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Vehicle Documents"), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      padding: '10px',
-      marginBottom: '15px',
-      backgroundColor: '#f8d7da',
-      color: '#721c24',
-      borderRadius: '4px'
+  }, "Vehicle Documents"), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Alert, {
+    variant: "danger",
+    onDismiss: function onDismiss() {
+      return setError(null);
     }
-  }, error), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      padding: '10px',
-      marginBottom: '15px',
-      backgroundColor: '#d4edda',
-      color: '#155724',
-      borderRadius: '4px'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Error:"), " ", error), successMessage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Alert, {
+    variant: "success",
+    onDismiss: function onDismiss() {
+      return setSuccessMessage(null);
     }
-  }, successMessage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Success:"), " ", successMessage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       backgroundColor: 'white',
-      borderRadius: '5px',
-      boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+      borderRadius: '8px',
+      boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
       padding: '20px',
       marginBottom: '20px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
     style: {
       marginTop: 0,
-      marginBottom: '15px'
+      marginBottom: '15px',
+      fontSize: '1.1rem',
+      fontWeight: '600',
+      color: '#343a40'
     }
   }, "Filters"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
@@ -60388,7 +61135,9 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
     style: {
       display: 'block',
       marginBottom: '5px',
-      fontWeight: 'bold'
+      fontWeight: '500',
+      color: '#495057',
+      fontSize: '0.9rem'
     }
   }, "Vehicle"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
     value: selectedVehicle,
@@ -60397,7 +61146,10 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
       padding: '8px 12px',
       borderRadius: '4px',
       border: '1px solid #ced4da',
-      minWidth: '200px'
+      minWidth: '220px',
+      backgroundColor: '#fff',
+      color: '#495057',
+      fontFamily: 'inherit'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "all"
@@ -60410,7 +61162,9 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
     style: {
       display: 'block',
       marginBottom: '5px',
-      fontWeight: 'bold'
+      fontWeight: '500',
+      color: '#495057',
+      fontSize: '0.9rem'
     }
   }, "Document Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
     value: selectedType,
@@ -60419,7 +61173,10 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
       padding: '8px 12px',
       borderRadius: '4px',
       border: '1px solid #ced4da',
-      minWidth: '200px'
+      minWidth: '220px',
+      backgroundColor: '#fff',
+      color: '#495057',
+      fontFamily: 'inherit'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "all"
@@ -60433,16 +61190,12 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
     value: "inspection"
   }, "Inspection Certificate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "other"
-  }, "Other"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, "Other"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
+    variant: "secondary",
     onClick: resetFilters,
-    style: {
-      backgroundColor: '#6c757d',
-      color: 'white',
-      border: 'none',
-      padding: '8px 16px',
-      borderRadius: '4px',
-      cursor: 'pointer'
-    }
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-x-circle"
+    })
   }, "Reset Filters")))), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       textAlign: 'center',
@@ -60458,23 +61211,53 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
       margin: '0 auto 15px',
       animation: 'spin 1s linear infinite'
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading documents..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("style", null, "\n              @keyframes spin {\n                0% { transform: rotate(0deg); }\n                100% { transform: rotate(360deg); }\n              }\n            ")) : documents.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      color: '#6c757d'
+    }
+  }, "Loading documents..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("style", null, "\n              @keyframes spin {\n                0% { transform: rotate(0deg); }\n                100% { transform: rotate(360deg); }\n              }\n            ")) : documents.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       textAlign: 'center',
       padding: '40px 0',
       backgroundColor: '#f8f9fa',
-      borderRadius: '5px'
+      borderRadius: '8px',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       fontSize: '48px',
-      marginBottom: '10px'
+      marginBottom: '10px',
+      color: '#6c757d'
     }
-  }, "\uD83D\uDCC4"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "No documents found"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Upload documents to vehicles for easy access and management")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-file-earmark-text"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
+    style: {
+      marginBottom: '10px',
+      color: '#343a40'
+    }
+  }, "No documents found"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    style: {
+      color: '#6c757d',
+      maxWidth: '500px',
+      margin: '0 auto'
+    }
+  }, selectedVehicle !== 'all' || selectedType !== 'all' ? 'Try adjusting your filters or upload new documents.' : 'Upload documents to vehicles for easy access and management.'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      marginTop: '20px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
+    onClick: function onClick() {
+      return handleOpenUploadModal();
+    },
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-plus-lg"
+    })
+  }, "Upload First Document"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       backgroundColor: 'white',
-      borderRadius: '5px',
-      boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+      borderRadius: '8px',
+      boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
       overflow: 'hidden'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("table", {
@@ -60522,7 +61305,14 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("tr", {
       key: document.id,
       style: {
-        borderBottom: '1px solid #dee2e6'
+        borderBottom: '1px solid #dee2e6',
+        transition: 'background-color 0.1s'
+      },
+      onMouseOver: function onMouseOver(e) {
+        return e.currentTarget.style.backgroundColor = '#f8f9fa';
+      },
+      onMouseOut: function onMouseOut(e) {
+        return e.currentTarget.style.backgroundColor = 'white';
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
@@ -60534,21 +61324,48 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
       style: {
-        backgroundColor: '#17a2b8',
+        backgroundColor: getDocumentTypeColor(document.type),
         color: 'white',
-        padding: '3px 8px',
-        borderRadius: '12px',
-        fontSize: '0.85rem'
+        padding: '3px 10px',
+        borderRadius: '20px',
+        fontSize: '0.8rem',
+        fontWeight: '500',
+        display: 'inline-block'
       }
     }, getDocumentTypeLabel(document.type))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px'
       }
-    }, (_document$vehicles = document.vehicles) === null || _document$vehicles === void 0 ? void 0 : _document$vehicles.registration_number, " (", (_document$vehicles2 = document.vehicles) === null || _document$vehicles2 === void 0 ? void 0 : _document$vehicles2.make, " ", (_document$vehicles3 = document.vehicles) === null || _document$vehicles3 === void 0 ? void 0 : _document$vehicles3.model, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '5px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-truck",
+      style: {
+        color: '#6c757d'
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, (_document$vehicles = document.vehicles) === null || _document$vehicles === void 0 ? void 0 : _document$vehicles.registration_number, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        color: '#6c757d',
+        fontSize: '0.9rem'
+      }
+    }, "(", (_document$vehicles2 = document.vehicles) === null || _document$vehicles2 === void 0 ? void 0 : _document$vehicles2.make, " ", (_document$vehicles3 = document.vehicles) === null || _document$vehicles3 === void 0 ? void 0 : _document$vehicles3.model, ")")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px'
       }
-    }, document.file_type.toUpperCase()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        backgroundColor: '#e9ecef',
+        color: '#495057',
+        padding: '2px 8px',
+        borderRadius: '4px',
+        fontSize: '0.8rem',
+        fontWeight: '500'
+      }
+    }, document.file_type.toUpperCase())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("td", {
       style: {
         padding: '12px 15px'
       }
@@ -60557,6 +61374,12 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
         padding: '12px 15px',
         textAlign: 'right'
       }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        gap: '5px'
+      }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
       onClick: function onClick() {
         return handleViewDocument(document);
@@ -60564,32 +61387,48 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
       style: {
         backgroundColor: 'transparent',
         border: '1px solid #007bff',
+        color: '#007bff',
         borderRadius: '4px',
-        padding: '4px 8px',
-        marginRight: '5px',
-        cursor: 'pointer'
+        padding: '5px 8px',
+        cursor: 'pointer',
+        transition: 'all 0.2s'
       },
-      title: "View Document"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      role: "img",
-      "aria-label": "View"
-    }, "\uD83D\uDC41\uFE0F")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      title: "View Document",
+      onMouseOver: function onMouseOver(e) {
+        e.currentTarget.style.backgroundColor = '#007bff';
+        e.currentTarget.style.color = 'white';
+      },
+      onMouseOut: function onMouseOut(e) {
+        e.currentTarget.style.backgroundColor = 'transparent';
+        e.currentTarget.style.color = '#007bff';
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-eye"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
       onClick: function onClick() {
         return handleDownloadDocument(document);
       },
       style: {
         backgroundColor: 'transparent',
         border: '1px solid #28a745',
+        color: '#28a745',
         borderRadius: '4px',
-        padding: '4px 8px',
-        marginRight: '5px',
-        cursor: 'pointer'
+        padding: '5px 8px',
+        cursor: 'pointer',
+        transition: 'all 0.2s'
       },
-      title: "Download Document"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      role: "img",
-      "aria-label": "Download"
-    }, "\uD83D\uDCE5")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      title: "Download Document",
+      onMouseOver: function onMouseOver(e) {
+        e.currentTarget.style.backgroundColor = '#28a745';
+        e.currentTarget.style.color = 'white';
+      },
+      onMouseOut: function onMouseOut(e) {
+        e.currentTarget.style.backgroundColor = 'transparent';
+        e.currentTarget.style.color = '#28a745';
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-download"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
       onClick: function onClick() {
         return handleOpenDeleteModal(document);
       },
@@ -60598,33 +61437,72 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
         border: '1px solid #dc3545',
         color: '#dc3545',
         borderRadius: '4px',
-        padding: '4px 8px',
-        cursor: 'pointer'
+        padding: '5px 8px',
+        cursor: 'pointer',
+        transition: 'all 0.2s'
       },
-      title: "Delete Document"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-      role: "img",
-      "aria-label": "Delete"
-    }, "\uD83D\uDDD1\uFE0F"))));
+      title: "Delete Document",
+      onMouseOver: function onMouseOver(e) {
+        e.currentTarget.style.backgroundColor = '#dc3545';
+        e.currentTarget.style.color = 'white';
+      },
+      onMouseOut: function onMouseOut(e) {
+        e.currentTarget.style.backgroundColor = 'transparent';
+        e.currentTarget.style.color = '#dc3545';
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-trash"
+    })))));
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
     show: showViewModal,
     onClose: function onClose() {
       return setShowViewModal(false);
     },
-    title: (currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.name) || 'Document Viewer',
-    footer: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    title: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, (currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.name) || 'Document Viewer'), (currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.type) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        backgroundColor: getDocumentTypeColor(currentDocument.type),
+        color: 'white',
+        padding: '2px 10px',
+        borderRadius: '20px',
+        fontSize: '0.7rem',
+        fontWeight: '500'
+      }
+    }, getDocumentTypeLabel(currentDocument.type))),
+    size: "large",
+    footer: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        display: 'flex',
+        gap: '10px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
+      variant: "secondary",
       onClick: function onClick() {
         return setShowViewModal(false);
-      },
-      style: {
-        backgroundColor: '#6c757d',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
       }
-    }, "Close")
+    }, "Close"), currentDocument && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
+      variant: "success",
+      icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+        className: "bi bi-download"
+      }),
+      onClick: function onClick() {
+        return handleDownloadDocument(currentDocument);
+      }
+    }, "Download"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
+      variant: "danger",
+      icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+        className: "bi bi-trash"
+      }),
+      onClick: function onClick() {
+        setShowViewModal(false);
+        handleOpenDeleteModal(currentDocument);
+      }
+    }, "Delete")))
   }, viewLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       textAlign: 'center',
@@ -60640,11 +61518,22 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
       margin: '0 auto 15px',
       animation: 'spin 1s linear infinite'
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading document...")) : documentUrl ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      color: '#6c757d'
+    }
+  }, "Loading document...")) : documentUrl ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       textAlign: 'center'
     }
-  }, (currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.file_type) === 'pdf' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("iframe", {
+  }, (currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.file_type) === 'pdf' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      border: '1px solid #dee2e6',
+      borderRadius: '4px',
+      overflow: 'hidden',
+      marginBottom: '15px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("iframe", {
     src: documentUrl,
     width: "100%",
     height: "500px",
@@ -60652,96 +61541,203 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
       border: 'none'
     },
     title: currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.name
-  }) : ['jpg', 'jpeg', 'png', 'gif'].includes(currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.file_type.toLowerCase()) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+  })) : ['jpg', 'jpeg', 'png', 'gif'].includes(currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.file_type.toLowerCase()) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      marginBottom: '15px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: documentUrl,
     alt: currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.name,
     style: {
       maxWidth: '100%',
-      maxHeight: '500px'
+      maxHeight: '500px',
+      border: '1px solid #dee2e6',
+      borderRadius: '4px',
+      padding: '5px',
+      backgroundColor: '#f8f9fa'
     }
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
-      padding: '20px',
-      textAlign: 'center'
+      padding: '30px',
+      textAlign: 'center',
+      backgroundColor: '#f8f9fa',
+      borderRadius: '8px',
+      marginBottom: '15px',
+      border: '1px dashed #dee2e6'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "This file type cannot be previewed directly."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontSize: '48px',
+      marginBottom: '15px',
+      color: '#6c757d'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-file-earmark"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    style: {
+      marginBottom: '15px'
+    }
+  }, "This file type cannot be previewed directly."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
+    variant: "success",
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-download"
+    }),
     onClick: function onClick() {
       return handleDownloadDocument(currentDocument);
-    },
-    style: {
-      backgroundColor: '#28a745',
-      color: 'white',
-      border: 'none',
-      padding: '8px 16px',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '5px',
-      margin: '10px auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    role: "img",
-    "aria-label": "Download"
-  }, "\uD83D\uDCE5"), " Download File")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "Download File")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      marginTop: '20px',
+      backgroundColor: '#f8f9fa',
+      borderRadius: '8px',
+      padding: '15px',
+      textAlign: 'left',
+      border: '1px solid #e9ecef'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", {
+    style: {
+      fontSize: '1rem',
+      marginBottom: '15px',
+      color: '#495057',
+      fontWeight: '600'
+    }
+  }, "Document Information"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '10px 30px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      minWidth: '200px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontSize: '0.8rem',
+      color: '#6c757d',
+      marginBottom: '3px'
+    }
+  }, "DOCUMENT NAME"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontWeight: '500'
+    }
+  }, currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontSize: '0.8rem',
+      color: '#6c757d',
+      marginBottom: '3px'
+    }
+  }, "DOCUMENT TYPE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontWeight: '500'
+    }
+  }, getDocumentTypeLabel(currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.type))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontSize: '0.8rem',
+      color: '#6c757d',
+      marginBottom: '3px'
+    }
+  }, "FILE TYPE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontWeight: '500'
+    }
+  }, currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.file_type.toUpperCase())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontSize: '0.8rem',
+      color: '#6c757d',
+      marginBottom: '3px'
+    }
+  }, "UPLOADED"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontWeight: '500'
+    }
+  }, formatDate(currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.created_at)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       marginTop: '15px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Vehicle:"), " ", currentDocument === null || currentDocument === void 0 || (_currentDocument$vehi = currentDocument.vehicles) === null || _currentDocument$vehi === void 0 ? void 0 : _currentDocument$vehi.registration_number, " (", currentDocument === null || currentDocument === void 0 || (_currentDocument$vehi2 = currentDocument.vehicles) === null || _currentDocument$vehi2 === void 0 ? void 0 : _currentDocument$vehi2.make, " ", currentDocument === null || currentDocument === void 0 || (_currentDocument$vehi3 = currentDocument.vehicles) === null || _currentDocument$vehi3 === void 0 ? void 0 : _currentDocument$vehi3.model, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Type:"), " ", getDocumentTypeLabel(currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.type)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Uploaded:"), " ", formatDate(currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.created_at))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: function onClick() {
-      return handleDownloadDocument(currentDocument);
-    },
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
-      backgroundColor: '#28a745',
-      color: 'white',
-      border: 'none',
-      padding: '8px 16px',
-      borderRadius: '4px',
-      cursor: 'pointer',
+      fontSize: '0.8rem',
+      color: '#6c757d',
+      marginBottom: '3px'
+    }
+  }, "VEHICLE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
       display: 'flex',
       alignItems: 'center',
       gap: '5px',
-      margin: '10px auto'
+      fontWeight: '500'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    role: "img",
-    "aria-label": "Download"
-  }, "\uD83D\uDCE5"), " Download")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-truck",
+    style: {
+      color: '#6c757d'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, currentDocument === null || currentDocument === void 0 || (_currentDocument$vehi = currentDocument.vehicles) === null || _currentDocument$vehi === void 0 ? void 0 : _currentDocument$vehi.registration_number, "(", currentDocument === null || currentDocument === void 0 || (_currentDocument$vehi2 = currentDocument.vehicles) === null || _currentDocument$vehi2 === void 0 ? void 0 : _currentDocument$vehi2.make, " ", currentDocument === null || currentDocument === void 0 || (_currentDocument$vehi3 = currentDocument.vehicles) === null || _currentDocument$vehi3 === void 0 ? void 0 : _currentDocument$vehi3.model, ")"))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       padding: '20px',
       textAlign: 'center',
       color: '#dc3545'
     }
-  }, "Failed to load document preview.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontSize: '48px',
+      marginBottom: '15px',
+      color: '#dc3545'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-exclamation-triangle"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", {
+    style: {
+      marginBottom: '10px'
+    }
+  }, "Document Preview Failed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    style: {
+      color: '#6c757d'
+    }
+  }, "We couldn't load the document preview. Please try again or download the file instead."), currentDocument && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      marginTop: '15px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
+    variant: "success",
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+      className: "bi bi-download"
+    }),
+    onClick: function onClick() {
+      return handleDownloadDocument(currentDocument);
+    }
+  }, "Download File")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
     show: showUploadModal,
     onClose: function onClose() {
       return setShowUploadModal(false);
     },
     title: "Upload Document",
-    footer: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    footer: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        display: 'flex',
+        gap: '10px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
+      variant: "secondary",
       onClick: function onClick() {
         return setShowUploadModal(false);
-      },
-      style: {
-        backgroundColor: '#6c757d',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
       }
-    }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
       onClick: handleUploadDocument,
-      disabled: uploadLoading || !documentFile || !documentName || !documentType || !uploadVehicleId,
-      style: {
-        backgroundColor: '#007bff',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        opacity: uploadLoading || !documentFile || !documentName || !documentType || !uploadVehicleId ? 0.6 : 1
-      }
+      disabled: uploadLoading,
+      icon: uploadLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        style: {
+          width: '16px',
+          height: '16px',
+          border: '2px solid rgba(255,255,255,0.3)',
+          borderTopColor: 'white',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite'
+        }
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+        className: "bi bi-cloud-upload"
+      })
     }, uploadLoading ? 'Uploading...' : 'Upload Document'))
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
@@ -60749,11 +61745,21 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
       flexDirection: 'column',
       gap: '15px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      marginBottom: '20px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Alert, {
+    variant: "info"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-info-circle me-2"
+  }), "Maximum 4 documents allowed per vehicle")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     style: {
       display: 'block',
       marginBottom: '5px',
-      fontWeight: 'bold'
+      fontWeight: '500',
+      color: '#495057',
+      fontSize: '0.9rem'
     }
   }, "Vehicle*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
     value: uploadVehicleId,
@@ -60762,9 +61768,10 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
     },
     style: {
       width: '100%',
-      padding: '8px',
+      padding: '10px',
       borderRadius: '4px',
-      border: '1px solid #ced4da'
+      border: formErrors.vehicle ? '1px solid #dc3545' : '1px solid #ced4da',
+      backgroundColor: formErrors.vehicle ? '#fff8f8' : '#fff'
     },
     required: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
@@ -60774,11 +61781,19 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
       key: vehicle.id,
       value: vehicle.id
     }, vehicle.registration_number, " (", vehicle.make, " ", vehicle.model, ")");
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+  })), formErrors.vehicle && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      color: '#dc3545',
+      fontSize: '0.8rem',
+      marginTop: '5px'
+    }
+  }, formErrors.vehicle)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     style: {
       display: 'block',
       marginBottom: '5px',
-      fontWeight: 'bold'
+      fontWeight: '500',
+      color: '#495057',
+      fontSize: '0.9rem'
     }
   }, "Document Name*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
@@ -60788,17 +61803,25 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
     },
     style: {
       width: '100%',
-      padding: '8px',
+      padding: '10px',
       borderRadius: '4px',
-      border: '1px solid #ced4da'
+      border: formErrors.name ? '1px solid #dc3545' : '1px solid #ced4da',
+      backgroundColor: formErrors.name ? '#fff8f8' : '#fff'
     },
-    required: true,
     placeholder: "e.g., Insurance Policy 2025, Vehicle Registration"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+  }), formErrors.name && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      color: '#dc3545',
+      fontSize: '0.8rem',
+      marginTop: '5px'
+    }
+  }, formErrors.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     style: {
       display: 'block',
       marginBottom: '5px',
-      fontWeight: 'bold'
+      fontWeight: '500',
+      color: '#495057',
+      fontSize: '0.9rem'
     }
   }, "Document Type*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
     value: documentType,
@@ -60807,9 +61830,10 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
     },
     style: {
       width: '100%',
-      padding: '8px',
+      padding: '10px',
       borderRadius: '4px',
-      border: '1px solid #ced4da'
+      border: formErrors.type ? '1px solid #dc3545' : '1px solid #ced4da',
+      backgroundColor: formErrors.type ? '#fff8f8' : '#fff'
     },
     required: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
@@ -60822,74 +61846,146 @@ var VehicleDocuments = function VehicleDocuments(_ref) {
     value: "inspection"
   }, "Inspection Certificate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "other"
-  }, "Other"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+  }, "Other")), formErrors.type && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      color: '#dc3545',
+      fontSize: '0.8rem',
+      marginTop: '5px'
+    }
+  }, formErrors.type)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     style: {
       display: 'block',
       marginBottom: '5px',
-      fontWeight: 'bold'
+      fontWeight: '500',
+      color: '#495057',
+      fontSize: '0.9rem'
     }
-  }, "File*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }, "File*"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      width: '100%',
+      border: formErrors.file ? '1px solid #dc3545' : '1px dashed #ced4da',
+      borderRadius: '4px',
+      padding: '20px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: formErrors.file ? '#fff8f8' : '#f8f9fa',
+      cursor: 'pointer',
+      transition: 'all 0.2s'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontSize: '24px',
+      color: '#6c757d',
+      marginBottom: '10px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-cloud-upload"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      marginBottom: '15px'
+    }
+  }, documentFile ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '5px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, documentFile.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontSize: '0.8rem',
+      color: '#6c757d'
+    }
+  }, (documentFile.size / 1024).toFixed(1), " KB")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Drag & drop a file here or click to browse"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontSize: '0.8rem',
+      color: '#6c757d',
+      marginTop: '5px'
+    }
+  }, "Supported formats: PDF, JPG, PNG, DOC, DOCX (max 5MB)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "file",
     onChange: function onChange(e) {
       return setDocumentFile(e.target.files[0]);
     },
     style: {
-      width: '100%',
-      padding: '8px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da'
+      display: 'none'
     },
-    required: true,
+    id: "fileInput",
     accept: ".pdf,.jpg,.jpeg,.png,.doc,.docx"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
+    variant: "outline-primary",
+    onClick: function onClick() {
+      return document.getElementById('fileInput').click();
+    },
+    size: "small"
+  }, documentFile ? 'Change File' : 'Select File')), formErrors.file && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
-      fontSize: '0.9rem',
-      color: '#6c757d',
+      color: '#dc3545',
+      fontSize: '0.8rem',
       marginTop: '5px'
     }
-  }, "Supported formats: PDF, JPG, PNG, DOC, DOCX (max 5MB)")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      backgroundColor: '#f8f9fa',
-      padding: '10px',
-      borderRadius: '4px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    style: {
-      fontSize: '0.9rem',
-      color: '#dc3545',
-      fontWeight: 'bold',
-      margin: '0'
-    }
-  }, "Note: Maximum 4 documents allowed per vehicle")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
+  }, formErrors.file)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Modal, {
     show: showDeleteModal,
     onClose: function onClose() {
       return setShowDeleteModal(false);
     },
     title: "Delete Document",
-    footer: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    footer: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        display: 'flex',
+        gap: '10px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
+      variant: "secondary",
       onClick: function onClick() {
         return setShowDeleteModal(false);
-      },
-      style: {
-        backgroundColor: '#6c757d',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
       }
-    }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, {
+      variant: "danger",
       onClick: handleDeleteDocument,
-      style: {
-        backgroundColor: '#dc3545',
-        color: 'white',
-        border: 'none',
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
-      }
+      icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+        className: "bi bi-trash"
+      })
     }, "Delete Document"))
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Are you sure you want to delete the document \"", currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.name, "\"?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Warning:"), " This action cannot be undone. The document will be permanently deleted.")));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      fontSize: '48px',
+      textAlign: 'center',
+      color: '#dc3545',
+      marginBottom: '15px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", {
+    className: "bi bi-exclamation-triangle"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    style: {
+      textAlign: 'center',
+      fontSize: '1.1rem',
+      marginBottom: '15px'
+    }
+  }, "Are you sure you want to delete this document?"), currentDocument && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      backgroundColor: '#f8f9fa',
+      borderRadius: '8px',
+      padding: '15px',
+      marginBottom: '15px',
+      border: '1px solid #e9ecef'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      marginBottom: '8px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Document:"), " ", currentDocument.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      marginBottom: '8px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Type:"), " ", getDocumentTypeLabel(currentDocument.type)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Vehicle:"), " ", (_currentDocument$vehi4 = currentDocument.vehicles) === null || _currentDocument$vehi4 === void 0 ? void 0 : _currentDocument$vehi4.registration_number, " (", (_currentDocument$vehi5 = currentDocument.vehicles) === null || _currentDocument$vehi5 === void 0 ? void 0 : _currentDocument$vehi5.make, " ", (_currentDocument$vehi6 = currentDocument.vehicles) === null || _currentDocument$vehi6 === void 0 ? void 0 : _currentDocument$vehi6.model, ")")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Alert, {
+    variant: "warning"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Warning:"), " This action cannot be undone. The document will be permanently deleted."))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VehicleDocuments);
 

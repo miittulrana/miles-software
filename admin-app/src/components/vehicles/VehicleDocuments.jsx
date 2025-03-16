@@ -23,6 +23,7 @@ const VehicleDocuments = ({ onBack }) => {
   const [documentName, setDocumentName] = useState('');
   const [documentType, setDocumentType] = useState('registration');
   const [uploadVehicleId, setUploadVehicleId] = useState('');
+  const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
     fetchData();
@@ -136,6 +137,7 @@ const VehicleDocuments = ({ onBack }) => {
     setDocumentName('');
     setDocumentType('registration');
     setUploadVehicleId(vehicleId || '');
+    setFormErrors({});
     setShowUploadModal(true);
   };
 
@@ -144,9 +146,43 @@ const VehicleDocuments = ({ onBack }) => {
     setShowDeleteModal(true);
   };
 
+  const validateUploadForm = () => {
+    const errors = {};
+    
+    if (!documentName.trim()) {
+      errors.name = 'Document name is required';
+    }
+    
+    if (!documentType) {
+      errors.type = 'Document type is required';
+    }
+    
+    if (!uploadVehicleId) {
+      errors.vehicle = 'Please select a vehicle';
+    }
+    
+    if (!documentFile) {
+      errors.file = 'Please select a file to upload';
+    } else {
+      // Check file size (max 5MB)
+      if (documentFile.size > 5 * 1024 * 1024) {
+        errors.file = 'File size exceeds the 5MB limit';
+      }
+      
+      // Check file type
+      const fileExt = documentFile.name.split('.').pop().toLowerCase();
+      const allowedTypes = ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx'];
+      if (!allowedTypes.includes(fileExt)) {
+        errors.file = 'File type not supported. Please use PDF, JPG, PNG, DOC, or DOCX';
+      }
+    }
+    
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleUploadDocument = async () => {
-    if (!documentFile || !documentName || !documentType || !uploadVehicleId) {
-      setError('Please fill in all required fields.');
+    if (!validateUploadForm()) {
       return;
     }
     
@@ -168,7 +204,7 @@ const VehicleDocuments = ({ onBack }) => {
       }
       
       // Upload file to storage
-      const fileExt = documentFile.name.split('.').pop();
+      const fileExt = documentFile.name.split('.').pop().toLowerCase();
       const fileName = `${Date.now()}.${fileExt}`;
       const filePath = `vehicle-documents/${uploadVehicleId}/${fileName}`;
       
@@ -283,9 +319,29 @@ const VehicleDocuments = ({ onBack }) => {
     }
   };
 
+  // Helper function to get document type color
+  const getDocumentTypeColor = (type) => {
+    switch (type) {
+      case 'registration':
+        return '#007bff'; // blue
+      case 'insurance':
+        return '#17a2b8'; // teal
+      case 'maintenance':
+        return '#6f42c1'; // purple
+      case 'inspection':
+        return '#fd7e14'; // orange
+      case 'other':
+        return '#6c757d'; // gray
+      default:
+        return '#17a2b8'; // default teal
+    }
+  };
+
   // Modal component
-  const Modal = ({ show, onClose, title, children, footer }) => {
+  const Modal = ({ show, onClose, title, children, footer, size = 'default' }) => {
     if (!show) return null;
+    
+    const modalWidth = size === 'large' ? '700px' : '500px';
     
     return (
       <div style={{
@@ -298,30 +354,231 @@ const VehicleDocuments = ({ onBack }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 1000
+        zIndex: 1000,
+        backdropFilter: 'blur(3px)'
       }}>
         <div style={{
           backgroundColor: 'white',
-          borderRadius: '5px',
-          width: '500px',
-          maxWidth: '90%',
+          borderRadius: '8px',
+          width: modalWidth,
+          maxWidth: '95%',
           maxHeight: '90%',
           overflowY: 'auto',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+          boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
         }}>
-          <div style={{ padding: '15px', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h3 style={{ margin: 0 }}>{title}</h3>
-            <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>&times;</button>
+          <div style={{ 
+            padding: '16px 20px', 
+            borderBottom: '1px solid #eee', 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            backgroundColor: '#f8f9fa',
+            borderTopLeftRadius: '8px',
+            borderTopRightRadius: '8px'
+          }}>
+            <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: '600' }}>{title}</h3>
+            <button 
+              onClick={onClose} 
+              style={{ 
+                background: 'none', 
+                border: 'none', 
+                fontSize: '1.5rem', 
+                cursor: 'pointer',
+                color: '#6c757d',
+                width: '30px',
+                height: '30px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '50%',
+                transition: 'background-color 0.2s'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#e9ecef'}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+            >
+              &times;
+            </button>
           </div>
-          <div style={{ padding: '15px' }}>
+          <div style={{ padding: '20px' }}>
             {children}
           </div>
           {footer && (
-            <div style={{ padding: '15px', borderTop: '1px solid #eee', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+            <div style={{ 
+              padding: '15px 20px', 
+              borderTop: '1px solid #eee', 
+              display: 'flex', 
+              justifyContent: 'flex-end', 
+              gap: '10px',
+              backgroundColor: '#f8f9fa',
+              borderBottomLeftRadius: '8px',
+              borderBottomRightRadius: '8px'
+            }}>
               {footer}
             </div>
           )}
         </div>
+      </div>
+    );
+  };
+
+  // Button component for consistency
+  const Button = ({ children, onClick, variant = 'primary', disabled = false, size = 'default', icon = null }) => {
+    const getBackgroundColor = () => {
+      switch (variant) {
+        case 'primary': return '#007bff';
+        case 'secondary': return '#6c757d';
+        case 'success': return '#28a745';
+        case 'danger': return '#dc3545';
+        case 'outline-primary': return 'transparent';
+        case 'outline-secondary': return 'transparent';
+        case 'outline-success': return 'transparent';
+        case 'outline-danger': return 'transparent';
+        default: return '#007bff';
+      }
+    };
+    
+    const getColor = () => {
+      if (variant.startsWith('outline-')) {
+        switch (variant) {
+          case 'outline-primary': return '#007bff';
+          case 'outline-secondary': return '#6c757d';
+          case 'outline-success': return '#28a745';
+          case 'outline-danger': return '#dc3545';
+          default: return '#007bff';
+        }
+      }
+      return 'white';
+    };
+    
+    const getBorder = () => {
+      if (variant.startsWith('outline-')) {
+        switch (variant) {
+          case 'outline-primary': return '1px solid #007bff';
+          case 'outline-secondary': return '1px solid #6c757d';
+          case 'outline-success': return '1px solid #28a745';
+          case 'outline-danger': return '1px solid #dc3545';
+          default: return '1px solid #007bff';
+        }
+      }
+      return 'none';
+    };
+    
+    const getPadding = () => {
+      return size === 'small' ? '4px 8px' : '8px 16px';
+    };
+    
+    const getFontSize = () => {
+      return size === 'small' ? '0.875rem' : '1rem';
+    };
+    
+    return (
+      <button
+        onClick={onClick}
+        disabled={disabled}
+        style={{
+          backgroundColor: getBackgroundColor(),
+          color: getColor(),
+          border: getBorder(),
+          padding: getPadding(),
+          borderRadius: '4px',
+          fontSize: getFontSize(),
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          opacity: disabled ? 0.65 : 1,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '5px',
+          transition: 'all 0.2s',
+          fontWeight: '500'
+        }}
+        onMouseOver={(e) => {
+          if (!disabled) {
+            if (variant.startsWith('outline-')) {
+              e.currentTarget.style.backgroundColor = getColor();
+              e.currentTarget.style.color = 'white';
+            } else {
+              e.currentTarget.style.opacity = 0.9;
+            }
+          }
+        }}
+        onMouseOut={(e) => {
+          if (!disabled) {
+            if (variant.startsWith('outline-')) {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = getColor();
+            } else {
+              e.currentTarget.style.opacity = 1;
+            }
+          }
+        }}
+      >
+        {icon && <span>{icon}</span>}
+        {children}
+      </button>
+    );
+  };
+
+  // Alert component for messages
+  const Alert = ({ children, variant = 'info', onDismiss = null }) => {
+    const getBackgroundColor = () => {
+      switch (variant) {
+        case 'success': return '#d4edda';
+        case 'danger': return '#f8d7da';
+        case 'warning': return '#fff3cd';
+        case 'info': return '#d1ecf1';
+        default: return '#d1ecf1';
+      }
+    };
+    
+    const getColor = () => {
+      switch (variant) {
+        case 'success': return '#155724';
+        case 'danger': return '#721c24';
+        case 'warning': return '#856404';
+        case 'info': return '#0c5460';
+        default: return '#0c5460';
+      }
+    };
+    
+    const getBorderColor = () => {
+      switch (variant) {
+        case 'success': return '#c3e6cb';
+        case 'danger': return '#f5c6cb';
+        case 'warning': return '#ffeeba';
+        case 'info': return '#bee5eb';
+        default: return '#bee5eb';
+      }
+    };
+    
+    return (
+      <div style={{
+        padding: '12px 16px',
+        marginBottom: '15px',
+        backgroundColor: getBackgroundColor(),
+        color: getColor(),
+        borderRadius: '4px',
+        border: `1px solid ${getBorderColor()}`,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}>
+        <div>{children}</div>
+        {onDismiss && (
+          <button 
+            onClick={onDismiss}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: getColor(),
+              fontSize: '1.5rem',
+              cursor: 'pointer',
+              marginLeft: '10px',
+              padding: '0',
+              lineHeight: '1'
+            }}
+          >
+            &times;
+          </button>
+        )}
       </div>
     );
   };
@@ -337,72 +594,78 @@ const VehicleDocuments = ({ onBack }) => {
             fontSize: '1rem',
             display: 'flex',
             alignItems: 'center',
-            cursor: 'pointer'
-          }}
-        >
-          ← Back to Vehicle Management
-        </button>
-        <button
-          onClick={() => handleOpenUploadModal()}
-          style={{
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            padding: '8px 16px',
-            borderRadius: '4px',
+            gap: '5px',
             cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '5px'
+            color: '#007bff',
+            padding: '0'
           }}
         >
-          <span>+</span> Upload Document
+          <i className="bi bi-arrow-left"></i>
+          Back to Vehicle Management
         </button>
+        <Button
+          onClick={() => handleOpenUploadModal()}
+          icon={<i className="bi bi-plus-lg"></i>}
+        >
+          Upload Document
+        </Button>
       </div>
       
-      <h2>Vehicle Documents</h2>
+      <h2 style={{ marginBottom: '20px' }}>Vehicle Documents</h2>
       
       {error && (
-        <div style={{ 
-          padding: '10px', 
-          marginBottom: '15px', 
-          backgroundColor: '#f8d7da', 
-          color: '#721c24',
-          borderRadius: '4px'
-        }}>
-          {error}
-        </div>
+        <Alert variant="danger" onDismiss={() => setError(null)}>
+          <strong>Error:</strong> {error}
+        </Alert>
       )}
       
       {successMessage && (
-        <div style={{ 
-          padding: '10px', 
-          marginBottom: '15px', 
-          backgroundColor: '#d4edda', 
-          color: '#155724',
-          borderRadius: '4px'
-        }}>
-          {successMessage}
-        </div>
+        <Alert variant="success" onDismiss={() => setSuccessMessage(null)}>
+          <strong>Success:</strong> {successMessage}
+        </Alert>
       )}
       
       {/* Filters */}
       <div style={{ 
         backgroundColor: 'white',
-        borderRadius: '5px',
-        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+        borderRadius: '8px',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
         padding: '20px',
         marginBottom: '20px'
       }}>
-        <h3 style={{ marginTop: 0, marginBottom: '15px' }}>Filters</h3>
+        <h3 style={{ 
+          marginTop: 0, 
+          marginBottom: '15px', 
+          fontSize: '1.1rem', 
+          fontWeight: '600',
+          color: '#343a40'
+        }}>
+          Filters
+        </h3>
         
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', alignItems: 'flex-end' }}>
           <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Vehicle</label>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '5px', 
+              fontWeight: '500',
+              color: '#495057',
+              fontSize: '0.9rem'
+            }}>
+              Vehicle
+            </label>
             <select
               value={selectedVehicle}
               onChange={handleVehicleSelect}
-              style={{ padding: '8px 12px', borderRadius: '4px', border: '1px solid #ced4da', minWidth: '200px' }}
+              style={{ 
+                padding: '8px 12px', 
+                borderRadius: '4px', 
+                border: '1px solid #ced4da', 
+                minWidth: '220px',
+                backgroundColor: '#fff',
+                color: '#495057',
+                fontFamily: 'inherit'
+              }}
             >
               <option value="all">All Vehicles</option>
               {vehicles.map(vehicle => (
@@ -414,11 +677,27 @@ const VehicleDocuments = ({ onBack }) => {
           </div>
           
           <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Type</label>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '5px', 
+              fontWeight: '500',
+              color: '#495057',
+              fontSize: '0.9rem'
+            }}>
+              Document Type
+            </label>
             <select
               value={selectedType}
               onChange={handleTypeSelect}
-              style={{ padding: '8px 12px', borderRadius: '4px', border: '1px solid #ced4da', minWidth: '200px' }}
+              style={{ 
+                padding: '8px 12px', 
+                borderRadius: '4px', 
+                border: '1px solid #ced4da', 
+                minWidth: '220px',
+                backgroundColor: '#fff',
+                color: '#495057',
+                fontFamily: 'inherit'
+              }}
             >
               <option value="all">All Types</option>
               <option value="registration">Registration</option>
@@ -430,19 +709,9 @@ const VehicleDocuments = ({ onBack }) => {
           </div>
           
           <div>
-            <button
-              onClick={resetFilters}
-              style={{
-                backgroundColor: '#6c757d',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
+            <Button variant="secondary" onClick={resetFilters} icon={<i className="bi bi-x-circle"></i>}>
               Reset Filters
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -459,7 +728,7 @@ const VehicleDocuments = ({ onBack }) => {
             margin: '0 auto 15px',
             animation: 'spin 1s linear infinite'
           }}></div>
-          <div>Loading documents...</div>
+          <div style={{ color: '#6c757d' }}>Loading documents...</div>
           <style>
             {`
               @keyframes spin {
@@ -470,16 +739,33 @@ const VehicleDocuments = ({ onBack }) => {
           </style>
         </div>
       ) : documents.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '40px 0', backgroundColor: '#f8f9fa', borderRadius: '5px' }}>
-          <div style={{ fontSize: '48px', marginBottom: '10px' }}>📄</div>
-          <h3>No documents found</h3>
-          <p>Upload documents to vehicles for easy access and management</p>
+        <div style={{ 
+          textAlign: 'center', 
+          padding: '40px 0', 
+          backgroundColor: '#f8f9fa', 
+          borderRadius: '8px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+        }}>
+          <div style={{ fontSize: '48px', marginBottom: '10px', color: '#6c757d' }}>
+            <i className="bi bi-file-earmark-text"></i>
+          </div>
+          <h3 style={{ marginBottom: '10px', color: '#343a40' }}>No documents found</h3>
+          <p style={{ color: '#6c757d', maxWidth: '500px', margin: '0 auto' }}>
+            {selectedVehicle !== 'all' || selectedType !== 'all' ? 
+              'Try adjusting your filters or upload new documents.' : 
+              'Upload documents to vehicles for easy access and management.'}
+          </p>
+          <div style={{ marginTop: '20px' }}>
+            <Button onClick={() => handleOpenUploadModal()} icon={<i className="bi bi-plus-lg"></i>}>
+              Upload First Document
+            </Button>
+          </div>
         </div>
       ) : (
         <div style={{ 
           backgroundColor: 'white', 
-          borderRadius: '5px',
-          boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+          borderRadius: '8px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
           overflow: 'hidden'
         }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -495,71 +781,127 @@ const VehicleDocuments = ({ onBack }) => {
             </thead>
             <tbody>
               {documents.map(document => (
-                <tr key={document.id} style={{ borderBottom: '1px solid #dee2e6' }}>
+                <tr 
+                  key={document.id} 
+                  style={{ 
+                    borderBottom: '1px solid #dee2e6',
+                    transition: 'background-color 0.1s'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+                  onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'white'}
+                >
                   <td style={{ padding: '12px 15px' }}>{document.name}</td>
                   <td style={{ padding: '12px 15px' }}>
                     <span style={{ 
-                      backgroundColor: '#17a2b8',
+                      backgroundColor: getDocumentTypeColor(document.type),
                       color: 'white',
-                      padding: '3px 8px',
-                      borderRadius: '12px',
-                      fontSize: '0.85rem'
+                      padding: '3px 10px',
+                      borderRadius: '20px',
+                      fontSize: '0.8rem',
+                      fontWeight: '500',
+                      display: 'inline-block'
                     }}>
                       {getDocumentTypeLabel(document.type)}
                     </span>
                   </td>
                   <td style={{ padding: '12px 15px' }}>
-                    {document.vehicles?.registration_number} ({document.vehicles?.make} {document.vehicles?.model})
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                      <i className="bi bi-truck" style={{ color: '#6c757d' }}></i>
+                      <span>
+                        {document.vehicles?.registration_number} 
+                        <span style={{ color: '#6c757d', fontSize: '0.9rem' }}>
+                          ({document.vehicles?.make} {document.vehicles?.model})
+                        </span>
+                      </span>
+                    </div>
                   </td>
                   <td style={{ padding: '12px 15px' }}>
-                    {document.file_type.toUpperCase()}
+                    <span style={{ 
+                      backgroundColor: '#e9ecef',
+                      color: '#495057',
+                      padding: '2px 8px',
+                      borderRadius: '4px',
+                      fontSize: '0.8rem',
+                      fontWeight: '500'
+                    }}>
+                      {document.file_type.toUpperCase()}
+                    </span>
                   </td>
                   <td style={{ padding: '12px 15px' }}>
                     {formatDate(document.created_at)}
                   </td>
                   <td style={{ padding: '12px 15px', textAlign: 'right' }}>
-                    <button 
-                      onClick={() => handleViewDocument(document)}
-                      style={{
-                        backgroundColor: 'transparent',
-                        border: '1px solid #007bff',
-                        borderRadius: '4px',
-                        padding: '4px 8px',
-                        marginRight: '5px',
-                        cursor: 'pointer'
-                      }}
-                      title="View Document"
-                    >
-                      <span role="img" aria-label="View">👁️</span>
-                    </button>
-                    <button 
-                      onClick={() => handleDownloadDocument(document)}
-                      style={{
-                        backgroundColor: 'transparent',
-                        border: '1px solid #28a745',
-                        borderRadius: '4px',
-                        padding: '4px 8px',
-                        marginRight: '5px',
-                        cursor: 'pointer'
-                      }}
-                      title="Download Document"
-                    >
-                      <span role="img" aria-label="Download">📥</span>
-                    </button>
-                    <button 
-                      onClick={() => handleOpenDeleteModal(document)}
-                      style={{
-                        backgroundColor: 'transparent',
-                        border: '1px solid #dc3545',
-                        color: '#dc3545',
-                        borderRadius: '4px',
-                        padding: '4px 8px',
-                        cursor: 'pointer'
-                      }}
-                      title="Delete Document"
-                    >
-                      <span role="img" aria-label="Delete">🗑️</span>
-                    </button>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '5px' }}>
+                      <button 
+                        onClick={() => handleViewDocument(document)}
+                        style={{
+                          backgroundColor: 'transparent',
+                          border: '1px solid #007bff',
+                          color: '#007bff',
+                          borderRadius: '4px',
+                          padding: '5px 8px',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s'
+                        }}
+                        title="View Document"
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = '#007bff';
+                          e.currentTarget.style.color = 'white';
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                          e.currentTarget.style.color = '#007bff';
+                        }}
+                      >
+                        <i className="bi bi-eye"></i>
+                      </button>
+                      <button 
+                        onClick={() => handleDownloadDocument(document)}
+                        style={{
+                          backgroundColor: 'transparent',
+                          border: '1px solid #28a745',
+                          color: '#28a745',
+                          borderRadius: '4px',
+                          padding: '5px 8px',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s'
+                        }}
+                        title="Download Document"
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = '#28a745';
+                          e.currentTarget.style.color = 'white';
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                          e.currentTarget.style.color = '#28a745';
+                        }}
+                      >
+                        <i className="bi bi-download"></i>
+                      </button>
+                      <button 
+                        onClick={() => handleOpenDeleteModal(document)}
+                        style={{
+                          backgroundColor: 'transparent',
+                          border: '1px solid #dc3545',
+                          color: '#dc3545',
+                          borderRadius: '4px',
+                          padding: '5px 8px',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s'
+                        }}
+                        title="Delete Document"
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = '#dc3545';
+                          e.currentTarget.style.color = 'white';
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                          e.currentTarget.style.color = '#dc3545';
+                        }}
+                      >
+                        <i className="bi bi-trash"></i>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -572,21 +914,54 @@ const VehicleDocuments = ({ onBack }) => {
       <Modal
         show={showViewModal}
         onClose={() => setShowViewModal(false)}
-        title={currentDocument?.name || 'Document Viewer'}
+        title={
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span>{currentDocument?.name || 'Document Viewer'}</span>
+            {currentDocument?.type && (
+              <span style={{ 
+                backgroundColor: getDocumentTypeColor(currentDocument.type),
+                color: 'white',
+                padding: '2px 10px',
+                borderRadius: '20px',
+                fontSize: '0.7rem',
+                fontWeight: '500'
+              }}>
+                {getDocumentTypeLabel(currentDocument.type)}
+              </span>
+            )}
+          </div>
+        }
+        size="large"
         footer={
-          <button 
-            onClick={() => setShowViewModal(false)}
-            style={{
-              backgroundColor: '#6c757d',
-              color: 'white',
-              border: 'none',
-              padding: '8px 16px',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
-            Close
-          </button>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Button 
+              variant="secondary" 
+              onClick={() => setShowViewModal(false)}
+            >
+              Close
+            </Button>
+            {currentDocument && (
+              <>
+                <Button 
+                  variant="success" 
+                  icon={<i className="bi bi-download"></i>}
+                  onClick={() => handleDownloadDocument(currentDocument)}
+                >
+                  Download
+                </Button>
+                <Button 
+                  variant="danger" 
+                  icon={<i className="bi bi-trash"></i>}
+                  onClick={() => {
+                    setShowViewModal(false);
+                    handleOpenDeleteModal(currentDocument);
+                  }}
+                >
+                  Delete
+                </Button>
+              </>
+            )}
+          </div>
         }
       >
         {viewLoading ? (
@@ -600,74 +975,152 @@ const VehicleDocuments = ({ onBack }) => {
               margin: '0 auto 15px',
               animation: 'spin 1s linear infinite'
             }}></div>
-            <div>Loading document...</div>
+            <div style={{ color: '#6c757d' }}>Loading document...</div>
           </div>
         ) : documentUrl ? (
           <div style={{ textAlign: 'center' }}>
             {currentDocument?.file_type === 'pdf' ? (
-              <iframe 
-                src={documentUrl} 
-                width="100%" 
-                height="500px" 
-                style={{ border: 'none' }}
-                title={currentDocument?.name}
-              />
+              <div style={{ 
+                border: '1px solid #dee2e6', 
+                borderRadius: '4px', 
+                overflow: 'hidden',
+                marginBottom: '15px'
+              }}>
+                <iframe 
+                  src={documentUrl} 
+                  width="100%" 
+                  height="500px" 
+                  style={{ border: 'none' }}
+                  title={currentDocument?.name}
+                />
+              </div>
             ) : ['jpg', 'jpeg', 'png', 'gif'].includes(currentDocument?.file_type.toLowerCase()) ? (
-              <img 
-                src={documentUrl} 
-                alt={currentDocument?.name} 
-                style={{ maxWidth: '100%', maxHeight: '500px' }} 
-              />
-            ) : (
-              <div style={{ padding: '20px', textAlign: 'center' }}>
-                <p>This file type cannot be previewed directly.</p>
-                <button
-                  onClick={() => handleDownloadDocument(currentDocument)}
-                  style={{
-                    backgroundColor: '#28a745',
-                    color: 'white',
-                    border: 'none',
-                    padding: '8px 16px',
+              <div style={{ marginBottom: '15px' }}>
+                <img 
+                  src={documentUrl} 
+                  alt={currentDocument?.name} 
+                  style={{ 
+                    maxWidth: '100%', 
+                    maxHeight: '500px',
+                    border: '1px solid #dee2e6',
                     borderRadius: '4px',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    margin: '10px auto'
-                  }}
+                    padding: '5px',
+                    backgroundColor: '#f8f9fa'
+                  }} 
+                />
+              </div>
+            ) : (
+              <div style={{ 
+                padding: '30px', 
+                textAlign: 'center',
+                backgroundColor: '#f8f9fa',
+                borderRadius: '8px',
+                marginBottom: '15px',
+                border: '1px dashed #dee2e6',
+              }}>
+                <div style={{ 
+                  fontSize: '48px', 
+                  marginBottom: '15px',
+                  color: '#6c757d'
+                }}>
+                  <i className="bi bi-file-earmark"></i>
+                </div>
+                <p style={{ marginBottom: '15px' }}>This file type cannot be previewed directly.</p>
+                <Button 
+                  variant="success" 
+                  icon={<i className="bi bi-download"></i>}
+                  onClick={() => handleDownloadDocument(currentDocument)}
                 >
-                  <span role="img" aria-label="Download">📥</span> Download File
-                </button>
+                  Download File
+                </Button>
               </div>
             )}
             
-            <div style={{ marginTop: '15px' }}>
-              <p><strong>Vehicle:</strong> {currentDocument?.vehicles?.registration_number} ({currentDocument?.vehicles?.make} {currentDocument?.vehicles?.model})</p>
-              <p><strong>Type:</strong> {getDocumentTypeLabel(currentDocument?.type)}</p>
-              <p><strong>Uploaded:</strong> {formatDate(currentDocument?.created_at)}</p>
+            <div style={{ 
+              marginTop: '20px',
+              backgroundColor: '#f8f9fa',
+              borderRadius: '8px',
+              padding: '15px',
+              textAlign: 'left',
+              border: '1px solid #e9ecef'
+            }}>
+              <h4 style={{ 
+                fontSize: '1rem', 
+                marginBottom: '15px',
+                color: '#495057',
+                fontWeight: '600'
+              }}>
+                Document Information
+              </h4>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 30px' }}>
+                <div style={{ minWidth: '200px' }}>
+                  <div style={{ fontSize: '0.8rem', color: '#6c757d', marginBottom: '3px' }}>
+                    DOCUMENT NAME
+                  </div>
+                  <div style={{ fontWeight: '500' }}>{currentDocument?.name}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.8rem', color: '#6c757d', marginBottom: '3px' }}>
+                    DOCUMENT TYPE
+                  </div>
+                  <div style={{ fontWeight: '500' }}>{getDocumentTypeLabel(currentDocument?.type)}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.8rem', color: '#6c757d', marginBottom: '3px' }}>
+                    FILE TYPE
+                  </div>
+                  <div style={{ fontWeight: '500' }}>{currentDocument?.file_type.toUpperCase()}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.8rem', color: '#6c757d', marginBottom: '3px' }}>
+                    UPLOADED
+                  </div>
+                  <div style={{ fontWeight: '500' }}>{formatDate(currentDocument?.created_at)}</div>
+                </div>
+              </div>
+              <div style={{ marginTop: '15px' }}>
+                <div style={{ fontSize: '0.8rem', color: '#6c757d', marginBottom: '3px' }}>
+                  VEHICLE
+                </div>
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '5px',
+                  fontWeight: '500'
+                }}>
+                  <i className="bi bi-truck" style={{ color: '#6c757d' }}></i>
+                  <span>
+                    {currentDocument?.vehicles?.registration_number} 
+                    ({currentDocument?.vehicles?.make} {currentDocument?.vehicles?.model})
+                  </span>
+                </div>
+              </div>
             </div>
-            
-            <button
-              onClick={() => handleDownloadDocument(currentDocument)}
-              style={{
-                backgroundColor: '#28a745',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
-                margin: '10px auto'
-              }}
-            >
-              <span role="img" aria-label="Download">📥</span> Download
-            </button>
           </div>
         ) : (
           <div style={{ padding: '20px', textAlign: 'center', color: '#dc3545' }}>
-            Failed to load document preview.
+            <div style={{ 
+              fontSize: '48px', 
+              marginBottom: '15px',
+              color: '#dc3545'
+            }}>
+              <i className="bi bi-exclamation-triangle"></i>
+            </div>
+            <h4 style={{ marginBottom: '10px' }}>Document Preview Failed</h4>
+            <p style={{ color: '#6c757d' }}>
+              We couldn't load the document preview. Please try again or download the file instead.
+            </p>
+            {currentDocument && (
+              <div style={{ marginTop: '15px' }}>
+                <Button 
+                  variant="success" 
+                  icon={<i className="bi bi-download"></i>}
+                  onClick={() => handleDownloadDocument(currentDocument)}
+                >
+                  Download File
+                </Button>
+              </div>
+            )}
           </div>
         )}
       </Modal>
@@ -678,45 +1131,61 @@ const VehicleDocuments = ({ onBack }) => {
         onClose={() => setShowUploadModal(false)}
         title="Upload Document"
         footer={
-          <>
-            <button 
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Button 
+              variant="secondary" 
               onClick={() => setShowUploadModal(false)}
-              style={{
-                backgroundColor: '#6c757d',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
             >
               Cancel
-            </button>
-            <button 
+            </Button>
+            <Button 
               onClick={handleUploadDocument}
-              disabled={uploadLoading || !documentFile || !documentName || !documentType || !uploadVehicleId}
-              style={{
-                backgroundColor: '#007bff',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                opacity: uploadLoading || !documentFile || !documentName || !documentType || !uploadVehicleId ? 0.6 : 1
-              }}
+              disabled={uploadLoading}
+              icon={uploadLoading ? 
+                <div style={{ 
+                  width: '16px', 
+                  height: '16px', 
+                  border: '2px solid rgba(255,255,255,0.3)', 
+                  borderTopColor: 'white',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite'
+                }}></div> : 
+                <i className="bi bi-cloud-upload"></i>
+              }
             >
               {uploadLoading ? 'Uploading...' : 'Upload Document'}
-            </button>
-          </>
+            </Button>
+          </div>
         }
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          <div style={{ marginBottom: '20px' }}>
+            <Alert variant="info">
+              <i className="bi bi-info-circle me-2"></i>
+              Maximum 4 documents allowed per vehicle
+            </Alert>
+          </div>
+          
           <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Vehicle*</label>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '5px', 
+              fontWeight: '500',
+              color: '#495057',
+              fontSize: '0.9rem'
+            }}>
+              Vehicle*
+            </label>
             <select
               value={uploadVehicleId}
               onChange={(e) => setUploadVehicleId(e.target.value)}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
+              style={{ 
+                width: '100%', 
+                padding: '10px', 
+                borderRadius: '4px', 
+                border: formErrors.vehicle ? '1px solid #dc3545' : '1px solid #ced4da',
+                backgroundColor: formErrors.vehicle ? '#fff8f8' : '#fff'
+              }}
               required
             >
               <option value="">Select a vehicle</option>
@@ -726,26 +1195,63 @@ const VehicleDocuments = ({ onBack }) => {
                 </option>
               ))}
             </select>
+            {formErrors.vehicle && (
+              <div style={{ color: '#dc3545', fontSize: '0.8rem', marginTop: '5px' }}>
+                {formErrors.vehicle}
+              </div>
+            )}
           </div>
           
           <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Name*</label>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '5px', 
+              fontWeight: '500',
+              color: '#495057',
+              fontSize: '0.9rem'
+            }}>
+              Document Name*
+            </label>
             <input
               type="text"
               value={documentName}
               onChange={(e) => setDocumentName(e.target.value)}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-              required
+              style={{ 
+                width: '100%', 
+                padding: '10px', 
+                borderRadius: '4px', 
+                border: formErrors.name ? '1px solid #dc3545' : '1px solid #ced4da',
+                backgroundColor: formErrors.name ? '#fff8f8' : '#fff'
+              }}
               placeholder="e.g., Insurance Policy 2025, Vehicle Registration"
             />
+            {formErrors.name && (
+              <div style={{ color: '#dc3545', fontSize: '0.8rem', marginTop: '5px' }}>
+                {formErrors.name}
+              </div>
+            )}
           </div>
           
           <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Type*</label>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '5px', 
+              fontWeight: '500',
+              color: '#495057',
+              fontSize: '0.9rem'
+            }}>
+              Document Type*
+            </label>
             <select
               value={documentType}
               onChange={(e) => setDocumentType(e.target.value)}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
+              style={{ 
+                width: '100%', 
+                padding: '10px', 
+                borderRadius: '4px', 
+                border: formErrors.type ? '1px solid #dc3545' : '1px solid #ced4da',
+                backgroundColor: formErrors.type ? '#fff8f8' : '#fff'
+              }}
               required
             >
               <option value="registration">Registration</option>
@@ -754,26 +1260,80 @@ const VehicleDocuments = ({ onBack }) => {
               <option value="inspection">Inspection Certificate</option>
               <option value="other">Other</option>
             </select>
+            {formErrors.type && (
+              <div style={{ color: '#dc3545', fontSize: '0.8rem', marginTop: '5px' }}>
+                {formErrors.type}
+              </div>
+            )}
           </div>
           
           <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>File*</label>
-            <input
-              type="file"
-              onChange={(e) => setDocumentFile(e.target.files[0])}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ced4da' }}
-              required
-              accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-            />
-            <p style={{ fontSize: '0.9rem', color: '#6c757d', marginTop: '5px' }}>
-              Supported formats: PDF, JPG, PNG, DOC, DOCX (max 5MB)
-            </p>
-          </div>
-          
-          <div style={{ backgroundColor: '#f8f9fa', padding: '10px', borderRadius: '4px' }}>
-            <p style={{ fontSize: '0.9rem', color: '#dc3545', fontWeight: 'bold', margin: '0' }}>
-              Note: Maximum 4 documents allowed per vehicle
-            </p>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '5px', 
+              fontWeight: '500',
+              color: '#495057',
+              fontSize: '0.9rem'
+            }}>
+              File*
+            </label>
+            <div style={{ 
+              width: '100%', 
+              border: formErrors.file ? '1px solid #dc3545' : '1px dashed #ced4da',
+              borderRadius: '4px',
+              padding: '20px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              backgroundColor: formErrors.file ? '#fff8f8' : '#f8f9fa',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}>
+              <div style={{ fontSize: '24px', color: '#6c757d', marginBottom: '10px' }}>
+                <i className="bi bi-cloud-upload"></i>
+              </div>
+              <div style={{ marginBottom: '15px' }}>
+                {documentFile ? (
+                  <div style={{ 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'center',
+                    gap: '5px'
+                  }}>
+                    <div>{documentFile.name}</div>
+                    <div style={{ fontSize: '0.8rem', color: '#6c757d' }}>
+                      {(documentFile.size / 1024).toFixed(1)} KB
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ textAlign: 'center' }}>
+                    <div>Drag & drop a file here or click to browse</div>
+                    <div style={{ fontSize: '0.8rem', color: '#6c757d', marginTop: '5px' }}>
+                      Supported formats: PDF, JPG, PNG, DOC, DOCX (max 5MB)
+                    </div>
+                  </div>
+                )}
+              </div>
+              <input
+                type="file"
+                onChange={(e) => setDocumentFile(e.target.files[0])}
+                style={{ display: 'none' }}
+                id="fileInput"
+                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+              />
+              <Button 
+                variant="outline-primary" 
+                onClick={() => document.getElementById('fileInput').click()}
+                size="small"
+              >
+                {documentFile ? 'Change File' : 'Select File'}
+              </Button>
+            </div>
+            {formErrors.file && (
+              <div style={{ color: '#dc3545', fontSize: '0.8rem', marginTop: '5px' }}>
+                {formErrors.file}
+              </div>
+            )}
           </div>
         </div>
       </Modal>
@@ -784,38 +1344,61 @@ const VehicleDocuments = ({ onBack }) => {
         onClose={() => setShowDeleteModal(false)}
         title="Delete Document"
         footer={
-          <>
-            <button 
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Button 
+              variant="secondary" 
               onClick={() => setShowDeleteModal(false)}
-              style={{
-                backgroundColor: '#6c757d',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
             >
               Cancel
-            </button>
-            <button 
+            </Button>
+            <Button 
+              variant="danger" 
               onClick={handleDeleteDocument}
-              style={{
-                backgroundColor: '#dc3545',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
+              icon={<i className="bi bi-trash"></i>}
             >
               Delete Document
-            </button>
-          </>
+            </Button>
+          </div>
         }
       >
-        <p>Are you sure you want to delete the document "{currentDocument?.name}"?</p>
-        <p><strong>Warning:</strong> This action cannot be undone. The document will be permanently deleted.</p>
+        <div>
+          <div style={{ 
+            fontSize: '48px', 
+            textAlign: 'center',
+            color: '#dc3545',
+            marginBottom: '15px'
+          }}>
+            <i className="bi bi-exclamation-triangle"></i>
+          </div>
+          
+          <p style={{ textAlign: 'center', fontSize: '1.1rem', marginBottom: '15px' }}>
+            Are you sure you want to delete this document?
+          </p>
+          
+          {currentDocument && (
+            <div style={{ 
+              backgroundColor: '#f8f9fa',
+              borderRadius: '8px',
+              padding: '15px',
+              marginBottom: '15px',
+              border: '1px solid #e9ecef'
+            }}>
+              <div style={{ marginBottom: '8px' }}>
+                <strong>Document:</strong> {currentDocument.name}
+              </div>
+              <div style={{ marginBottom: '8px' }}>
+                <strong>Type:</strong> {getDocumentTypeLabel(currentDocument.type)}
+              </div>
+              <div>
+                <strong>Vehicle:</strong> {currentDocument.vehicles?.registration_number} ({currentDocument.vehicles?.make} {currentDocument.vehicles?.model})
+              </div>
+            </div>
+          )}
+          
+          <Alert variant="warning">
+            <strong>Warning:</strong> This action cannot be undone. The document will be permanently deleted.
+          </Alert>
+        </div>
       </Modal>
     </div>
   );

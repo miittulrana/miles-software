@@ -9,7 +9,6 @@ import VehicleTracking from './VehicleTracking';
 import Dashboard from './Dashboard';
 import IssueReporting from './IssueReporting';
 import ApiKeys from './ApiKeys';
-import DocumentManagement from './DocumentManagement';
 import Login from './Login';
 
 const App = () => {
@@ -180,7 +179,6 @@ const App = () => {
     { id: 'drivers', label: 'Driver Management', icon: 'bi-person' },
     { id: 'tracking', label: 'Vehicle Tracking', icon: 'bi-geo-alt' },
     { id: 'issues', label: 'Issue Reporting', icon: 'bi-exclamation-triangle' },
-    { id: 'documents', label: 'Documents', icon: 'bi-file-earmark' },
     { id: 'api', label: 'API Keys', icon: 'bi-key' },
   ];
   
@@ -201,9 +199,6 @@ const App = () => {
       break;
     case 'api':
       content = <ApiKeys networkStatus={networkStatus} />;
-      break;
-    case 'documents':
-      content = <DocumentManagement networkStatus={networkStatus} />;
       break;
     default:
       content = <Dashboard networkStatus={networkStatus} />;
